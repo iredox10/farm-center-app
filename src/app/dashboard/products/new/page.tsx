@@ -14,13 +14,13 @@ export default function AddProductPage() {
       <div className="flex items-center gap-3">
         <Link
           href="/dashboard/products"
-          className="p-2 rounded-xl hover:bg-white/5 text-text-muted hover:text-text-primary transition-colors"
+          className="p-2 rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h2 className="font-heading text-2xl font-bold text-text-primary">Add New Product</h2>
-          <p className="text-sm text-text-secondary mt-0.5">
+          <h2 className="font-heading text-2xl font-bold text-on-surface">Add New Product</h2>
+          <p className="font-body text-sm text-on-surface-variant mt-0.5">
             Fill in the details to list your product
           </p>
         </div>

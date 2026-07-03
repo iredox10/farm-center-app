@@ -1,35 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-/* ─── Tailwind CSS v4 Theme Tokens ─── */
+/* ─── Tailwind CSS v4 Theme Tokens (Tech-Luxe) ─── */
 @theme {
-  /* Navy palette */
-  --color-navy-950: #0f0f23;
-  --color-navy-900: #141432;
-  --color-navy-800: #1a1a4e;
-  --color-navy-700: #252569;
-
-  /* Green accent palette */
-  --color-green-400: #00f5a0;
-  --color-green-500: #00d68f;
-  --color-green-600: #00b377;
-
-  /* Gold accent palette */
-  --color-gold-400: #f5c842;
-  --color-gold-500: #f5a623;
-
   /* Surface colors */
-  --color-surface: #1a1a3e;
-  --color-surface-light: #252555;
+  --color-surface: #f8f9ff;
+  --color-surface-dim: #cbdbf5;
+  --color-surface-bright: #f8f9ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e5eeff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+  
+  /* Primary colors */
+  --color-primary: #041627;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #1a2b3c;
+  --color-on-primary-container: #8192a7;
+  --color-inverse-primary: #b7c8de;
+  --color-primary-fixed: #d2e4fb;
+  --color-primary-fixed-dim: #b7c8de;
+  --color-on-primary-fixed: #0b1d2d;
+  --color-on-primary-fixed-variant: #38485a;
 
-  /* Text hierarchy */
-  --color-text-primary: #f0f0ff;
-  --color-text-secondary: #a0a0c0;
-  --color-text-muted: #6a6a90;
+  /* Secondary colors */
+  --color-secondary: #006875;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #00e3fd;
+  --color-on-secondary-container: #00616d;
+  --color-secondary-fixed: #9cf0ff;
+  --color-secondary-fixed-dim: #00daf3;
+  --color-on-secondary-fixed: #001f24;
+  --color-on-secondary-fixed-variant: #004f58;
+
+  /* Tertiary colors */
+  --color-tertiary: #211200;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #38260b;
+  --color-on-tertiary-container: #a88c69;
+  --color-tertiary-fixed: #feddb5;
+  --color-tertiary-fixed-dim: #e1c29b;
+  --color-on-tertiary-fixed: #281802;
+  --color-on-tertiary-fixed-variant: #584326;
+
+  /* Error colors */
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+
+  /* Background and On-Colors */
+  --color-background: #f8f9ff;
+  --color-on-background: #0b1c30;
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #44474c;
+  --color-inverse-surface: #213145;
+  --color-inverse-on-surface: #eaf1ff;
+  
+  /* Outline and Tint */
+  --color-outline: #74777d;
+  --color-outline-variant: #c4c6cd;
+  --color-surface-tint: #4f6073;
+  --color-surface-variant: #d3e4fe;
 
   /* Font families */
   --font-heading: 'Inter', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Geist', sans-serif;
 }
 
 /* ─── Base Styles ─── */
@@ -49,8 +87,8 @@ html {
 
 body {
   font-family: var(--font-body);
-  background-color: var(--color-navy-950);
-  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  color: var(--color-on-background);
   min-height: 100dvh;
   overflow-x: hidden;
 }
@@ -59,50 +97,24 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* ─── Glassmorphism Card ─── */
-.glass-card {
-  background: rgba(26, 26, 62, 0.6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* ─── Ambient Shadow Cards ─── */
+.card {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-surface-container-high);
   border-radius: 1rem;
-  box-shadow:
-    0 4px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 4px 12px rgba(4, 22, 39, 0.05);
 }
 
-.glass-card:hover {
-  background: rgba(26, 26, 62, 0.75);
-  border-color: rgba(0, 245, 160, 0.12);
-  box-shadow:
-    0 8px 40px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-/* ─── Gradient Text ─── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-green-400), var(--color-gold-400));
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 4s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+.card:hover {
+  border-color: var(--color-surface-variant);
+  box-shadow: 0 12px 24px rgba(4, 22, 39, 0.08);
 }
 
 /* ─── Skeleton Loading ─── */
 .skeleton {
   position: relative;
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--color-surface-container);
   border-radius: 0.5rem;
 }
 
@@ -113,21 +125,17 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.04) 40%,
-    rgba(255, 255, 255, 0.08) 50%,
-    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.4) 40%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.4) 60%,
     transparent 100%
   );
   animation: skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 @keyframes skeleton-shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* ─── Custom Scrollbar ─── */
@@ -137,36 +145,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-navy-950);
+  background: var(--color-surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-light);
+  background: var(--color-outline-variant);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-green-500);
+  background: var(--color-outline);
 }
 
-/* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-surface-light) var(--color-navy-950);
+  scrollbar-color: var(--color-outline-variant) var(--color-surface);
 }
 
 /* ─── Focus & Selection ─── */
 ::selection {
-  background: rgba(0, 245, 160, 0.25);
-  color: var(--color-text-primary);
+  background: var(--color-secondary-container);
+  color: var(--color-on-secondary-container);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-green-400);
+  outline: 2px solid var(--color-secondary-container);
   outline-offset: 2px;
 }
 
-/* ─── Button Base Reset ─── */
+/* ─── Resets ─── */
 button {
   cursor: pointer;
 }
@@ -176,7 +183,6 @@ button:disabled {
   opacity: 0.5;
 }
 
-/* ─── Link Reset ─── */
 a {
   color: inherit;
   text-decoration: none;

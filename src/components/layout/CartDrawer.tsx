@@ -53,7 +53,7 @@ export default function CartDrawer() {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[90] bg-primary/40 backdrop-blur-sm transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         onClick={closeCart}
@@ -65,25 +65,25 @@ export default function CartDrawer() {
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex h-full flex-col bg-navy-950/95 backdrop-blur-2xl border-l border-white/10">
+        <div className="flex h-full flex-col bg-surface-container-lowest border-l border-outline-variant/30 shadow-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/10 p-5">
+          <div className="flex items-center justify-between border-b border-outline-variant/30 p-5 bg-surface-container-lowest">
             <div className="flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-green-400 to-green-600">
-                <ShoppingBag className="h-5 w-5 text-navy-950" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary-container">
+                <ShoppingBag className="h-5 w-5 text-on-secondary-container" />
               </div>
               <div>
-                <h2 className="font-heading text-lg font-bold text-text-primary">
+                <h2 className="font-heading text-lg font-bold text-on-surface tracking-tight">
                   Your Cart
                 </h2>
-                <p className="text-xs text-text-muted">
+                <p className="text-xs font-label text-on-surface-variant">
                   {totalItems} {totalItems === 1 ? 'item' : 'items'}
                 </p>
               </div>
             </div>
             <button
               onClick={closeCart}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 text-text-muted transition-colors hover:bg-white/10 hover:text-text-primary"
+              className="flex h-9 w-9 items-center justify-center rounded-md text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
             >
               <X className="h-5 w-5" />
             </button>
@@ -91,22 +91,22 @@ export default function CartDrawer() {
 
           {/* Cart Content */}
           {items.length === 0 ? (
-            <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6">
-              <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/5">
-                <ShoppingBag className="h-12 w-12 text-text-muted" />
+            <div className="flex flex-1 flex-col items-center justify-center gap-4 px-6 bg-surface-bright">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full bg-surface-container-low shadow-sm">
+                <ShoppingBag className="h-10 w-10 text-outline-variant" />
               </div>
               <div className="text-center">
-                <p className="font-heading text-lg font-semibold text-text-primary">
+                <p className="font-heading text-lg font-semibold text-on-surface">
                   Your cart is empty
                 </p>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="mt-1 text-sm font-body text-on-surface-variant max-w-[250px] mx-auto">
                   Discover amazing electronics at unbeatable prices
                 </p>
               </div>
               <Link
                 href="/shop"
                 onClick={closeCart}
-                className="mt-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-3 text-sm font-semibold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/20"
+                className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-label font-medium text-on-primary transition-all shadow-md hover:opacity-90 active:scale-[0.98]"
               >
                 Browse Products
                 <ArrowRight className="h-4 w-4" />
@@ -115,12 +115,12 @@ export default function CartDrawer() {
           ) : (
             <>
               {/* Items list */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-6">
+              <div className="flex-1 overflow-y-auto p-4 space-y-6 bg-surface-bright">
                 {Object.entries(itemsByShop).map(([shopId, shopItems]) => (
                   <div key={shopId}>
                     <div className="mb-3 flex items-center gap-2">
-                      <Store className="h-3.5 w-3.5 text-text-muted" />
-                      <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
+                      <Store className="h-4 w-4 text-secondary" />
+                      <span className="text-xs font-label font-bold uppercase tracking-wider text-on-surface-variant">
                         {shopItems[0]?.shopName ?? shopId}
                       </span>
                     </div>
@@ -128,27 +128,35 @@ export default function CartDrawer() {
                       {shopItems.map((item) => (
                         <div
                           key={item.productId}
-                          className="group flex gap-3 rounded-2xl bg-white/5 p-3 transition-colors hover:bg-white/[0.07]"
+                          className="group flex gap-3 rounded-xl bg-surface-container-lowest border border-outline-variant p-3 shadow-sm transition-colors hover:border-secondary/30"
                         >
                           {/* Image placeholder */}
-                          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-navy-800">
-                            <div className="flex h-full w-full items-center justify-center">
-                              <ShoppingBag className="h-8 w-8 text-text-muted/50" />
-                            </div>
+                          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-surface-container-high border border-outline-variant/30">
+                            {item.imageUrl ? (
+                              <img
+                                src={item.imageUrl}
+                                alt={item.name}
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <div className="flex h-full w-full items-center justify-center">
+                                <ShoppingBag className="h-8 w-8 text-outline-variant" />
+                              </div>
+                            )}
                           </div>
 
-                          <div className="flex flex-1 flex-col justify-between min-w-0">
+                          <div className="flex flex-1 flex-col justify-between min-w-0 py-0.5">
                             <div>
-                              <p className="truncate text-sm font-medium text-text-primary">
+                              <p className="truncate text-sm font-heading font-medium text-on-surface">
                                 {item.name}
                               </p>
-                              <p className="mt-0.5 text-sm font-semibold text-green-400">
+                              <p className="mt-0.5 text-sm font-label font-semibold text-primary">
                                 {formatPrice(item.price)}
                               </p>
                             </div>
 
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-1.5">
+                            <div className="flex items-center justify-between mt-2">
+                              <div className="flex items-center gap-1">
                                 <button
                                   onClick={() =>
                                     updateQuantity(
@@ -156,11 +164,11 @@ export default function CartDrawer() {
                                       item.quantity - 1
                                     )
                                   }
-                                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text-primary"
+                                  className="flex h-7 w-7 items-center justify-center rounded border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
                                 >
                                   <Minus className="h-3.5 w-3.5" />
                                 </button>
-                                <span className="w-8 text-center text-sm font-medium text-text-primary">
+                                <span className="w-8 text-center text-sm font-label font-medium text-on-surface">
                                   {item.quantity}
                                 </span>
                                 <button
@@ -170,21 +178,22 @@ export default function CartDrawer() {
                                       item.quantity + 1
                                     )
                                   }
-                                  className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-text-muted transition-colors hover:bg-white/20 hover:text-text-primary"
+                                  className="flex h-7 w-7 items-center justify-center rounded border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
                                 >
                                   <Plus className="h-3.5 w-3.5" />
                                 </button>
                               </div>
 
                               <div className="flex items-center gap-3">
-                                <span className="text-xs text-text-muted">
+                                <span className="text-xs font-label font-semibold text-on-surface-variant">
                                   {formatPrice(item.price * item.quantity)}
                                 </span>
                                 <button
                                   onClick={() => removeItem(item.productId)}
-                                  className="flex h-7 w-7 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-red-500/10 hover:text-red-400"
+                                  className="flex h-7 w-7 items-center justify-center rounded text-outline transition-colors hover:bg-error-container hover:text-on-error-container"
+                                  title="Remove item"
                                 >
-                                  <Trash2 className="h-3.5 w-3.5" />
+                                  <Trash2 className="h-4 w-4" />
                                 </button>
                               </div>
                             </div>
@@ -197,19 +206,19 @@ export default function CartDrawer() {
               </div>
 
               {/* Footer with total */}
-              <div className="border-t border-white/10 p-5 space-y-4">
+              <div className="border-t border-outline-variant/30 bg-surface-container-lowest p-5 space-y-4 shadow-[0_-4px_12px_rgba(4,22,39,0.03)]">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-text-muted">
+                  <span className="text-sm font-label text-on-surface-variant">
                     Total ({totalItems} items)
                   </span>
-                  <span className="font-heading text-xl font-bold text-text-primary">
+                  <span className="font-heading text-xl font-bold text-primary">
                     {formatPrice(totalPrice)}
                   </span>
                 </div>
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-4 font-heading text-sm font-bold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/25 active:scale-[0.98]"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-secondary-container px-6 py-4 font-label text-sm font-bold text-on-secondary-container transition-all shadow-md hover:opacity-90 active:scale-[0.98]"
                 >
                   Proceed to Checkout
                   <ArrowRight className="h-4 w-4" />

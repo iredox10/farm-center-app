@@ -72,16 +72,16 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
   if (!product) {
     return (
-      <div className="glass-card p-12 text-center">
-        <h3 className="font-heading text-xl font-bold text-text-primary mb-2">
+      <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-12 text-center">
+        <h3 className="font-heading text-xl font-bold text-on-surface mb-2">
           Product Not Found
         </h3>
-        <p className="text-sm text-text-secondary mb-4">
+        <p className="font-body text-sm text-on-surface-variant mb-4">
           The product you&apos;re looking for doesn&apos;t exist.
         </p>
         <Link
           href="/dashboard/products"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-green-400 to-green-600 text-navy-950 text-sm font-bold hover:shadow-lg hover:shadow-green-400/25 transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-on-primary text-sm font-label font-bold hover:opacity-90 transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Products
@@ -96,13 +96,13 @@ export default function EditProductPage({ params }: EditProductPageProps) {
       <div className="flex items-center gap-3">
         <Link
           href="/dashboard/products"
-          className="p-2 rounded-xl hover:bg-white/5 text-text-muted hover:text-text-primary transition-colors"
+          className="p-2 rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors"
         >
           <ArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h2 className="font-heading text-2xl font-bold text-text-primary">Edit Product</h2>
-          <p className="text-sm text-text-secondary mt-0.5">
+          <h2 className="font-heading text-2xl font-bold text-on-surface">Edit Product</h2>
+          <p className="font-body text-sm text-on-surface-variant mt-0.5">
             Update &quot;{product.name}&quot;
           </p>
         </div>

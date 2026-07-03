@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FarmCenter - Discover</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "primary": "#041627",
+                        "surface-dim": "#cbdbf5",
+                        "tertiary-container": "#38260b",
+                        "background": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#74777d",
+                        "surface-tint": "#4f6073",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#feddb5",
+                        "surface-container": "#e5eeff",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed-variant": "#38485a",
+                        "secondary": "#006875",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed": "#9cf0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00616d",
+                        "tertiary": "#211200",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-tertiary-container": "#a88c69",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#e1c29b",
+                        "on-tertiary-fixed": "#281802",
+                        "secondary-container": "#00e3fd",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#44474c",
+                        "surface-container-low": "#eff4ff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#0b1c30",
+                        "surface-container-highest": "#f8f9ff",
+                        "primary-fixed": "#d2e4fb",
+                        "inverse-primary": "#b7c8de",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-secondary-fixed": "#001f24",
+                        "surface": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a2b3c",
+                        "on-primary-container": "#8192a7",
+                        "on-tertiary-fixed-variant": "#584326",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#b7c8de",
+                        "outline-variant": "#e2e8f0",
+                        "on-secondary-fixed-variant": "#004f58"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "24px",
+                        "gutter": "32px",
+                        "xs": "8px",
+                        "margin-desktop": "64px",
+                        "md": "32px",
+                        "sm": "16px",
+                        "xl": "120px",
+                        "base": "4px",
+                        "lg": "64px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500", "letterSpacing": "0.05em" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "300", "letterSpacing": "-0.02em" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "400", "textTransform": "uppercase" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "300" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "300" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "300" }],
+                        "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "300" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "300" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom Scrollbar for horizontal lists */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background antialiased pt-[88px] pb-[100px] md:pb-0 font-body-md">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-background/90 backdrop-blur-md border-b border-outline-variant">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-5 w-full">
+<div class="flex items-center gap-sm">
+<span class="font-headline-md text-headline-md font-medium text-primary tracking-tighter">FarmCenter.</span>
+</div>
+<!-- Desktop Nav Cluster -->
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-on-surface hover:text-secondary transition-colors font-label-md text-label-md" href="#">Discover</a>
+<a class="text-outline hover:text-secondary transition-colors font-label-md text-label-md" href="#">Collections</a>
+<a class="text-outline hover:text-secondary transition-colors font-label-md text-label-md" href="#">Journal</a>
+</nav>
+<div class="flex items-center gap-sm">
+<button class="active:scale-95 transition-transform duration-200 hover:opacity-80 transition-opacity text-primary">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+<button class="active:scale-95 transition-transform duration-200 hover:opacity-80 transition-opacity text-primary">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+</button>
+</div>
+</div>
+</header>
+<main class="w-full max-w-[1600px] mx-auto px-margin-mobile md:px-margin-desktop py-md md:py-lg flex flex-col gap-xl">
+<!-- Categories -->
+<section class="flex gap-md overflow-x-auto hide-scrollbar pb-4 border-b border-outline-variant">
+<button class="text-primary border-b-2 border-primary pb-2 whitespace-nowrap active:scale-95 transition-transform duration-200">
+<span class="font-label-md text-label-md">All Tech</span>
+</button>
+<button class="text-outline hover:text-primary pb-2 whitespace-nowrap active:scale-95 transition-transform duration-200">
+<span class="font-label-md text-label-md">Phones</span>
+</button>
+<button class="text-outline hover:text-primary pb-2 whitespace-nowrap active:scale-95 transition-transform duration-200">
+<span class="font-label-md text-label-md">Laptops</span>
+</button>
+<button class="text-outline hover:text-primary pb-2 whitespace-nowrap active:scale-95 transition-transform duration-200">
+<span class="font-label-md text-label-md">Audio</span>
+</button>
+<button class="text-outline hover:text-primary pb-2 whitespace-nowrap active:scale-95 transition-transform duration-200">
+<span class="font-label-md text-label-md">Wearables</span>
+</button>
+</section>
+<!-- Flash Sales Bento -->
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-end mb-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Featured Stories</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-gutter">
+<!-- Hero Flash Item -->
+<div class="relative overflow-hidden group bg-surface-container-lowest h-[500px] md:h-[600px] flex items-end">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A sleek, futuristic silver laptop displayed on a minimalist white table with dramatic, high-contrast studio lighting highlighting its metallic edges." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_eJjLrsGhzVREaHxoAkeJdFALJ0ZBeH669HkeDBcaezuDnPcb1XcQkWuSUmV3Vr-dcEhm68vgXy1JORbBwHAkPipYRFhvBCGmLi8Dsmn4pebupkTWRKpCf4d_mpu89cL2h_TbJqfgssu4MV2YECJrsoa1RUZyS0Oy5TGTySLzVVDrtsUW2osrbI0_uyVSAJ34pqOE6MP9RvEzZPweDWe2YUfxakABHDRPPE9U9EbYKWRNVKaL0hvk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/20 to-transparent z-10"></div>
+<div class="relative z-20 p-lg w-full">
+<span class="text-on-primary font-label-sm text-label-sm mb-xs block opacity-80 uppercase tracking-widest">Limited Edition</span>
+<h3 class="font-display-lg text-display-lg text-on-primary mb-sm leading-tight">Quantum X Pro</h3>
+<button class="text-on-primary font-label-md text-label-md border-b border-on-primary pb-1 hover:opacity-70 transition-opacity uppercase">Explore Now</button>
+</div>
+</div>
+<!-- Secondary Flash Items -->
+<div class="flex flex-col gap-gutter h-full">
+<div class="relative overflow-hidden group bg-surface-container-lowest flex-1 min-h-[240px] flex items-end">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A pair of premium matte black wireless earbuds resting in their open charging case on a crisp white surface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzYHw93MITZV1DJQV2MbTwzhjbDqtR48ZGraJU7_TpiZYVdXsuPwDfNBvzvU5jjCDBc49SI4Wpz4b_hfmQQiE02DpzSCAbs_jODgS_Ow_J2Hod_VmSg_lgVQlhBE-y94P7SQ6qhcyR7dla8YY6Cc2kzBxWp5HW0phJOztWyfMtTsupJmXJpD8Pp5ruxEfoDwn64SxPxczgoPJGTm-PV66gUWl2nLkPDVZ43rF5L8c30bftlMDq3iY1')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent z-10"></div>
+<div class="relative z-20 p-md w-full">
+<h3 class="font-headline-lg text-headline-lg text-on-primary mb-2">Immersive Sound</h3>
+<p class="font-body-md text-body-md text-on-primary/80">Noise Cancelling Earbuds Pro</p>
+</div>
+</div>
+<div class="relative overflow-hidden group bg-surface-container-lowest flex-1 min-h-[240px] flex items-end">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A modern smartwatch with a bright, colorful OLED display and a sleek metal band." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-Th5Tn4wgwIhwasgUuOkz55pZFXicWLEogFy6vjfn1kW7B7_LJkawpa0XJNg5oGk3fnpqyNeA34a9B7OqRvsyUX64JPzEgFlYvxrLZCAUUitgBbBMqhEFVKAdOWZn5mJxeNYf5NOvqmng9OGSgWh0GxcbqxnPGc3gugIPw-DLT1L32nym9jiwDYAu1Jhxfp5yBRIpUODsxs6OA1gRWhd6O8ZOcrv2PSWhBYtQZlt1aQFYRU5QxyBY')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent z-10"></div>
+<div class="relative z-20 p-md w-full">
+<h3 class="font-headline-lg text-headline-lg text-on-primary mb-2">Stay Connected</h3>
+<p class="font-body-md text-body-md text-on-primary/80">SmartWatch Series 5</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trending Feed -->
+<section class="flex flex-col gap-md">
+<div class="flex justify-between items-end mb-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Curated Selection</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-y-xl gap-x-gutter">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer flex flex-col">
+<div class="relative h-[400px] md:h-[500px] overflow-hidden bg-surface-bright mb-md">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A high-end modern smartphone with a glass back reflecting soft white light, standing upright against a pristine minimalist background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBm9PsyUHF2V3Sikl4nln2qPK5rAbvWw427M36q1ZwNRtE0m7_OutIydB1u1ic_ExKGDSZ61LSY7CEExef90GSHTyqb7FuYhdV9EkxYD7hJGhmwBfRia0HBkTgKa4VzLqCqRM9BKAzORwpR3i68t_Vp0SKsxgsxw_7jAqCAnO5uIUdGlqrTIKtPNJnju0V2sH7wHKeQv7Pl-bX-iEkyRE22X8I3UksYauqJRCRDic19bD1SvkqK3HCt')"></div>
+</div>
+<div class="flex flex-col items-center text-center">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Aero Phone 14 Ultra</h3>
+<p class="font-body-md text-body-md text-outline mb-3">Midnight, 256GB</p>
+<span class="font-body-lg text-body-lg text-primary">$899</span>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer flex flex-col">
+<div class="relative h-[400px] md:h-[500px] overflow-hidden bg-surface-bright mb-md">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A sleek mechanical keyboard with subtle RGB backlighting set on a clean, light-colored desk mat." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDV5trGo_a1IEq8jHTdTKa-n1muhiVOt7Kt37E_KAy7zVFJ9eg2u3O9hxtM79nTQwzvDxPWRKEXVMmvNVnQz-9zQNRe6_U3wvkPC04sIyJtmT7pX-OhRls4hD33sP19HBFTsTbFOeshKZ7jfYzBwZKwNEjmxXa73qIUFvGLOTV5DBFoq3ByLycVqSblgKt6HnH3LS-BHmNy_7oCDflvi835Ikb5G5ACT_zcmu6Iz7IP_t6FJe0-naux')"></div>
+</div>
+<div class="flex flex-col items-center text-center">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">ProType Keyboard</h3>
+<p class="font-body-md text-body-md text-outline mb-3">Mechanical Precision</p>
+<span class="font-body-lg text-body-lg text-primary">$120</span>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer flex flex-col">
+<div class="relative h-[400px] md:h-[500px] overflow-hidden bg-surface-bright mb-md">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A compact, stylish mirrorless camera with a silver and black body, resting on a white studio pedestal." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCJ-FTjMJWIpJHtO7poy_ACLiik0eqoZSxeszJw3JTDaLQTVqMpQ4Vl4JTNJa0wsKglJ3X9P_T0smGGIv05lNJotMt9exKrfdLv_uafZWMf9VSCYKu2Y3VUHT3sNp2s8QHt5lfdGdXB1ogx_1Xxald0EhX-cEQD4AClukElGMp6D4Xq4K6RXZ1u77aLhGR7XlP74Fc07oZ1slnVpEeI4WRA-Rw0_VOMT2OiOWbnKs2yhVri7y1hNoTb')"></div>
+</div>
+<div class="flex flex-col items-center text-center">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Lumina Mirrorless</h3>
+<p class="font-body-md text-body-md text-outline mb-3">Body Only</p>
+<span class="font-body-lg text-body-lg text-primary">$1,050</span>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group cursor-pointer flex flex-col">
+<div class="relative h-[400px] md:h-[500px] overflow-hidden bg-surface-bright mb-md">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="A high-performance portable SSD drive, small and rugged with a sleek metallic finish, sitting next to a subtle USB-C cable on a pristine white background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKhTUbhKN8H5ohdf9sUZtY8mX0IggZXlDOmEITOql6m6zjAsUwKD7mbRzahNCKybtxsb88b4OSr0W6t2BtRzieo-fv-ZZrOfqCwgFrsYnARTmtY2Nyw_2hBt0NQ22L5A6nh1ohwWIHWYs6yYOCmWB7kJLGqjgPaxWyQUya75FsGJJf9VyR5Vrw0hSsN2T_QuDRr6F1ptHaNXyCDnJFAmg7MzDTdx7gfSasKHKSsXx1YT6V1tzVF9Qf')"></div>
+</div>
+<div class="flex flex-col items-center text-center">
+<h3 class="font-headline-md text-headline-md text-primary mb-1">UltraFast Portable SSD</h3>
+<p class="font-body-md text-body-md text-outline mb-3">2TB Storage</p>
+<span class="font-body-lg text-body-lg text-primary">$189</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-background/90 backdrop-blur-md border-t border-outline-variant">
+<div class="flex justify-around items-center h-20 w-full px-4">
+<a class="flex flex-col items-center justify-center text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined icon-fill mb-1">explore</span>
+<span class="font-label-sm text-label-sm text-[10px]">Discover</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined mb-1">favorite</span>
+<span class="font-label-sm text-label-sm text-[10px]">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined mb-1">shopping_bag</span>
+<span class="font-label-sm text-label-sm text-[10px]">Bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors p-2" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-sm text-label-sm text-[10px]">Profile</span>
+</a>
+</div>
+</nav>
+</body></html>

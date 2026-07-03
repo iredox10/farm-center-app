@@ -53,39 +53,39 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-12">
+    <div className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-12 bg-[#fafafa] relative overflow-hidden">
       {/* Background effects */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-green-400/5 blur-[128px]" />
-        <div className="absolute bottom-1/4 right-1/4 h-96 w-96 rounded-full bg-gold-400/5 blur-[128px]" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-secondary-container/10 blur-[100px] -translate-x-1/2" />
+        <div className="absolute bottom-1/4 right-1/4 h-[500px] w-[500px] rounded-full bg-primary-container/10 blur-[100px] translate-x-1/2" />
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full max-w-md z-10">
         {/* Card */}
-        <div className="rounded-3xl border border-white/10 bg-navy-900/60 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="rounded-[2rem] border border-outline-variant/50 bg-white p-8 shadow-[0_4px_12px_rgba(4,22,39,0.02)]">
           {/* Logo */}
-          <div className="mb-8 flex flex-col items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-400 to-green-600 shadow-lg shadow-green-400/20">
-              <ShoppingBag className="h-7 w-7 text-navy-950" />
+          <div className="mb-8 flex flex-col items-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/20">
+              <ShoppingBag className="h-8 w-8 text-on-primary" />
             </div>
             <div>
-              <h1 className="text-center font-heading text-2xl font-bold text-text-primary">
+              <h1 className="text-center font-heading text-2xl font-black text-primary tracking-tight">
                 Welcome back
               </h1>
-              <p className="mt-1 text-center text-sm text-text-muted">
+              <p className="mt-1.5 text-center font-body text-sm text-on-surface-variant">
                 Sign in to your Farm Center Market account
               </p>
             </div>
           </div>
 
           {/* Tab Toggle */}
-          <div className="mb-6 flex rounded-2xl bg-white/5 p-1">
+          <div className="mb-8 flex rounded-xl bg-surface-container p-1.5">
             <button
               onClick={() => setActiveTab('email')}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-label font-bold transition-all duration-200 ${
                 activeTab === 'email'
-                  ? 'bg-white/10 text-text-primary shadow-sm'
-                  : 'text-text-muted hover:text-text-secondary'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               <Mail className="h-4 w-4" />
@@ -93,10 +93,10 @@ export default function LoginPage() {
             </button>
             <button
               onClick={() => setActiveTab('phone')}
-              className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${
+              className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-label font-bold transition-all duration-200 ${
                 activeTab === 'phone'
-                  ? 'bg-white/10 text-text-primary shadow-sm'
-                  : 'text-text-muted hover:text-text-secondary'
+                  ? 'bg-white text-primary shadow-sm'
+                  : 'text-on-surface-variant hover:text-on-surface'
               }`}
             >
               <Phone className="h-4 w-4" />
@@ -108,12 +108,12 @@ export default function LoginPage() {
           {activeTab === 'email' && (
             <form
               onSubmit={emailForm.handleSubmit(handleEmailSubmit)}
-              className="space-y-4"
+              className="space-y-5"
             >
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-text-secondary"
+                  className="mb-2 block font-label text-sm font-semibold text-on-surface"
                 >
                   Email address
                 </label>
@@ -128,10 +128,10 @@ export default function LoginPage() {
                       message: 'Please enter a valid email',
                     },
                   })}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                  className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                 />
                 {emailForm.formState.errors.email && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {emailForm.formState.errors.email.message}
                   </p>
                 )}
@@ -140,7 +140,7 @@ export default function LoginPage() {
               <div>
                 <label
                   htmlFor="password"
-                  className="mb-1.5 block text-sm font-medium text-text-secondary"
+                  className="mb-2 block font-label text-sm font-semibold text-on-surface"
                 >
                   Password
                 </label>
@@ -156,12 +156,12 @@ export default function LoginPage() {
                         message: 'Password must be at least 8 characters',
                       },
                     })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-12 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 pr-12 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-outline transition-colors hover:text-on-surface"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -171,7 +171,7 @@ export default function LoginPage() {
                   </button>
                 </div>
                 {emailForm.formState.errors.password && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {emailForm.formState.errors.password.message}
                   </p>
                 )}
@@ -180,7 +180,7 @@ export default function LoginPage() {
               <div className="flex justify-end">
                 <Link
                   href="/forgot-password"
-                  className="text-sm text-green-400 transition-colors hover:text-green-300"
+                  className="font-label text-sm font-bold text-secondary transition-colors hover:text-secondary-container hover:underline"
                 >
                   Forgot Password?
                 </Link>
@@ -189,14 +189,14 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-3.5 font-heading text-sm font-bold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 font-label text-base font-bold text-on-primary transition-all shadow-md hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
                     Sign In
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-5 w-5" />
                   </>
                 )}
               </button>
@@ -207,17 +207,17 @@ export default function LoginPage() {
           {activeTab === 'phone' && (
             <form
               onSubmit={phoneForm.handleSubmit(handlePhoneSubmit)}
-              className="space-y-4"
+              className="space-y-5"
             >
               <div>
                 <label
                   htmlFor="phone"
-                  className="mb-1.5 block text-sm font-medium text-text-secondary"
+                  className="mb-2 block font-label text-sm font-semibold text-on-surface"
                 >
                   Phone number
                 </label>
                 <div className="flex gap-2">
-                  <div className="flex items-center rounded-xl border border-white/10 bg-white/5 px-3.5 text-sm text-text-muted">
+                  <div className="flex items-center rounded-xl border border-outline-variant bg-surface-container px-4 font-label text-sm font-semibold text-on-surface-variant">
                     +234
                   </div>
                   <input
@@ -235,11 +235,11 @@ export default function LoginPage() {
                         message: 'Enter a valid phone number',
                       },
                     })}
-                    className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="flex-1 rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                 </div>
                 {phoneForm.formState.errors.phone && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {phoneForm.formState.errors.phone.message}
                   </p>
                 )}
@@ -248,14 +248,14 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-3.5 font-heading text-sm font-bold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 font-label text-base font-bold text-on-primary transition-all shadow-md hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
                 ) : (
                   <>
                     Send OTP
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-5 w-5" />
                   </>
                 )}
               </button>
@@ -263,18 +263,18 @@ export default function LoginPage() {
           )}
 
           {/* Divider */}
-          <div className="my-6 flex items-center gap-4">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-text-muted">or</span>
-            <div className="h-px flex-1 bg-white/10" />
+          <div className="my-8 flex items-center gap-4">
+            <div className="h-px flex-1 bg-outline-variant/50" />
+            <span className="font-label text-xs font-semibold uppercase tracking-wider text-outline">or</span>
+            <div className="h-px flex-1 bg-outline-variant/50" />
           </div>
 
           {/* Register link */}
-          <p className="text-center text-sm text-text-muted">
+          <p className="text-center font-body text-sm text-on-surface-variant">
             Don&apos;t have an account?{' '}
             <Link
               href="/register"
-              className="font-semibold text-green-400 transition-colors hover:text-green-300"
+              className="font-label font-bold text-secondary transition-colors hover:text-secondary-container hover:underline ml-1"
             >
               Register
             </Link>

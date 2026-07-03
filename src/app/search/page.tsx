@@ -31,9 +31,9 @@ const conditionOptions = [
   { value: 'refurbished', label: 'Refurbished' },
 ];
 const conditionBadge: Record<string, { label: string; cls: string }> = {
-  new: { label: 'New', cls: 'bg-green-500/20 text-green-400 border-green-500/30' },
-  'uk-used': { label: 'UK-Used', cls: 'bg-blue-500/20 text-blue-400 border-blue-500/30' },
-  refurbished: { label: 'Refurbished', cls: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30' },
+  new: { label: 'New', cls: 'bg-primary/20 text-primary border-primary/30' },
+  'uk-used': { label: 'UK-Used', cls: 'bg-secondary/20 text-secondary border-secondary/30' },
+  refurbished: { label: 'Refurbished', cls: 'bg-tertiary/20 text-tertiary border-tertiary/30' },
 };
 
 function SearchContent() {
@@ -88,31 +88,31 @@ function SearchContent() {
   const hasFilters = selectedCategories.length > 0 || selectedConditions.length > 0 || minPrice || maxPrice;
 
   return (
-    <main className="min-h-screen bg-navy-950 pt-4 pb-16">
+    <main className="min-h-screen bg-[#fafafa] pt-4 pb-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Search Header */}
         <div className="mb-8">
           <div className="relative max-w-2xl">
-            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+            <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-outline" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search phones, laptops, accessories..."
-              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-navy-800/60 border border-white/10 text-text-primary text-lg placeholder:text-text-muted focus:outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/25 transition-all"
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface text-lg placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all"
             />
           </div>
-          <p className="text-text-muted text-sm mt-3">
+          <p className="text-outline text-sm mt-3">
             {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''}{query ? ` for "${query}"` : ''}
           </p>
         </div>
 
         <div className="flex gap-8">
           {/* Filter Sidebar (Desktop) */}
-          <aside className={`w-64 flex-shrink-0 space-y-6 ${showFilters ? 'fixed inset-0 z-50 bg-navy-950/95 backdrop-blur-sm p-6 overflow-y-auto lg:relative lg:inset-auto lg:z-auto lg:bg-transparent lg:backdrop-blur-none lg:p-0' : 'hidden lg:block'}`}>
+          <aside className={`w-64 flex-shrink-0 space-y-6 ${showFilters ? 'fixed inset-0 z-50 bg-[#fafafa]/95 backdrop-blur-sm p-6 overflow-y-auto lg:relative lg:inset-auto lg:z-auto lg:bg-transparent lg:backdrop-blur-none lg:p-0' : 'hidden lg:block'}`}>
             <div className="flex items-center justify-between lg:hidden">
-              <h3 className="font-heading text-lg font-bold text-text-primary">Filters</h3>
-              <button onClick={() => setShowFilters(false)} className="text-text-muted hover:text-text-primary"><X className="w-5 h-5" /></button>
+              <h3 className="font-heading text-lg font-bold text-on-surface">Filters</h3>
+              <button onClick={() => setShowFilters(false)} className="text-outline hover:text-on-surface"><X className="w-5 h-5" /></button>
             </div>
 
             {hasFilters && (
@@ -120,44 +120,44 @@ function SearchContent() {
             )}
 
             {/* Categories */}
-            <div className="glass-card rounded-2xl p-5">
-              <h4 className="font-heading font-semibold text-text-primary mb-3">Categories</h4>
+            <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-5">
+              <h4 className="font-heading font-semibold text-on-surface mb-3">Categories</h4>
               <div className="space-y-2">
                 {categoryOptions.map((cat) => (
                   <label key={cat} className="flex items-center gap-3 cursor-pointer group">
                     <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                      selectedCategories.includes(cat) ? 'bg-green-400 border-green-400' : 'border-white/20 group-hover:border-white/40'
+                      selectedCategories.includes(cat) ? 'bg-primary border-primary' : 'border-outline-variant group-hover:border-outline'
                     }`}>
-                      {selectedCategories.includes(cat) && <svg className="w-3 h-3 text-navy-950" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                      {selectedCategories.includes(cat) && <svg className="w-3 h-3 text-on-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                     </div>
-                    <span className="text-text-secondary text-sm group-hover:text-text-primary transition-colors">{cat}</span>
+                    <span className="text-on-surface-variant text-sm group-hover:text-on-surface transition-colors">{cat}</span>
                   </label>
                 ))}
               </div>
             </div>
 
             {/* Price Range */}
-            <div className="glass-card rounded-2xl p-5">
-              <h4 className="font-heading font-semibold text-text-primary mb-3">Price Range</h4>
+            <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-5">
+              <h4 className="font-heading font-semibold text-on-surface mb-3">Price Range</h4>
               <div className="flex gap-2">
-                <input type="number" placeholder="Min" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-navy-800/60 border border-white/10 text-text-primary text-sm focus:outline-none focus:border-green-400/50" />
-                <span className="text-text-muted self-center">-</span>
-                <input type="number" placeholder="Max" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-navy-800/60 border border-white/10 text-text-primary text-sm focus:outline-none focus:border-green-400/50" />
+                <input type="number" placeholder="Min" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-[#f3f4f6] border border-outline-variant/50 text-on-surface text-sm focus:outline-none focus:border-primary/50" />
+                <span className="text-outline self-center">-</span>
+                <input type="number" placeholder="Max" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} className="w-full px-3 py-2 rounded-lg bg-[#f3f4f6] border border-outline-variant/50 text-on-surface text-sm focus:outline-none focus:border-primary/50" />
               </div>
             </div>
 
             {/* Condition */}
-            <div className="glass-card rounded-2xl p-5">
-              <h4 className="font-heading font-semibold text-text-primary mb-3">Condition</h4>
+            <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-5">
+              <h4 className="font-heading font-semibold text-on-surface mb-3">Condition</h4>
               <div className="space-y-2">
                 {conditionOptions.map((cond) => (
                   <label key={cond.value} className="flex items-center gap-3 cursor-pointer group">
                     <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-                      selectedConditions.includes(cond.value) ? 'bg-green-400 border-green-400' : 'border-white/20 group-hover:border-white/40'
+                      selectedConditions.includes(cond.value) ? 'bg-primary border-primary' : 'border-outline-variant group-hover:border-outline'
                     }`}>
-                      {selectedConditions.includes(cond.value) && <svg className="w-3 h-3 text-navy-950" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
+                      {selectedConditions.includes(cond.value) && <svg className="w-3 h-3 text-on-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>}
                     </div>
-                    <span className="text-text-secondary text-sm group-hover:text-text-primary transition-colors">{cond.label}</span>
+                    <span className="text-on-surface-variant text-sm group-hover:text-on-surface transition-colors">{cond.label}</span>
                   </label>
                 ))}
               </div>
@@ -168,30 +168,30 @@ function SearchContent() {
           <div className="flex-1 min-w-0">
             {/* Sort Bar */}
             <div className="flex items-center justify-between mb-6">
-              <button onClick={() => setShowFilters(true)} className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-xl bg-navy-800/60 border border-white/10 text-text-secondary text-sm">
-                <SlidersHorizontal className="w-4 h-4" /> Filters {hasFilters && <span className="w-5 h-5 rounded-full bg-green-400 text-navy-950 text-xs flex items-center justify-center font-bold">{selectedCategories.length + selectedConditions.length}</span>}
+              <button onClick={() => setShowFilters(true)} className="lg:hidden flex items-center gap-2 px-4 py-2 rounded-xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface-variant text-sm">
+                <SlidersHorizontal className="w-4 h-4" /> Filters {hasFilters && <span className="w-5 h-5 rounded-full bg-primary text-on-primary text-xs flex items-center justify-center font-bold">{selectedCategories.length + selectedConditions.length}</span>}
               </button>
               <div className="flex items-center gap-3 ml-auto">
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 rounded-xl bg-navy-800/60 border border-white/10 text-text-secondary text-sm focus:outline-none focus:border-green-400/50 appearance-none cursor-pointer pr-8">
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="px-3 py-2 rounded-xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface-variant text-sm focus:outline-none focus:border-primary/50 appearance-none cursor-pointer pr-8">
                   <option value="relevance">Relevance</option>
                   <option value="price-low">Price: Low → High</option>
                   <option value="price-high">Price: High → Low</option>
                   <option value="newest">Newest</option>
                   <option value="popular">Most Popular</option>
                 </select>
-                <div className="flex bg-navy-800/60 rounded-xl border border-white/10 overflow-hidden">
-                  <button onClick={() => setViewMode('grid')} className={`px-3 py-2 ${viewMode === 'grid' ? 'text-green-400 bg-green-400/10' : 'text-text-muted'}`}><Grid3X3 className="w-4 h-4" /></button>
-                  <button onClick={() => setViewMode('list')} className={`px-3 py-2 ${viewMode === 'list' ? 'text-green-400 bg-green-400/10' : 'text-text-muted'}`}><List className="w-4 h-4" /></button>
+                <div className="flex bg-[#f3f4f6] rounded-xl border border-outline-variant/50 overflow-hidden">
+                  <button onClick={() => setViewMode('grid')} className={`px-3 py-2 ${viewMode === 'grid' ? 'text-primary bg-primary/10' : 'text-outline'}`}><Grid3X3 className="w-4 h-4" /></button>
+                  <button onClick={() => setViewMode('list')} className={`px-3 py-2 ${viewMode === 'list' ? 'text-primary bg-primary/10' : 'text-outline'}`}><List className="w-4 h-4" /></button>
                 </div>
               </div>
             </div>
 
             {filteredProducts.length === 0 ? (
-              <div className="glass-card rounded-2xl p-12 text-center">
-                <SearchIcon className="w-16 h-16 text-text-muted mx-auto mb-4" />
-                <h3 className="font-heading text-xl font-bold text-text-primary mb-2">No results found</h3>
-                <p className="text-text-muted mb-4">Try different keywords or adjust your filters.</p>
-                {hasFilters && <button onClick={clearAllFilters} className="text-green-400 font-medium hover:text-green-300 transition-colors">Clear all filters</button>}
+              <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-12 text-center">
+                <SearchIcon className="w-16 h-16 text-outline mx-auto mb-4" />
+                <h3 className="font-heading text-xl font-bold text-on-surface mb-2">No results found</h3>
+                <p className="text-outline mb-4">Try different keywords or adjust your filters.</p>
+                {hasFilters && <button onClick={clearAllFilters} className="text-primary font-medium hover:text-primary/80 transition-colors">Clear all filters</button>}
               </div>
             ) : (
               <div className={viewMode === 'grid' ? 'grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6' : 'space-y-4'}>
@@ -203,15 +203,28 @@ function SearchContent() {
                   if (viewMode === 'list') {
                     return (
                       <Link key={product.id} href={`/product/${product.slug}`} className="group block">
-                        <div className="glass-card rounded-2xl p-4 flex gap-4 transition-all group-hover:border-green-400/30">
-                          <div className="w-24 h-24 rounded-xl bg-navy-800/50 flex items-center justify-center flex-shrink-0"><Zap className="w-8 h-8 text-navy-700/40" /></div>
-                          <div className="flex-1 min-w-0">
-                            <div className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold border mb-1 ${badge.cls}`}>{badge.label}</div>
-                            <h3 className="font-heading font-semibold text-text-primary group-hover:text-green-400 transition-colors line-clamp-1">{product.name}</h3>
-                            <p className="text-text-muted text-xs mt-0.5">{product.shopName}</p>
-                            <div className="mt-1 flex items-baseline gap-2">
-                              <span className="font-bold text-green-400 text-lg">{formatPrice(price)}</span>
-                              {hasDiscount && <span className="text-text-muted text-sm line-through">{formatPrice(product.price)}</span>}
+                        <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-4 flex gap-4 transition-all group-hover:border-primary/30">
+                          <div className="w-24 h-24 rounded-xl bg-[#f3f4f6] flex items-center justify-center flex-shrink-0"><Zap className="w-8 h-8 text-outline-variant" /></div>
+                          <div className="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                              <div className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold font-label border mb-1 ${badge.cls}`}>{badge.label}</div>
+                              <h3 className="font-heading font-semibold text-on-surface group-hover:text-[#0f172a] transition-colors line-clamp-1">{product.name}</h3>
+                              <p className="text-outline text-xs mt-0.5">{product.shopName}</p>
+                            </div>
+                            <div className="mt-1 flex items-center justify-between">
+                              <div className="flex items-baseline gap-2">
+                                <span className="font-bold text-on-surface text-lg">{formatPrice(price)}</span>
+                                {hasDiscount && <span className="text-outline text-sm line-through">{formatPrice(product.price)}</span>}
+                              </div>
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault(); e.stopPropagation();
+                                  addItem({ productId: product.id, name: product.name, price, imageUrl: '', shopId: product.shopId, shopName: product.shopName, slug: product.slug, quantity: 1 });
+                                }}
+                                className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] text-white transition-transform active:scale-95 hover:bg-black"
+                              >
+                                <ShoppingCart className="h-3.5 w-3.5" />
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -221,17 +234,28 @@ function SearchContent() {
 
                   return (
                     <Link key={product.id} href={`/product/${product.slug}`} className="group block">
-                      <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-green-400/10 group-hover:border-green-400/30">
-                        <div className="aspect-square bg-navy-800/50 flex items-center justify-center relative">
-                          <Zap className="w-10 h-10 text-navy-700/40" />
-                          <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-semibold border ${badge.cls}`}>{badge.label}</div>
+                      <div className="bg-white border border-outline-variant/50 overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-[0_4px_12px_rgba(4,22,39,0.02)] group-hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] group-hover:border-primary/30">
+                        <div className="aspect-square bg-[#f3f4f6] flex items-center justify-center relative">
+                          <Zap className="w-10 h-10 text-outline-variant" />
+                          <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-semibold font-label border ${badge.cls}`}>{badge.label}</div>
                         </div>
-                        <div className="p-3">
-                          <p className="text-text-muted text-xs truncate flex items-center gap-1"><Tag className="w-3 h-3" />{product.shopName}</p>
-                          <h3 className="font-heading font-semibold text-text-primary text-sm line-clamp-2 mt-0.5 group-hover:text-green-400 transition-colors">{product.name}</h3>
-                          <div className="mt-1.5 flex items-baseline gap-2">
-                            <span className="font-bold text-green-400">{formatPrice(price)}</span>
-                            {hasDiscount && <span className="text-text-muted text-xs line-through">{formatPrice(product.price)}</span>}
+                        <div className="p-3 flex flex-col flex-1">
+                          <p className="text-outline text-xs truncate flex items-center gap-1"><Tag className="w-3 h-3" />{product.shopName}</p>
+                          <h3 className="font-heading font-semibold text-on-surface text-sm line-clamp-2 mt-0.5 group-hover:text-[#0f172a] transition-colors mb-3">{product.name}</h3>
+                          <div className="mt-auto flex items-center justify-between">
+                            <div className="flex items-baseline gap-2">
+                              <span className="font-bold text-on-surface">{formatPrice(price)}</span>
+                              {hasDiscount && <span className="text-outline text-xs line-through hidden sm:inline">{formatPrice(product.price)}</span>}
+                            </div>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault(); e.stopPropagation();
+                                addItem({ productId: product.id, name: product.name, price, imageUrl: '', shopId: product.shopId, shopName: product.shopName, slug: product.slug, quantity: 1 });
+                              }}
+                              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] text-white transition-transform active:scale-95 hover:bg-black"
+                            >
+                              <ShoppingCart className="h-3.5 w-3.5" />
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -249,7 +273,7 @@ function SearchContent() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-navy-950 flex items-center justify-center"><div className="w-8 h-8 border-2 border-green-400 border-t-transparent rounded-full animate-spin" /></div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#fafafa] flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
       <SearchContent />
     </Suspense>
   );

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Product Detail - FarmCenter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "primary": "#041627",
+                        "surface-dim": "#cbdbf5",
+                        "tertiary-container": "#38260b",
+                        "background": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "outline": "#74777d",
+                        "surface-tint": "#4f6073",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#feddb5",
+                        "surface-container": "#e5eeff",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed-variant": "#38485a",
+                        "secondary": "#006875",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed": "#9cf0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00616d",
+                        "tertiary": "#211200",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-tertiary-container": "#a88c69",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#e1c29b",
+                        "on-tertiary-fixed": "#281802",
+                        "secondary-container": "#00e3fd",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#44474c",
+                        "surface-container-low": "#eff4ff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#0b1c30",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-fixed": "#d2e4fb",
+                        "inverse-primary": "#b7c8de",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-secondary-fixed": "#001f24",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a2b3c",
+                        "on-primary-container": "#8192a7",
+                        "on-tertiary-fixed-variant": "#584326",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#b7c8de",
+                        "outline-variant": "#c4c6cd",
+                        "on-secondary-fixed-variant": "#004f58"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "xs": "8px",
+                        "margin-desktop": "64px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "xl": "80px",
+                        "base": "4px",
+                        "lg": "48px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 6px -1px rgba(26, 43, 60, 0.05), 0 2px 4px -1px rgba(26, 43, 60, 0.03);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="antialiased font-body-md pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-gradient-to-b from-black/50 to-transparent">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 w-full">
+<button aria-label="Go Back" class="text-white hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-size: 28px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">arrow_back</span>
+</button>
+<button aria-label="Notifications" class="text-white hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-size: 28px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto md:px-margin-desktop md:mt-lg">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-0 md:gap-gutter">
+<!-- Gallery & Video Section (Left Column on Desktop) -->
+<div class="col-span-1 md:col-span-7 flex flex-col">
+<!-- Main Image/Video Stage -->
+<div class="relative w-full h-[60vh] md:h-auto md:aspect-[4/3] md:rounded-xl overflow-hidden bg-surface-container-low group">
+<img alt="Agricultural Drone Main View" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A pristine, high-resolution product photography shot of an advanced agricultural drone hovering slightly above a clean, modern white background. The drone is sleek, predominantly matte black with subtle cyan accents, featuring multiple rotors and a prominent sensor suite underneath. The lighting is studio-quality, casting soft, diffused shadows that emphasize the high-tech corporate modern aesthetic. The emotional tone is efficient, reliable, and cutting-edge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeV1tWfcfIDDAh4rfyh0nCPlI4YJcm_8zpibi-4_EGc_w-gBUrpFOrdNNwtPZVMfv8KINbHrYmw1u1pVLtu26XRK42GeTmrQoE5L_z0U9rBzf7v34NJvYduhFMlvmCStB3WH-5KxJuFer7Kv9MAJGPBV5afO4UfkuMNKY6H8OjJsvyFCMKtT2hNC_Jux2Dob3PXN5JeyZormQuw6qlc9uaxOmz9IO5fvLlE0H-lZEVd5lsakzun_aV"/>
+<!-- Floating Tech Badge -->
+<div class="absolute bottom-10 left-margin-mobile md:left-4 bg-primary-container/80 backdrop-blur-md text-on-primary rounded-full px-4 py-2 font-label-sm text-label-sm shadow-[0_4px_12px_rgba(26,43,60,0.2)]">
+                        New Arrival
+                    </div>
+<!-- Video Play Overlay (Minimalist) -->
+<button class="absolute inset-0 flex items-center justify-center bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-16 h-16 bg-white/20 backdrop-blur-lg rounded-full flex items-center justify-center border border-white/40 shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-white text-3xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</button>
+<!-- Pagination Dots Overlay -->
+<div class="absolute bottom-4 left-0 w-full flex justify-center gap-2">
+<div class="w-2 h-2 rounded-full bg-white shadow-sm"></div>
+<div class="w-2 h-2 rounded-full bg-white/50 shadow-sm"></div>
+<div class="w-2 h-2 rounded-full bg-white/50 shadow-sm"></div>
+<div class="w-2 h-2 rounded-full bg-white/50 shadow-sm"></div>
+</div>
+</div>
+</div>
+<!-- Product Details Section (Right Column on Desktop) -->
+<div class="col-span-1 md:col-span-5 flex flex-col gap-md px-margin-mobile md:px-0 mt-6 md:mt-0">
+<!-- Title & Price Block -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">AgriFly Pro X1 Sensor Drone</h1>
+<button aria-label="Share via Direct Link" class="p-2 rounded-full hover:bg-surface-variant transition-colors text-outline">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+<div class="flex items-center gap-sm mt-2">
+<span class="font-headline-md text-headline-md text-primary">$1,299.00</span>
+<span class="font-body-md text-body-md text-outline line-through">$1,499.00</span>
+<span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2 py-1 rounded-md">Save 13%</span>
+</div>
+<div class="flex items-center gap-xs mt-1">
+<div class="flex text-secondary-fixed-dim">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined">star_half</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">4.8 (124 reviews)</span>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Seller Info -->
+<div class="flex items-center justify-between glass-card p-sm rounded-xl">
+<div class="flex items-center gap-sm">
+<div class="w-12 h-12 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="Seller Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of an agricultural tech specialist smiling slightly. They are wearing a neat dark blue polo shirt. The background is a clean, modern white studio setting, conveying trust and expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiWHAnHLBDrF9Hc78o-aQizvUtkQX_t_J9rQuo-q-8EYTTZ8jtr8xlOKLaPNQFyOUYNxE0y4ktfGxGyNvowfINsS_HDkAftgLKCId5DM97vmWrW5Cb2pGJC5OyXt3wMFEO4IEu_mKKAkCuLYrDYSjLl4sE7tqbdeO20s0e2pepx_jWhjJNg57QFCErn384mBwtzUT-Rn3QSvqZ2DJ7bD-GOkLYbnZ_NIUIkAzN4VWsPCjtxjzyUdYv"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Sold by</span>
+<a class="font-headline-md text-headline-md text-primary hover:underline" href="#" style="font-size: 18px; line-height: 24px;">TechFarm Solutions</a>
+</div>
+</div>
+<button class="font-label-md text-label-md text-primary border border-outline-variant hover:bg-surface-variant px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                        Contact Seller
+                    </button>
+</div>
+<!-- Description (Storytelling Approach) -->
+<div class="flex flex-col gap-sm">
+<p class="font-body-lg text-body-lg text-primary leading-relaxed">
+                        The AgriFly Pro X1 isn't just a drone; it's the definitive aerial sensor platform for precision agriculture. Equipped with a state-of-the-art multispectral camera suite and real-time data processing capabilities, it delivers unparalleled crop health analytics directly to your FarmCenter dashboard. 
+                    </p>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Built for true resilience with a carbon-fiber reinforced frame, it operates flawlessly even in the most challenging weather conditions, ensuring you never miss critical field data when it matters most.
+                    </p>
+</div>
+<!-- Technical Specs Toggle -->
+<div class="border-t border-b border-outline-variant py-2">
+<button class="w-full py-3 flex justify-between items-center group">
+<span class="font-headline-md text-primary text-[18px]">Technical Specifications</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">expand_more</span>
+</button>
+<!-- Hidden Specs Grid (Bento style) -->
+<div class="hidden grid-cols-2 gap-sm mt-2 mb-4">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-sm flex flex-col gap-1 shadow-[0_4px_6px_-1px_rgba(26,43,60,0.05)]">
+<span class="material-symbols-outlined text-secondary">battery_charging_full</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Flight Time</span>
+<span class="font-headline-md text-headline-md text-primary" style="font-size: 16px; line-height: 20px;">45 Minutes</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-sm flex flex-col gap-1 shadow-[0_4px_6px_-1px_rgba(26,43,60,0.05)]">
+<span class="material-symbols-outlined text-secondary">radar</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Sensor Range</span>
+<span class="font-headline-md text-headline-md text-primary" style="font-size: 16px; line-height: 20px;">5km Radius</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-sm flex flex-col gap-1 shadow-[0_4px_6px_-1px_rgba(26,43,60,0.05)]">
+<span class="material-symbols-outlined text-secondary">camera</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Camera</span>
+<span class="font-headline-md text-headline-md text-primary" style="font-size: 16px; line-height: 20px;">4K Multispectral</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-sm flex flex-col gap-1 shadow-[0_4px_6px_-1px_rgba(26,43,60,0.05)]">
+<span class="material-symbols-outlined text-secondary">shield</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Warranty</span>
+<span class="font-headline-md text-headline-md text-primary" style="font-size: 16px; line-height: 20px;">24 Months</span>
+</div>
+</div>
+</div>
+<!-- Actions (Sticky on Mobile, normal on desktop) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant p-4 z-40 flex gap-4 md:relative md:border-none md:bg-transparent md:p-0 md:mt-4 shadow-[0_-12px_24px_rgba(26,43,60,0.08)] md:shadow-none">
+<button class="flex-1 bg-surface-container-low border border-primary-container text-primary font-label-md text-label-md rounded-lg py-3 hover:bg-surface-variant transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                        Add to Cart
+                    </button>
+<button class="flex-1 bg-[#00E5FF] text-primary-container font-label-md text-label-md font-bold rounded-lg py-3 hover:opacity-90 transition-opacity shadow-[0_4px_12px_rgba(0,229,255,0.3)]">
+                        Buy Now
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

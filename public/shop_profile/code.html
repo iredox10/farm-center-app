@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shop Profile - FarmCenter</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600&amp;family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "primary": "#041627",
+                        "surface-dim": "#cbdbf5",
+                        "tertiary-container": "#38260b",
+                        "background": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "outline": "#74777d",
+                        "surface-tint": "#4f6073",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-fixed": "#feddb5",
+                        "surface-container": "#e5eeff",
+                        "surface-variant": "#d3e4fe",
+                        "on-primary-fixed-variant": "#38485a",
+                        "secondary": "#006875",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "secondary-fixed": "#9cf0ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#00616d",
+                        "tertiary": "#211200",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#0b1d2d",
+                        "on-tertiary-container": "#a88c69",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#e1c29b",
+                        "on-tertiary-fixed": "#281802",
+                        "secondary-container": "#00e3fd",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#44474c",
+                        "surface-container-low": "#eff4ff",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#0b1c30",
+                        "surface-container-highest": "#d3e4fe",
+                        "primary-fixed": "#d2e4fb",
+                        "inverse-primary": "#b7c8de",
+                        "secondary-fixed-dim": "#00daf3",
+                        "on-secondary-fixed": "#001f24",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a2b3c",
+                        "on-primary-container": "#8192a7",
+                        "on-tertiary-fixed-variant": "#584326",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary-fixed-dim": "#b7c8de",
+                        "outline-variant": "#c4c6cd",
+                        "on-secondary-fixed-variant": "#004f58"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "20px",
+                        "xs": "8px",
+                        "margin-desktop": "64px",
+                        "md": "24px",
+                        "sm": "16px",
+                        "xl": "80px",
+                        "base": "4px",
+                        "lg": "48px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased pt-16 pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-highest dark:bg-primary-container text-primary dark:text-primary-fixed shadow-[0_20px_20px_-5px_rgba(26,43,60,0.1)] flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 cursor-pointer" data-icon="storefront">storefront</span>
+<span class="font-headline-md text-headline-md font-bold">FarmCenter</span>
+</div>
+<div class="hidden md:flex items-center gap-md font-label-md text-label-md">
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity" href="#">Home</a>
+<a class="text-secondary dark:text-secondary-fixed hover:opacity-80 transition-opacity" href="#">Search</a>
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity" href="#">Cart</a>
+<a class="text-on-surface-variant hover:opacity-80 transition-opacity" href="#">Profile</a>
+</div>
+<span class="material-symbols-outlined hover:opacity-80 transition-opacity active:scale-95 transition-transform duration-200 cursor-pointer" data-icon="notifications">notifications</span>
+</header>
+<main class="w-full">
+<!-- Shop Banner & Header -->
+<section class="relative w-full h-64 md:h-80 bg-surface-variant">
+<div class="absolute inset-0 w-full h-full bg-cover bg-center" data-alt="A sleek, high-tech banner image for an electronics shop. The scene features subtly glowing circuit board patterns and premium gadgets like laptops and smartphones on a glossy black surface with vibrant cyan and deep blue studio lighting. The aesthetic is corporate modern and luxurious, conveying trust and cutting-edge technology." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEDlsNHWwYmZPpqea9wAZWNRZit68IJjUQCNSRGg523NW80PFcC1Gv9EyR0PbQYkBDkfo3ArWA2Bm0mEuwhDIRgmI91JefLkcFWhxvhznabDSK8yyZkqxsciq42lJgJGFecWNXHFpiTmkGlB6HNOQzr62DYXG76GKCbRQIIbXtITbLaBgamat45gjhAoFA1ELg4jy88e8Zielypn_CSrPiLQ2m4R1twogbWdlM9S4_MUKSZjvWEZ65')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full px-margin-mobile md:px-margin-desktop translate-y-1/2 flex items-end justify-between">
+<div class="flex items-end gap-md">
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-xl bg-surface p-1 shadow-[0_4px_12px_rgba(26,43,60,0.1)] flex-shrink-0 z-10">
+<img class="w-full h-full object-cover rounded-lg" data-alt="A clean, modern logo for an electronics retailer named TechHub. The logo features a stylized, glowing blue 'T' integrated into a microchip design on a pristine white background. The overall style is crisp, professional, and tech-forward." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8PVDhai-B9ub421sk6vo38p8YXxzhnAfO3Xge97vR7mswjeAi4XY1Yjftwwrs1qDBiaETYfHgkWp_NZ9pBFvkRYOOohQA8LbPmglTV8RsTlr7Y_UBaSUWukecXSmpMme3ypC9EY_mZz1ri1HSwQ66ILTwmWs3BMKHt6YG2X5C1GjeOUUNA_hoWdgrgfRptqfNQk08ikJifIdm7L6G2ysvSTn0UYI7Oqmz55c6NjIHVFaXs_zKl60E"/>
+</div>
+<div class="mb-2 hidden md:block">
+<h1 class="font-headline-lg text-headline-lg text-on-primary">TechHub Electronics</h1>
+<p class="font-body-md text-body-md text-on-primary-container flex items-center gap-xs mt-1">
+<span class="material-symbols-outlined text-sm">verified</span> Verified Seller
+                        </p>
+</div>
+</div>
+<button class="mb-2 md:mb-6 bg-surface text-primary px-sm py-xs rounded-full shadow-[0_4px_12px_rgba(26,43,60,0.1)] hover:bg-surface-container-high transition-colors flex items-center gap-xs font-label-md text-label-md z-10">
+<span class="material-symbols-outlined text-sm">share</span> Share Shop
+                </button>
+</div>
+</section>
+<!-- Mobile Shop Info (shows below banner on small screens) -->
+<div class="md:hidden px-margin-mobile mt-16 mb-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-background">TechHub Electronics</h1>
+<p class="font-body-md text-body-md text-primary flex items-center gap-xs mt-1">
+<span class="material-symbols-outlined text-sm">verified</span> Verified Seller
+            </p>
+</div>
+<div class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop mt-20 md:mt-16 pb-lg flex flex-col lg:flex-row gap-lg">
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col gap-lg">
+<!-- Category: Latest iPhones -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-md text-headline-md text-on-background">Latest iPhones</h2>
+<button class="text-secondary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-gutter">
+<!-- Product Card 1 -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] hover:shadow-[0_12px_24px_rgba(26,43,60,0.08)] transition-all group overflow-hidden cursor-pointer flex flex-col">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden p-4 flex items-center justify-center">
+<img class="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300" data-alt="A pristine new iPhone 15 Pro Max displayed in Titanium Blue. The phone is angled slightly to show the sleek metallic edges and triple camera setup. Studio lighting highlights the premium finish against a light, clean background. High-resolution, corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCASe3wWlX_clDJuPwLa8u7pWTYejSN9NVxG5eNG2kBEFbbRJHrwfjdJXudEgLoHpSmUnAvp9O0ImOTEMgbJ8W_xDWx7F-lYMap35eFTYPrcRUxzLtvLLfpIKW1jC0I6orn-ieICBrjx0ZdI_eJjAuBU3gDq9nxyiQNCkEJ5GeuSKqZpd4vxwpI_MPGBL6LkMYMFos9edelswAaY7GtVCYb-MN1Vl-0_pzZYjehgpjeKlBtwk6m8zmo"/>
+<span class="absolute top-2 left-2 bg-primary-container text-secondary-container px-2 py-1 rounded font-label-sm text-label-sm">New</span>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-label-md text-label-md text-on-background line-clamp-2 mb-1">iPhone 15 Pro Max - 256GB, Titanium Blue</h3>
+<div class="mt-auto pt-2">
+<p class="font-headline-md text-headline-md text-primary">₦1,450,000</p>
+<button class="mt-3 w-full bg-secondary-container text-on-secondary-container py-2 rounded-lg font-label-md text-label-md hover:bg-[#00c9e0] transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] hover:shadow-[0_12px_24px_rgba(26,43,60,0.08)] transition-all group overflow-hidden cursor-pointer flex flex-col">
+<div class="relative w-full aspect-square bg-surface-container-low overflow-hidden p-4 flex items-center justify-center">
+<img class="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300" data-alt="An iPhone 14 Pro displayed in Deep Purple. The phone is shown face up, highlighting the Dynamic Island and vibrant OLED screen. The lighting is crisp and modern, reflecting a premium electronic retail environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXgmiGcDfZxzxpiLMUbBZqae-D2HNo-MggvVaMi0x2zAhwE9zS0shufV9JJm9CpGiF1PRPJ7APGWnvF_nZ8r9ACiYRk0YCGGjrrbZikoCiuvE6pQD3FtpjgMAWXDQayDddNZFE363AbJwnYMAO9H4msXhRp4TqJ7on2FVLQsKq4YCKRW_mZCfesIbvT8BX6CLvNYZO36dIkWPpXtr36yimzJ2o5DPvZiOSpHujHHUHy81sulUiNiB8"/>
+</div>
+<div class="p-4 flex flex-col flex-1">
+<h3 class="font-label-md text-label-md text-on-background line-clamp-2 mb-1">iPhone 14 Pro - 128GB, Deep Purple</h3>
+<div class="mt-auto pt-2">
+<p class="font-headline-md text-headline-md text-primary">₦1,100,000</p>
+<button class="mt-3 w-full bg-secondary-container text-on-secondary-container py-2 rounded-lg font-label-md text-label-md hover:bg-[#00c9e0] transition-colors">Add to Cart</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Category: Gaming Laptops -->
+<section>
+<div class="flex justify-between items-end mb-md">
+<h2 class="font-headline-md text-headline-md text-on-background">Gaming Laptops</h2>
+<button class="text-secondary font-label-md text-label-md hover:underline">View All</button>
+</div>
+<!-- Bento Grid Layout for Laptops -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter auto-rows-[250px]">
+<!-- Featured Laptop (Large Card) -->
+<div class="md:col-span-2 md:row-span-2 bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] overflow-hidden relative group cursor-pointer">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-end Alienware gaming laptop opened to display a vibrant, glowing RGB keyboard and a high-resolution space wallpaper on the screen. The laptop sits on a sleek, dark desk in a modern studio setting with subtle blue ambient lighting. Corporate modern tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNxC2cn0V6MepKsrRYrZEE7jR6KxbFHrt-wIZu2PcumMJoKZdDXd08Ria9brYEC-5IfWbsp9SXXvY-8rtZ-t2dHW1FGug2l3A5ZjRnbnhBVDLCFyn4OC7isw4A9yNzspvYCYWPff0LVYXeojreDbG0P8SZ-8bHDLnc70KV8Op_IkNk4tW82RcL1VHiZfOqOLIjuzaFkMQacBL64c9J0B1v9XiJPm1OC8jcS7JhwVEI87EP8iRcS9Bo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+<div class="absolute bottom-0 left-0 w-full p-md">
+<span class="bg-primary-container text-secondary-container px-2 py-1 rounded font-label-sm text-label-sm mb-2 inline-block">RTX 4080</span>
+<h3 class="font-headline-lg text-headline-lg text-on-primary mb-1">Alienware m18 R2</h3>
+<p class="font-body-md text-body-md text-surface-dim mb-4 line-clamp-1">Intel Core i9, 32GB RAM, 2TB SSD, RTX 4080</p>
+<div class="flex items-center justify-between">
+<p class="font-headline-md text-headline-md text-secondary-fixed">₦3,850,000</p>
+<button class="bg-secondary-container text-on-secondary-container px-sm py-xs rounded-lg font-label-md text-label-md hover:bg-[#00c9e0] transition-colors">Buy Now</button>
+</div>
+</div>
+</div>
+<!-- Smaller Laptop Cards -->
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] hover:shadow-[0_12px_24px_rgba(26,43,60,0.08)] transition-all group overflow-hidden cursor-pointer flex flex-col">
+<div class="relative w-full h-32 bg-surface-container-low overflow-hidden p-2 flex items-center justify-center">
+<img class="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300" data-alt="An ASUS ROG Zephyrus G14 laptop shown partially closed, emphasizing its thin profile and the anime matrix LED display on the lid. Shot against a clean, light grey background with professional tech lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNXc2Ke68Hs-jQLAZ6xIp7I0ZRir2P72EfxU_tgGiYA5Vz5DN3Su3s1LOeD3ew25ff15uwiEZzQG_UkHo5QkLbNgtEHnDRAeXEmnwH780s3dXC2UYI6dPqaFKFv3PFMlh92M8QcVsE4kU_8IEo1RVPlG_9NTefymEHMUE4q_9mOOeXfGRj_PtmTFzM0sM2MB7Cj7vEFRTO5hzBwW81WK2TD11gmWcCkuGjjmfLtqCYsaeQs6fs8Zuy"/>
+</div>
+<div class="p-3 flex flex-col flex-1 bg-surface">
+<h3 class="font-label-md text-label-md text-on-background line-clamp-2 mb-1">ASUS ROG Zephyrus G14</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-1 mb-2">Ryzen 9, RTX 4060, 16GB</p>
+<div class="mt-auto">
+<p class="font-headline-md text-headline-md text-primary text-lg">₦1,650,000</p>
+</div>
+</div>
+</div>
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] hover:shadow-[0_12px_24px_rgba(26,43,60,0.08)] transition-all group overflow-hidden cursor-pointer flex flex-col">
+<div class="relative w-full h-32 bg-surface-container-low overflow-hidden p-2 flex items-center justify-center">
+<img class="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300" data-alt="A Lenovo Legion Pro 5i gaming laptop open, showing a fast refresh rate screen and an RGB keyboard. It is positioned on a modern, minimalist white desk surface. The aesthetic is clean and performance-focused." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWQe5sWrT7-USv1ha3wAFKHiKsR-Qepii0kJW07CXNHqbEOeF0mfPaZxoFDpRsTBES7omYlM0_-IuZZ91TF0xJXeKIG9GGUMPmSRWy--l7i15BNtNzuJ8VUxZT_9GF1iPJWcoyJvABqT-6sZu_UppTfG3llFrVCExeDgNjIqN8LLLUlLPVd9qeaTS5jFAHCpU339N3wJkRksmtvcXV9ExRf4AeNzMXj_AUj1p1kwXfy7J_vRPmKgkx"/>
+</div>
+<div class="p-3 flex flex-col flex-1 bg-surface">
+<h3 class="font-label-md text-label-md text-on-background line-clamp-2 mb-1">Lenovo Legion Pro 5i</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-clamp-1 mb-2">Intel i7, RTX 4070, 32GB</p>
+<div class="mt-auto">
+<p class="font-headline-md text-headline-md text-primary text-lg">₦1,920,000</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Sidebar / About Section -->
+<aside class="w-full lg:w-80 flex flex-col gap-md">
+<div class="bg-surface rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(26,43,60,0.05)] p-md sticky top-24">
+<h3 class="font-headline-md text-headline-md text-on-background mb-4 border-b border-surface-container-high pb-2">About Shop</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        TechHub Electronics is your premier destination for high-end gadgets, smartphones, and professional computing equipment. We pride ourselves on authentic products and reliable customer service.
+                    </p>
+<div class="flex flex-col gap-sm">
+<div class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary">location_on</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Location</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Shop 42, Block C, Farmcenter Kano</p>
+</div>
+</div>
+<div class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary">schedule</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Working Hours</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Mon - Sat: 9:00 AM - 6:00 PM</p>
+</div>
+</div>
+<div class="flex items-start gap-xs">
+<span class="material-symbols-outlined text-secondary">call</span>
+<div>
+<p class="font-label-md text-label-md text-on-background">Contact</p>
+<p class="font-body-md text-body-md text-on-surface-variant">+234 800 123 4567</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 bg-transparent border border-primary text-primary py-2 rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-sm">chat</span> Message Seller
+                    </button>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface-container-lowest dark:bg-surface-dim fixed bottom-0 w-full z-50 rounded-t-xl border-t border-outline-variant dark:border-outline shadow-[0_-4px_12px_0px_rgba(26,43,60,0.08)] flex justify-around items-center h-16 px-4">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface hover:bg-surface-variant transition-colors active:scale-90 duration-150 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-xl" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 hover:bg-surface-variant transition-colors active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined mb-1 text-xl" data-icon="search" data-weight="fill">search</span>
+<span class="font-label-sm text-label-sm">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface hover:bg-surface-variant transition-colors active:scale-90 duration-150 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-xl" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface hover:bg-surface-variant transition-colors active:scale-90 duration-150 w-full h-full" href="#">
+<span class="material-symbols-outlined mb-1 text-xl" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+</body></html>

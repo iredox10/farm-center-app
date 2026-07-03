@@ -51,48 +51,48 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-12">
+    <div className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-12 bg-[#fafafa] relative overflow-hidden">
       {/* Background effects */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute top-1/3 left-1/3 h-96 w-96 rounded-full bg-green-400/5 blur-[128px]" />
-        <div className="absolute bottom-1/3 right-1/3 h-96 w-96 rounded-full bg-gold-400/5 blur-[128px]" />
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-secondary-container/10 blur-[100px] -translate-x-1/2" />
+        <div className="absolute bottom-1/4 right-1/4 h-[500px] w-[500px] rounded-full bg-primary-container/10 blur-[100px] translate-x-1/2" />
       </div>
 
-      <div className="relative w-full max-w-lg">
+      <div className="relative w-full max-w-lg z-10">
         {/* Progress indicator */}
-        <div className="mb-6 flex items-center justify-center gap-3">
-          <div className="flex items-center gap-2">
+        <div className="mb-8 flex items-center justify-center gap-4">
+          <div className="flex items-center gap-3">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-full font-label text-xs font-bold transition-colors ${
                 step >= 1
-                  ? 'bg-gradient-to-r from-green-500 to-green-400 text-navy-950'
-                  : 'bg-white/10 text-text-muted'
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'bg-surface-container text-on-surface-variant'
               }`}
             >
               {step > 1 ? <Check className="h-4 w-4" /> : '1'}
             </div>
             <span
-              className={`text-sm font-medium ${
-                step >= 1 ? 'text-text-primary' : 'text-text-muted'
+              className={`font-label text-sm font-bold ${
+                step >= 1 ? 'text-primary' : 'text-on-surface-variant'
               }`}
             >
               Account Type
             </span>
           </div>
-          <div className="h-px w-8 bg-white/10" />
-          <div className="flex items-center gap-2">
+          <div className="h-px w-10 bg-outline-variant/50" />
+          <div className="flex items-center gap-3">
             <div
-              className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-full font-label text-xs font-bold transition-colors ${
                 step >= 2
-                  ? 'bg-gradient-to-r from-green-500 to-green-400 text-navy-950'
-                  : 'bg-white/10 text-text-muted'
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'bg-surface-container text-on-surface-variant'
               }`}
             >
               2
             </div>
             <span
-              className={`text-sm font-medium ${
-                step >= 2 ? 'text-text-primary' : 'text-text-muted'
+              className={`font-label text-sm font-bold ${
+                step >= 2 ? 'text-primary' : 'text-on-surface-variant'
               }`}
             >
               Details
@@ -101,17 +101,17 @@ export default function RegisterPage() {
         </div>
 
         {/* Card */}
-        <div className="rounded-3xl border border-white/10 bg-navy-900/60 p-8 backdrop-blur-2xl shadow-2xl">
+        <div className="rounded-[2rem] border border-outline-variant/50 bg-white p-8 shadow-[0_4px_12px_rgba(4,22,39,0.02)]">
           {/* Logo */}
-          <div className="mb-8 flex flex-col items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-400 to-green-600 shadow-lg shadow-green-400/20">
-              <ShoppingBag className="h-7 w-7 text-navy-950" />
+          <div className="mb-8 flex flex-col items-center gap-4">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/20">
+              <ShoppingBag className="h-8 w-8 text-on-primary" />
             </div>
             <div>
-              <h1 className="text-center font-heading text-2xl font-bold text-text-primary">
+              <h1 className="text-center font-heading text-2xl font-black text-primary tracking-tight">
                 {step === 1 ? 'Create your account' : 'Complete your profile'}
               </h1>
-              <p className="mt-1 text-center text-sm text-text-muted">
+              <p className="mt-1.5 text-center font-body text-sm text-on-surface-variant">
                 {step === 1
                   ? 'Choose how you want to use Farm Center Market'
                   : 'Fill in your details to get started'}
@@ -121,36 +121,36 @@ export default function RegisterPage() {
 
           {/* Step 1: Account type selection */}
           {step === 1 && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {/* Buyer card */}
                 <button
                   onClick={() => setAccountType('buyer')}
-                  className={`group relative flex flex-col items-center gap-3 rounded-2xl border-2 p-6 text-center transition-all duration-300 ${
+                  className={`group relative flex flex-col items-center gap-4 rounded-2xl border-2 p-6 text-center transition-all duration-300 ${
                     accountType === 'buyer'
-                      ? 'border-green-400 bg-green-400/5 shadow-lg shadow-green-400/10'
-                      : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/5'
+                      ? 'border-secondary bg-secondary-container/10 shadow-md shadow-secondary/10'
+                      : 'border-outline-variant/50 bg-white hover:border-outline hover:bg-[#f3f4f6]'
                   }`}
                 >
                   {accountType === 'buyer' && (
-                    <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-green-400">
-                      <Check className="h-3.5 w-3.5 text-navy-950" />
+                    <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-secondary">
+                      <Check className="h-3.5 w-3.5 text-on-secondary" />
                     </div>
                   )}
                   <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-all ${
+                    className={`flex h-16 w-16 items-center justify-center rounded-2xl transition-all ${
                       accountType === 'buyer'
-                        ? 'bg-green-400/20 text-green-400'
-                        : 'bg-white/5 text-text-muted group-hover:bg-white/10 group-hover:text-text-secondary'
+                        ? 'bg-secondary text-on-secondary'
+                        : 'bg-[#fafafa] text-on-surface-variant group-hover:bg-[#f3f4f6] group-hover:text-primary'
                     }`}
                   >
-                    <User className="h-7 w-7" />
+                    <User className="h-8 w-8" />
                   </div>
                   <div>
-                    <p className="font-heading text-sm font-bold text-text-primary">
+                    <p className="font-heading text-base font-bold text-on-surface">
                       I want to Buy
                     </p>
-                    <p className="mt-1 text-xs text-text-muted">
+                    <p className="mt-1.5 font-body text-xs text-on-surface-variant">
                       Browse and purchase electronics from trusted sellers
                     </p>
                   </div>
@@ -159,31 +159,31 @@ export default function RegisterPage() {
                 {/* Seller card */}
                 <button
                   onClick={() => setAccountType('seller')}
-                  className={`group relative flex flex-col items-center gap-3 rounded-2xl border-2 p-6 text-center transition-all duration-300 ${
+                  className={`group relative flex flex-col items-center gap-4 rounded-2xl border-2 p-6 text-center transition-all duration-300 ${
                     accountType === 'seller'
-                      ? 'border-green-400 bg-green-400/5 shadow-lg shadow-green-400/10'
-                      : 'border-white/10 bg-white/[0.02] hover:border-white/20 hover:bg-white/5'
+                      ? 'border-secondary bg-secondary-container/10 shadow-md shadow-secondary/10'
+                      : 'border-outline-variant/50 bg-white hover:border-outline hover:bg-[#f3f4f6]'
                   }`}
                 >
                   {accountType === 'seller' && (
-                    <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-green-400">
-                      <Check className="h-3.5 w-3.5 text-navy-950" />
+                    <div className="absolute top-3 right-3 flex h-6 w-6 items-center justify-center rounded-full bg-secondary">
+                      <Check className="h-3.5 w-3.5 text-on-secondary" />
                     </div>
                   )}
                   <div
-                    className={`flex h-14 w-14 items-center justify-center rounded-2xl transition-all ${
+                    className={`flex h-16 w-16 items-center justify-center rounded-2xl transition-all ${
                       accountType === 'seller'
-                        ? 'bg-green-400/20 text-green-400'
-                        : 'bg-white/5 text-text-muted group-hover:bg-white/10 group-hover:text-text-secondary'
+                        ? 'bg-secondary text-on-secondary'
+                        : 'bg-surface-container text-on-surface-variant group-hover:bg-surface-container-high group-hover:text-primary'
                     }`}
                   >
-                    <Store className="h-7 w-7" />
+                    <Store className="h-8 w-8" />
                   </div>
                   <div>
-                    <p className="font-heading text-sm font-bold text-text-primary">
+                    <p className="font-heading text-base font-bold text-on-surface">
                       I want to Sell
                     </p>
-                    <p className="mt-1 text-xs text-text-muted">
+                    <p className="mt-1.5 font-body text-xs text-on-surface-variant">
                       Open your shop and reach thousands of buyers in Kano
                     </p>
                   </div>
@@ -193,10 +193,10 @@ export default function RegisterPage() {
               <button
                 onClick={() => accountType && setStep(2)}
                 disabled={!accountType}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-3.5 font-heading text-sm font-bold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/25 active:scale-[0.98] disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 font-label text-base font-bold text-on-primary transition-all shadow-md hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
               >
                 Continue
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-5 w-5" />
               </button>
             </div>
           )}
@@ -205,10 +205,10 @@ export default function RegisterPage() {
           {step === 2 && (
             <form
               onSubmit={handleSubmit(handleRegister)}
-              className="space-y-4"
+              className="space-y-5"
             >
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                   Full Name
                 </label>
                 <input
@@ -217,17 +217,17 @@ export default function RegisterPage() {
                   {...register('fullName', {
                     required: 'Full name is required',
                   })}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                  className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                 />
                 {errors.fullName && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {errors.fullName.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                   Email address
                 </label>
                 <input
@@ -240,21 +240,21 @@ export default function RegisterPage() {
                       message: 'Please enter a valid email',
                     },
                   })}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                  className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                 />
                 {errors.email && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {errors.email.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                   Phone number
                 </label>
                 <div className="flex gap-2">
-                  <div className="flex items-center rounded-xl border border-white/10 bg-white/5 px-3.5 text-sm text-text-muted">
+                  <div className="flex items-center rounded-xl border border-outline-variant bg-surface-container px-4 font-label text-sm font-semibold text-on-surface-variant">
                     +234
                   </div>
                   <input
@@ -267,11 +267,11 @@ export default function RegisterPage() {
                         message: 'Enter a valid phone number',
                       },
                     })}
-                    className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="flex-1 rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                 </div>
                 {errors.phone && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {errors.phone.message}
                   </p>
                 )}
@@ -279,7 +279,7 @@ export default function RegisterPage() {
 
               {accountType === 'seller' && (
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                  <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                     Shop Name
                   </label>
                   <input
@@ -291,10 +291,10 @@ export default function RegisterPage() {
                           ? 'Shop name is required'
                           : false,
                     })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                   {errors.shopName && (
-                    <p className="mt-1.5 text-xs text-red-400">
+                    <p className="mt-2 font-label text-xs font-medium text-error">
                       {errors.shopName.message}
                     </p>
                   )}
@@ -302,7 +302,7 @@ export default function RegisterPage() {
               )}
 
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                   Password
                 </label>
                 <div className="relative">
@@ -316,12 +316,12 @@ export default function RegisterPage() {
                         message: 'Password must be at least 8 characters',
                       },
                     })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-12 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 pr-12 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-outline transition-colors hover:text-on-surface"
                   >
                     {showPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -331,14 +331,14 @@ export default function RegisterPage() {
                   </button>
                 </div>
                 {errors.password && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {errors.password.message}
                   </p>
                 )}
               </div>
 
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-text-secondary">
+                <label className="mb-2 block font-label text-sm font-semibold text-on-surface">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -350,12 +350,12 @@ export default function RegisterPage() {
                       validate: (value) =>
                         value === password || 'Passwords do not match',
                     })}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-12 text-sm text-text-primary placeholder:text-text-muted transition-all focus:border-green-400/50 focus:outline-none focus:ring-1 focus:ring-green-400/30"
+                    className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-3.5 pr-12 text-sm font-body text-on-surface placeholder:text-outline transition-all focus:border-secondary focus:outline-none focus:ring-1 focus:ring-secondary/30"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-outline transition-colors hover:text-on-surface"
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -365,64 +365,64 @@ export default function RegisterPage() {
                   </button>
                 </div>
                 {errors.confirmPassword && (
-                  <p className="mt-1.5 text-xs text-red-400">
+                  <p className="mt-2 font-label text-xs font-medium text-error">
                     {errors.confirmPassword.message}
                   </p>
                 )}
               </div>
 
               {/* Terms */}
-              <label className="flex items-start gap-3 cursor-pointer">
+              <label className="flex items-start gap-3 cursor-pointer pt-2">
                 <input
                   type="checkbox"
                   {...register('agreeTerms', {
                     required: 'You must agree to the terms',
                   })}
-                  className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-green-400 focus:ring-green-400/30 accent-green-400"
+                  className="mt-1 h-4 w-4 rounded border-outline-variant bg-white text-secondary focus:ring-secondary/30 accent-secondary"
                 />
-                <span className="text-sm text-text-muted">
+                <span className="font-body text-sm text-on-surface-variant leading-relaxed">
                   I agree to the{' '}
                   <Link
                     href="/terms"
-                    className="text-green-400 hover:text-green-300"
+                    className="font-label font-bold text-secondary transition-colors hover:text-secondary-container hover:underline"
                   >
                     Terms of Service
                   </Link>{' '}
                   and{' '}
                   <Link
                     href="/privacy"
-                    className="text-green-400 hover:text-green-300"
+                    className="font-label font-bold text-secondary transition-colors hover:text-secondary-container hover:underline"
                   >
                     Privacy Policy
                   </Link>
                 </span>
               </label>
               {errors.agreeTerms && (
-                <p className="text-xs text-red-400">
+                <p className="font-label text-xs font-medium text-error">
                   {errors.agreeTerms.message}
                 </p>
               )}
 
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-4 pt-4">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 px-5 py-3.5 text-sm font-medium text-text-secondary transition-all hover:bg-white/5"
+                  className="flex items-center justify-center gap-2 rounded-xl border border-outline-variant px-6 py-4 font-label text-base font-bold text-on-surface-variant transition-all hover:bg-surface-container hover:text-on-surface"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-5 w-5" />
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-6 py-3.5 font-heading text-sm font-bold text-navy-950 transition-all hover:shadow-lg hover:shadow-green-400/25 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 font-label text-base font-bold text-on-primary transition-all shadow-md hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
                 >
                   {isLoading ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
                   ) : (
                     <>
                       Create Account
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="h-5 w-5" />
                     </>
                   )}
                 </button>
@@ -431,12 +431,12 @@ export default function RegisterPage() {
           )}
 
           {/* Sign in link */}
-          <div className="mt-6 border-t border-white/10 pt-6">
-            <p className="text-center text-sm text-text-muted">
+          <div className="mt-8 border-t border-outline-variant/50 pt-8">
+            <p className="text-center font-body text-sm text-on-surface-variant">
               Already have an account?{' '}
               <Link
                 href="/login"
-                className="font-semibold text-green-400 transition-colors hover:text-green-300"
+                className="ml-1 font-label font-bold text-secondary transition-colors hover:text-secondary-container hover:underline"
               >
                 Sign in
               </Link>

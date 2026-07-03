@@ -34,8 +34,8 @@ export default function ShopSettingsPage() {
   const shopUrl = `farmcentermarket.com/shop/${shopSlug}`;
 
   const inputClass =
-    'w-full bg-navy-900/60 border border-white/8 rounded-xl px-4 py-3 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/20 transition-all';
-  const labelClass = 'block text-sm font-medium text-text-secondary mb-2';
+    'w-full bg-white border border-outline-variant/50 rounded-xl px-4 py-3 text-on-surface font-body placeholder:text-on-surface-variant text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all shadow-[0_4px_12px_rgba(4,22,39,0.02)]';
+  const labelClass = 'block text-sm font-label font-medium text-on-surface-variant mb-2';
 
   function handleCopyUrl() {
     navigator.clipboard.writeText(`https://${shopUrl}`);
@@ -53,31 +53,31 @@ export default function ShopSettingsPage() {
     <div className="space-y-6 max-w-4xl">
       {/* Header */}
       <div>
-        <h2 className="font-heading text-2xl font-bold text-text-primary">Shop Settings</h2>
-        <p className="text-sm text-text-secondary mt-1">
+        <h2 className="font-heading text-2xl font-bold text-on-surface">Shop Settings</h2>
+        <p className="font-body text-sm text-on-surface-variant mt-1">
           Manage your shop profile and preferences
         </p>
       </div>
 
       {/* Shop URL Display */}
-      <div className="glass-card p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-green-400/10 flex items-center justify-center">
-            <Globe className="w-5 h-5 text-green-400" />
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <Globe className="w-5 h-5 text-primary" />
           </div>
           <div>
-            <p className="text-xs text-text-muted">Your Shop URL</p>
-            <p className="text-sm font-medium text-text-primary">{shopUrl}</p>
+            <p className="font-label text-xs text-on-surface-variant">Your Shop URL</p>
+            <p className="font-body text-sm font-medium text-on-surface">{shopUrl}</p>
           </div>
         </div>
         <button
           onClick={handleCopyUrl}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/8 text-sm text-text-secondary hover:text-text-primary hover:bg-white/10 transition-all"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-container border border-outline-variant/50 text-sm font-label text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all"
         >
           {copied ? (
             <>
-              <Check className="w-4 h-4 text-green-400" />
-              <span className="text-green-400">Copied!</span>
+              <Check className="w-4 h-4 text-green-600" />
+              <span className="text-green-600">Copied!</span>
             </>
           ) : (
             <>
@@ -90,9 +90,9 @@ export default function ShopSettingsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Shop Info */}
-        <div className="glass-card p-6">
-          <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-            <Store className="w-5 h-5 text-green-400" />
+        <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+          <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+            <Store className="w-5 h-5 text-primary" />
             Shop Information
           </h3>
           <div className="space-y-4">
@@ -171,9 +171,9 @@ export default function ShopSettingsPage() {
 
         <div className="space-y-6">
           {/* Logo & Banner Uploads */}
-          <div className="glass-card p-6">
-            <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-              <Upload className="w-5 h-5 text-green-400" />
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+            <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+              <Upload className="w-5 h-5 text-primary" />
               Branding
             </h3>
             <div className="space-y-5">
@@ -181,19 +181,19 @@ export default function ShopSettingsPage() {
               <div>
                 <p className={labelClass}>Shop Logo</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-full bg-navy-800 border-2 border-dashed border-white/10 flex items-center justify-center overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-                      <span className="text-2xl font-bold text-navy-950">TV</span>
+                  <div className="w-20 h-20 rounded-full bg-surface-container border-2 border-dashed border-outline-variant/50 flex items-center justify-center overflow-hidden">
+                    <div className="w-full h-full bg-primary flex items-center justify-center">
+                      <span className="font-heading text-2xl font-bold text-on-primary">TV</span>
                     </div>
                   </div>
                   <div>
                     <button
                       type="button"
-                      className="px-4 py-2 rounded-xl bg-white/5 border border-white/8 text-sm text-text-secondary hover:text-text-primary hover:bg-white/10 transition-all"
+                      className="px-4 py-2 rounded-xl bg-surface-container border border-outline-variant/50 text-sm font-label font-medium text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-all"
                     >
                       Change Logo
                     </button>
-                    <p className="text-xs text-text-muted mt-1.5">
+                    <p className="font-body text-xs text-on-surface-variant mt-1.5">
                       Recommended: 200×200px, PNG/JPG
                     </p>
                   </div>
@@ -204,12 +204,12 @@ export default function ShopSettingsPage() {
               <div>
                 <p className={labelClass}>Shop Banner</p>
                 <div
-                  className="relative h-32 rounded-xl bg-navy-800 border-2 border-dashed border-white/10 flex items-center justify-center overflow-hidden cursor-pointer hover:border-white/20 transition-colors group"
+                  className="relative h-32 rounded-xl bg-surface-container border-2 border-dashed border-outline-variant/50 flex items-center justify-center overflow-hidden cursor-pointer hover:border-outline-variant transition-colors group"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 via-green-500/5 to-gold-400/10" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10" />
                   <div className="relative text-center">
-                    <Upload className="w-6 h-6 mx-auto mb-2 text-text-muted group-hover:text-text-secondary transition-colors" />
-                    <p className="text-xs text-text-muted group-hover:text-text-secondary transition-colors">
+                    <Upload className="w-6 h-6 mx-auto mb-2 text-on-surface-variant group-hover:text-on-surface transition-colors" />
+                    <p className="font-body text-xs text-on-surface-variant group-hover:text-on-surface transition-colors">
                       Click to upload banner (1200×400px)
                     </p>
                   </div>
@@ -219,17 +219,17 @@ export default function ShopSettingsPage() {
           </div>
 
           {/* Payment Options */}
-          <div className="glass-card p-6">
-            <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-green-400" />
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+            <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-primary" />
               Payment Options
             </h3>
             <div className="space-y-4">
               {/* Pay on Delivery */}
-              <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-white/3 border border-white/6">
+              <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-surface-container border border-outline-variant/50">
                 <div>
-                  <p className="text-sm font-medium text-text-primary">Accept Pay on Delivery</p>
-                  <p className="text-xs text-text-muted mt-0.5">
+                  <p className="font-body text-sm font-medium text-on-surface">Accept Pay on Delivery</p>
+                  <p className="font-body text-xs text-on-surface-variant mt-0.5">
                     Allow customers to pay when they receive their order
                   </p>
                 </div>
@@ -237,12 +237,12 @@ export default function ShopSettingsPage() {
                   onClick={() => setPayOnDelivery(!payOnDelivery)}
                   className={cn(
                     'w-11 h-6 rounded-full transition-colors shrink-0 mt-0.5',
-                    payOnDelivery ? 'bg-green-400' : 'bg-white/20'
+                    payOnDelivery ? 'bg-primary' : 'bg-surface-container-highest'
                   )}
                 >
                   <div
                     className={cn(
-                      'w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
+                      'w-5 h-5 rounded-full bg-white shadow-[0_4px_12px_rgba(4,22,39,0.02)] transition-transform',
                       payOnDelivery ? 'translate-x-5.5' : 'translate-x-0.5'
                     )}
                   />
@@ -250,10 +250,10 @@ export default function ShopSettingsPage() {
               </div>
 
               {/* WhatsApp Orders */}
-              <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-white/3 border border-white/6">
+              <div className="flex items-start justify-between gap-4 p-4 rounded-xl bg-surface-container border border-outline-variant/50">
                 <div>
-                  <p className="text-sm font-medium text-text-primary">Accept WhatsApp Orders</p>
-                  <p className="text-xs text-text-muted mt-0.5">
+                  <p className="font-body text-sm font-medium text-on-surface">Accept WhatsApp Orders</p>
+                  <p className="font-body text-xs text-on-surface-variant mt-0.5">
                     Let customers place orders directly via WhatsApp
                   </p>
                 </div>
@@ -261,12 +261,12 @@ export default function ShopSettingsPage() {
                   onClick={() => setWhatsappOrders(!whatsappOrders)}
                   className={cn(
                     'w-11 h-6 rounded-full transition-colors shrink-0 mt-0.5',
-                    whatsappOrders ? 'bg-green-400' : 'bg-white/20'
+                    whatsappOrders ? 'bg-primary' : 'bg-surface-container-highest'
                   )}
                 >
                   <div
                     className={cn(
-                      'w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
+                      'w-5 h-5 rounded-full bg-white shadow-[0_4px_12px_rgba(4,22,39,0.02)] transition-transform',
                       whatsappOrders ? 'translate-x-5.5' : 'translate-x-0.5'
                     )}
                   />
@@ -282,7 +282,7 @@ export default function ShopSettingsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-green-400 to-green-600 text-navy-950 text-sm font-bold hover:shadow-lg hover:shadow-green-400/25 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+          className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-on-primary text-sm font-label font-bold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="w-4 h-4" />
           {saving ? 'Saving...' : 'Save Changes'}

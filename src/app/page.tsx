@@ -24,6 +24,8 @@ import {
   Gamepad2,
   Watch,
   Camera,
+  SlidersHorizontal,
+  Heart,
 } from 'lucide-react';
 import { useCartStore } from '@/stores/cart';
 import { useRef } from 'react';
@@ -33,84 +35,76 @@ import { useRef } from 'react';
 const mockProducts = [
   {
     id: '1',
-    name: 'iPhone 15 Pro Max 256GB',
-    price: 980000,
+    name: 'Aero Phone 14 Ultra - 256GB...',
+    price: 899000,
     image: null,
     condition: 'new' as const,
-    shop: 'TechHub Electronics',
+    shop: 'TechHaven',
     shopId: 'shop-1',
     rating: 4.8,
+    reviews: 120,
+    badge: 'wishlist',
   },
   {
     id: '2',
-    name: 'Samsung Galaxy S24 Ultra',
-    price: 850000,
+    name: 'ProType Mechanical Keyboard',
+    price: 120000,
     image: null,
     condition: 'new' as const,
-    shop: 'PhoneCity Kano',
+    shop: 'GamerGear',
     shopId: 'shop-2',
-    rating: 4.7,
+    rating: 4.9,
+    reviews: 340,
+    badge: 'bestseller',
   },
   {
     id: '3',
-    name: 'MacBook Air M3 15-inch',
-    price: 1250000,
+    name: 'Lumina Mirrorless Camera Body Only',
+    price: 1050000,
     image: null,
     condition: 'new' as const,
-    shop: 'CompuLand',
+    shop: 'PhotoPro',
     shopId: 'shop-3',
-    rating: 4.9,
+    rating: 4.6,
+    reviews: 85,
+    badge: 'wishlist',
   },
   {
     id: '4',
-    name: 'HP EliteBook 840 G7',
-    price: 320000,
+    name: 'UltraFast Portable SSD 2TB',
+    price: 189000,
     image: null,
-    condition: 'uk-used' as const,
-    shop: 'UK Laptops Hub',
+    condition: 'new' as const,
+    shop: 'DataStore',
     shopId: 'shop-4',
-    rating: 4.5,
-  },
-  {
-    id: '5',
-    name: 'AirPods Pro 2nd Gen',
-    price: 185000,
-    image: null,
-    condition: 'new' as const,
-    shop: 'TechHub Electronics',
-    shopId: 'shop-1',
-    rating: 4.8,
-  },
-  {
-    id: '6',
-    name: 'Anker PowerBank 20000mAh',
-    price: 28000,
-    image: null,
-    condition: 'new' as const,
-    shop: 'Gadget Zone',
-    shopId: 'shop-5',
-    rating: 4.6,
-  },
-  {
-    id: '7',
-    name: 'Google Pixel 8 Pro',
-    price: 620000,
-    image: null,
-    condition: 'uk-used' as const,
-    shop: 'PhoneCity Kano',
-    shopId: 'shop-2',
-    rating: 4.4,
-  },
-  {
-    id: '8',
-    name: 'Dell XPS 13 Plus',
-    price: 750000,
-    image: null,
-    condition: 'new' as const,
-    shop: 'CompuLand',
-    shopId: 'shop-3',
     rating: 4.7,
+    reviews: 210,
+    badge: 'wishlist',
   },
+];
+
+const mockFlashSales = [
+  {
+    id: 'fs-1',
+    name: 'Noise Cancelling Earbuds Pro',
+    price: 139000,
+    discount: '-30%',
+    image: null,
+  },
+  {
+    id: 'fs-2',
+    name: 'SmartWatch Series 5',
+    price: 249000,
+    discount: '-15%',
+    image: null,
+  },
+];
+
+const mobileCategories = [
+  { name: 'All Tech', icon: null, active: true },
+  { name: 'Phones', icon: Smartphone, active: false },
+  { name: 'Laptops', icon: Laptop, active: false },
+  { name: 'Audio', icon: Headphones, active: false },
 ];
 
 const mockCategories = [
@@ -164,14 +158,6 @@ const mockShops = [
   },
 ];
 
-const quickCategories = [
-  { name: 'Phones', icon: Smartphone },
-  { name: 'Laptops', icon: Laptop },
-  { name: 'Accessories', icon: Cable },
-  { name: 'Audio', icon: Headphones },
-  { name: 'Power Banks', icon: Battery },
-];
-
 const howItWorks = [
   {
     step: 1,
@@ -209,7 +195,6 @@ const formatPrice = (price: number) =>
 
 export default function HomePage() {
   const { addItem } = useCartStore();
-  const productsScrollRef = useRef<HTMLDivElement>(null);
   const shopsScrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: 'left' | 'right') => {
@@ -222,169 +207,228 @@ export default function HomePage() {
   };
 
   return (
-    <div className="overflow-hidden">
-      {/* ═══════════ Hero Section ═══════════ */}
-      <section className="relative min-h-[85vh] flex items-center justify-center px-4 py-20 overflow-hidden">
-        {/* Background effects */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-navy-950 via-navy-950 to-navy-900" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-[600px] w-[800px] rounded-full bg-green-400/[0.04] blur-[120px]" />
-          <div className="absolute bottom-0 right-0 h-[400px] w-[600px] rounded-full bg-gold-400/[0.03] blur-[100px]" />
-          {/* Grid pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.02]"
-            style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: '64px 64px',
-            }}
+    <div className="overflow-hidden bg-[#fafafa]">
+      
+      {/* ═══════════ Mobile Search & Categories ═══════════ */}
+      <section className="px-4 pt-4 lg:hidden bg-surface-container-lowest pb-4">
+        {/* Search Bar */}
+        <div className="flex items-center rounded-full border border-outline-variant/50 bg-white p-1 pl-4 shadow-sm">
+          <Search className="h-5 w-5 text-on-surface-variant shrink-0" />
+          <input
+            type="text"
+            placeholder="Search gadgets, phones, laptops..."
+            className="w-full bg-transparent border-none focus:ring-0 font-body text-[15px] text-on-surface placeholder:text-on-surface-variant p-2 outline-none"
           />
-          {/* Floating particles */}
-          <div className="absolute top-1/4 left-1/5 h-2 w-2 rounded-full bg-green-400/30 animate-pulse" />
-          <div className="absolute top-1/3 right-1/4 h-1.5 w-1.5 rounded-full bg-gold-400/40 animate-pulse [animation-delay:1s]" />
-          <div className="absolute bottom-1/3 left-1/3 h-1 w-1 rounded-full bg-green-400/20 animate-pulse [animation-delay:2s]" />
-          <div className="absolute top-2/3 right-1/3 h-2.5 w-2.5 rounded-full bg-gold-400/20 animate-pulse [animation-delay:0.5s]" />
+          <button className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e6f0ff] shrink-0">
+            <SlidersHorizontal className="h-4 w-4 text-primary" />
+          </button>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/5 px-4 py-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-green-400" />
-            <span className="text-xs font-medium text-green-400">
-              Kano&apos;s #1 Electronics Marketplace
-            </span>
-          </div>
+        {/* Category Pills */}
+        <div className="mt-4 flex gap-3 overflow-x-auto scrollbar-hide pb-1">
+          {mobileCategories.map((cat) => (
+            <button
+              key={cat.name}
+              className={`flex shrink-0 items-center gap-2 rounded-full px-4 py-2 font-label text-sm font-medium transition-colors border ${
+                cat.active
+                  ? 'bg-[#1a202c] text-white border-[#1a202c]'
+                  : 'bg-white text-on-surface-variant border-outline-variant hover:border-outline'
+              }`}
+            >
+              {cat.icon && <cat.icon className="h-4 w-4" />}
+              {cat.name}
+            </button>
+          ))}
+        </div>
+      </section>
 
-          {/* Headline */}
-          <h1 className="font-heading text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            <span className="text-text-primary">Your One-Stop</span>
-            <br />
-            <span className="bg-gradient-to-r from-green-400 via-green-300 to-gold-400 bg-clip-text text-transparent">
-              Electronics Market
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-xl text-base text-text-muted sm:text-lg">
-            Discover the best phones, laptops &amp; accessories from
-            Kano&apos;s Farm Center. New and UK-used, all in one place.
-          </p>
-
-          {/* Hero search bar */}
-          <div className="mx-auto mt-8 max-w-lg">
-            <div className="group relative">
-              <Search className="absolute left-5 top-1/2 h-5 w-5 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-green-400" />
-              <input
-                type="text"
-                placeholder="Search phones, laptops, accessories..."
-                className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-14 pr-5 text-base text-text-primary placeholder:text-text-muted backdrop-blur-sm transition-all duration-300 focus:border-green-400/50 focus:bg-white/[0.07] focus:outline-none focus:ring-2 focus:ring-green-400/20 focus:shadow-[0_0_40px_rgba(0,245,160,0.08)]"
-              />
+      {/* ═══════════ Desktop Hero Section ═══════════ */}
+      <section className="hidden lg:flex relative min-h-[500px] items-center justify-center px-4 py-16 overflow-hidden bg-surface-container-lowest border-b border-outline-variant/30">
+        <div className="relative z-10 mx-auto w-full max-w-7xl flex flex-col md:flex-row items-center gap-10">
+          <div className="flex-1 space-y-6">
+             <div className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5 shadow-sm">
+              <Zap className="h-4 w-4 text-secondary fill-secondary" />
+              <span className="text-xs font-label font-bold text-secondary uppercase tracking-wider">
+                Weekend Flash Sale
+              </span>
+            </div>
+            <h1 className="font-heading text-5xl font-black leading-[1.1] tracking-tight lg:text-6xl text-on-surface">
+              Discover Premium <span className="text-primary">Tech Gear</span>
+            </h1>
+            <p className="max-w-lg text-lg text-on-surface-variant font-body">
+              Shop the latest phones, laptops, and accessories with unbeatable prices and fast delivery.
+            </p>
+            <div className="pt-4 flex items-center gap-4">
+              <button className="rounded-full bg-secondary text-on-secondary px-8 py-3.5 font-label font-bold tracking-wide transition-opacity hover:opacity-90 shadow-md">
+                Shop Flash Sale
+              </button>
+              <button className="rounded-full bg-surface-container text-on-surface px-8 py-3.5 font-label font-bold tracking-wide transition-colors hover:bg-surface-container-high border border-outline-variant shadow-sm">
+                View Categories
+              </button>
             </div>
           </div>
-
-          {/* Quick category pills */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-            {quickCategories.map((cat) => (
-              <Link
-                key={cat.name}
-                href={`/categories/${cat.name.toLowerCase().replace(' ', '-')}`}
-                className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-text-muted transition-all duration-300 hover:border-green-400/30 hover:bg-green-400/5 hover:text-green-400"
-              >
-                <cat.icon className="h-3.5 w-3.5 transition-colors group-hover:text-green-400" />
-                {cat.name}
-              </Link>
-            ))}
+          <div className="flex-1 w-full relative">
+            <div className="aspect-[4/3] rounded-3xl bg-surface-container-low border border-outline-variant overflow-hidden relative shadow-lg">
+              {/* Mock desktop hero image placeholder */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-surface-container-low to-surface-container flex items-center justify-center">
+                <Laptop className="h-32 w-32 text-outline/50" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════ Trending Products ═══════════ */}
-      <section className="py-16 sm:py-20">
+      {/* ═══════════ Flash Sales ═══════════ */}
+      <section className="py-6 sm:py-12 bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="font-heading text-2xl font-bold text-text-primary sm:text-3xl">
-                Trending Products
-              </h2>
-              <p className="mt-1 text-sm text-text-muted">
-                The most popular electronics right now
-              </p>
-            </div>
-            <div className="hidden items-center gap-2 sm:flex">
-              <button
-                onClick={() => scroll(productsScrollRef, 'left')}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-text-muted transition-all hover:border-white/20 hover:bg-white/5 hover:text-text-primary"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                onClick={() => scroll(productsScrollRef, 'right')}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-text-muted transition-all hover:border-white/20 hover:bg-white/5 hover:text-text-primary"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-heading text-xl font-bold text-on-surface flex items-center gap-2 sm:text-2xl">
+              <Zap className="h-5 w-5 text-error fill-error" />
+              Flash Sales
+            </h2>
+            <Link href="/sales" className="text-sm font-label font-semibold text-primary hover:text-primary/80">
+              View all
+            </Link>
           </div>
 
-          <div
-            ref={productsScrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory scroll-smooth"
-            style={{ scrollbarWidth: 'none' }}
-          >
+          <div className="flex flex-col lg:flex-row gap-4">
+            {/* Hero Flash Sale Card */}
+            <div className="relative overflow-hidden rounded-2xl bg-[#0b1320] lg:w-2/3 h-[240px] sm:h-[300px]">
+              {/* Background styling to mock an image */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10" />
+              <div className="absolute right-0 top-0 bottom-0 w-2/3 bg-surface-container-high/20" />
+              
+              <div className="relative z-20 p-5 sm:p-8 flex flex-col h-full justify-between">
+                <div className="inline-block bg-secondary text-on-secondary text-xs font-label font-bold px-3 py-1.5 rounded w-max">
+                  Ends in 2h 14m
+                </div>
+                
+                <div className="mt-auto">
+                  <h3 className="font-heading text-2xl sm:text-3xl font-bold text-white mb-2">
+                    Quantum V
+                  </h3>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="font-heading text-2xl font-bold text-secondary">
+                      {formatPrice(1299000)}
+                    </span>
+                    <span className="font-heading text-base text-white/50 line-through">
+                      {formatPrice(1599000)}
+                    </span>
+                  </div>
+                  <button className="bg-secondary text-on-secondary px-6 py-2 rounded-full font-label font-bold text-sm hover:bg-secondary/90 transition-colors">
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Side Flash Sales List */}
+            <div className="flex flex-col gap-4 lg:w-1/3">
+              {mockFlashSales.map((item) => (
+                <div key={item.id} className="flex bg-white rounded-2xl border border-outline-variant/50 p-4 shadow-sm items-center justify-between h-full">
+                  <div className="flex flex-col justify-between h-full py-1 w-1/2 pr-2">
+                    <div className="bg-error text-white text-[10px] font-bold px-2 py-0.5 rounded w-max mb-2">
+                      {item.discount}
+                    </div>
+                    <h4 className="font-heading text-sm font-bold text-on-surface line-clamp-2 leading-snug mb-2">
+                      {item.name}
+                    </h4>
+                    <p className="font-heading text-base font-bold text-on-surface">
+                      {formatPrice(item.price)}
+                    </p>
+                  </div>
+                  <div className="w-1/2 h-[90px] bg-[#e6ecef] rounded-xl flex items-center justify-center overflow-hidden">
+                    {/* Placeholder for the image */}
+                    {item.name.includes('Earbud') ? (
+                      <Headphones className="h-8 w-8 text-outline" />
+                    ) : (
+                      <Watch className="h-8 w-8 text-outline" />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ Trending Now ═══════════ */}
+      <section className="py-6 sm:py-12 bg-[#fafafa]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-4">
+            <h2 className="font-heading text-xl font-bold text-on-surface sm:text-2xl">
+              Trending Now
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
             {mockProducts.map((product) => (
               <div
                 key={product.id}
-                className="group w-[280px] shrink-0 snap-start rounded-2xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-green-400/20 hover:bg-white/[0.04] hover:shadow-xl hover:shadow-green-400/5"
+                className="group flex flex-col rounded-2xl border border-outline-variant/60 bg-white overflow-hidden shadow-[0_4px_12px_rgba(4,22,39,0.03)] hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] transition-shadow"
               >
-                {/* Image area */}
-                <div className="relative h-56 overflow-hidden rounded-t-2xl bg-navy-800/50">
-                  <div className="flex h-full w-full items-center justify-center">
-                    <Smartphone className="h-16 w-16 text-text-muted/20 transition-transform duration-300 group-hover:scale-110" />
-                  </div>
-                  {/* Condition badge */}
-                  <div
-                    className={`absolute top-3 left-3 rounded-lg px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
-                      product.condition === 'new'
-                        ? 'bg-green-400/20 text-green-400'
-                        : 'bg-gold-400/20 text-gold-400'
-                    }`}
-                  >
-                    {product.condition === 'uk-used' ? 'UK Used' : 'New'}
-                  </div>
-                  {/* Quick add button */}
-                  <button
-                    onClick={() =>
-                      addItem({
-                        productId: product.id,
-                        name: product.name,
-                        price: product.price,
-                        imageUrl: '',
-                        shopId: product.shopId,
-                        shopName: product.shop,
-                        slug: product.id,
-                        quantity: 1,
-                      })
-                    }
-                    className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-xl bg-green-400/90 text-navy-950 opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100 hover:bg-green-400 active:scale-95"
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                  </button>
+                {/* Image Area */}
+                <div className="relative aspect-square w-full bg-[#f3f4f6] flex items-center justify-center p-6">
+                  {/* Badge Area */}
+                  {product.badge === 'bestseller' ? (
+                    <div className="absolute top-3 left-3 bg-[#0f172a] text-white text-[10px] font-bold px-2.5 py-1 rounded">
+                      Bestseller
+                    </div>
+                  ) : null}
+                  
+                  {product.badge === 'wishlist' ? (
+                    <button className="absolute top-3 right-3 h-7 w-7 rounded-full bg-white flex items-center justify-center shadow-sm">
+                      <Heart className="h-3.5 w-3.5 text-on-surface-variant" />
+                    </button>
+                  ) : null}
+
+                  {/* Icon placeholder based on product name */}
+                  {product.name.includes('Phone') ? <Smartphone className="w-16 h-16 text-outline" /> :
+                   product.name.includes('Keyboard') ? <Laptop className="w-16 h-16 text-outline" /> :
+                   product.name.includes('Camera') ? <Camera className="w-16 h-16 text-outline" /> :
+                   <Monitor className="w-16 h-16 text-outline" />}
                 </div>
 
-                {/* Product info */}
-                <div className="p-4">
-                  <p className="text-xs text-text-muted">{product.shop}</p>
-                  <h3 className="mt-1 truncate font-heading text-sm font-semibold text-text-primary">
+                {/* Info Area */}
+                <div className="p-3 sm:p-4 flex flex-col flex-1">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Star className="h-3 w-3 fill-secondary text-secondary" />
+                    <span className="text-[11px] font-label font-bold text-on-surface">
+                      {product.rating}
+                    </span>
+                    <span className="text-[11px] font-label text-on-surface-variant">
+                      ({product.reviews})
+                    </span>
+                    <span className="text-[11px] font-label text-on-surface-variant ml-1 truncate">
+                      {product.shop}
+                    </span>
+                  </div>
+                  
+                  <h3 className="font-heading text-sm font-semibold text-on-surface line-clamp-2 leading-tight mb-3">
                     {product.name}
                   </h3>
-                  <div className="mt-2 flex items-center justify-between">
-                    <p className="font-heading text-lg font-bold text-green-400">
+                  
+                  <div className="mt-auto flex items-center justify-between">
+                    <span className="font-heading text-lg font-bold text-on-surface">
                       {formatPrice(product.price)}
-                    </p>
-                    <div className="flex items-center gap-1 text-gold-400">
-                      <Star className="h-3 w-3 fill-gold-400" />
-                      <span className="text-xs font-medium">
-                        {product.rating}
-                      </span>
-                    </div>
+                    </span>
+                    <button
+                      onClick={() =>
+                        addItem({
+                          productId: product.id,
+                          name: product.name,
+                          price: product.price,
+                          imageUrl: '',
+                          shopId: product.shopId,
+                          shopName: product.shop,
+                          slug: product.id,
+                          quantity: 1,
+                        })
+                      }
+                      className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] text-white transition-transform active:scale-95 hover:bg-black"
+                    >
+                      <ShoppingCart className="h-3.5 w-3.5" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -394,32 +438,32 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ Categories Grid ═══════════ */}
-      <section className="py-16 sm:py-20 bg-navy-900/30">
+      <section className="py-12 sm:py-20 bg-white border-t border-outline-variant/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="font-heading text-2xl font-bold text-text-primary sm:text-3xl">
+          <div className="text-center mb-12">
+            <h2 className="font-heading text-xl font-bold text-on-surface sm:text-3xl">
               Shop by Category
             </h2>
-            <p className="mt-2 text-sm text-text-muted">
-              Find exactly what you&apos;re looking for
+            <p className="mt-2 text-sm text-on-surface-variant max-w-2xl mx-auto">
+              Find exactly what you&apos;re looking for across our diverse range of technical categories
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-4 lg:grid-cols-5">
             {mockCategories.map((cat) => (
               <Link
                 key={cat.name}
                 href={cat.href}
-                className="group flex flex-col items-center gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-6 transition-all duration-300 hover:border-green-400/20 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-green-400/5 hover:-translate-y-0.5"
+                className="group flex flex-col items-center gap-3 rounded-2xl border border-outline-variant/50 bg-[#fafafa] p-6 transition-all duration-300 hover:border-secondary/30 hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] hover:-translate-y-1"
               >
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 transition-all duration-300 group-hover:bg-green-400/10 group-hover:text-green-400">
-                  <cat.icon className="h-6 w-6 text-text-muted transition-colors group-hover:text-green-400" />
+                <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white shadow-sm transition-all duration-300 group-hover:bg-[#e6f0ff]">
+                  <cat.icon className="h-6 w-6 text-on-surface-variant transition-colors group-hover:text-primary" />
                 </div>
                 <div className="text-center">
-                  <p className="font-heading text-sm font-semibold text-text-primary">
+                  <p className="font-heading text-sm font-bold text-on-surface group-hover:text-primary transition-colors">
                     {cat.name}
                   </p>
-                  <p className="mt-0.5 text-xs text-text-muted">
+                  <p className="mt-1 text-[11px] font-label text-on-surface-variant">
                     {cat.count.toLocaleString()} items
                   </p>
                 </div>
@@ -430,72 +474,75 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ Popular Shops ═══════════ */}
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-20 bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-end justify-between mb-8">
             <div>
-              <h2 className="font-heading text-2xl font-bold text-text-primary sm:text-3xl">
+              <h2 className="font-heading text-xl font-bold text-on-surface sm:text-3xl">
                 Popular Shops
               </h2>
-              <p className="mt-1 text-sm text-text-muted">
-                Trusted sellers at Farm Center
+              <p className="mt-2 text-sm text-on-surface-variant">
+                Trusted sellers running their businesses on Farm Center
               </p>
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               <button
                 onClick={() => scroll(shopsScrollRef, 'left')}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-text-muted transition-all hover:border-white/20 hover:bg-white/5 hover:text-text-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant bg-white text-on-surface-variant transition-all hover:bg-surface-container hover:text-primary active:scale-95 shadow-sm"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 onClick={() => scroll(shopsScrollRef, 'right')}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-text-muted transition-all hover:border-white/20 hover:bg-white/5 hover:text-text-primary"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-outline-variant bg-white text-on-surface-variant transition-all hover:bg-surface-container hover:text-primary active:scale-95 shadow-sm"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4" />
               </button>
             </div>
           </div>
 
           <div
             ref={shopsScrollRef}
-            className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth"
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide scroll-smooth"
             style={{ scrollbarWidth: 'none' }}
           >
             {mockShops.map((shop) => (
               <Link
                 key={shop.id}
                 href={`/shops/${shop.id}`}
-                className="group w-[280px] shrink-0 snap-start rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all duration-300 hover:border-green-400/20 hover:bg-white/[0.04] hover:shadow-xl hover:shadow-green-400/5"
+                className="group w-[280px] sm:w-[320px] shrink-0 snap-start flex flex-col p-4 sm:p-5 overflow-hidden rounded-2xl border border-outline-variant/60 bg-white shadow-[0_4px_12px_rgba(4,22,39,0.02)] transition-shadow hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)]"
               >
                 {/* Shop banner area */}
-                <div className="mb-4 h-24 overflow-hidden rounded-xl bg-gradient-to-br from-navy-800 to-navy-700">
-                  <div className="flex h-full w-full items-center justify-center">
-                    <Store className="h-10 w-10 text-text-muted/20" />
+                <div className="relative mb-5 h-24 w-full rounded-xl bg-[#e6ecef] overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#e6ecef] to-secondary/10" />
+                  <div className="flex h-full w-full items-center justify-center relative z-10">
+                    <Store className="h-8 w-8 text-outline/50" />
                   </div>
                 </div>
 
                 {/* Shop logo */}
-                <div className="-mt-10 mb-3 ml-3">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border-2 border-navy-950 bg-gradient-to-br from-green-400/20 to-green-600/20 backdrop-blur-sm">
-                    <Store className="h-6 w-6 text-green-400" />
+                <div className="absolute top-[72px] left-8 z-20">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl border-4 border-white bg-[#fafafa] shadow-sm">
+                    <Store className="h-5 w-5 text-primary" />
                   </div>
                 </div>
 
-                <h3 className="font-heading text-sm font-bold text-text-primary group-hover:text-green-400 transition-colors">
-                  {shop.name}
-                </h3>
-                <p className="mt-0.5 text-xs text-text-muted">
-                  {shop.description}
-                </p>
+                <div className="mt-2 px-1">
+                  <h3 className="font-heading text-base font-bold text-on-surface group-hover:text-primary transition-colors">
+                    {shop.name}
+                  </h3>
+                  <p className="mt-1 text-xs text-on-surface-variant line-clamp-1">
+                    {shop.description}
+                  </p>
 
-                <div className="mt-3 flex items-center justify-between">
-                  <span className="text-xs text-text-muted">
-                    {shop.products} products
-                  </span>
-                  <div className="flex items-center gap-1 text-gold-400">
-                    <Star className="h-3 w-3 fill-gold-400" />
-                    <span className="text-xs font-medium">{shop.rating}</span>
+                  <div className="mt-4 flex items-center justify-between border-t border-outline-variant/40 pt-3">
+                    <span className="text-[11px] font-label font-semibold text-on-surface-variant px-2 py-1 bg-[#fafafa] rounded border border-outline-variant/30">
+                      {shop.products} products
+                    </span>
+                    <div className="flex items-center gap-1 text-secondary">
+                      <Star className="h-3 w-3 fill-secondary" />
+                      <span className="text-xs font-label font-bold text-on-surface">{shop.rating}</span>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -505,44 +552,41 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ How It Works ═══════════ */}
-      <section className="py-16 sm:py-20 bg-navy-900/30">
+      <section className="py-12 sm:py-20 bg-white border-t border-outline-variant/30">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-2xl font-bold text-text-primary sm:text-3xl">
-              How It Works
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="font-heading text-xl font-bold text-on-surface sm:text-3xl">
+              Shopping Made Simple
             </h2>
-            <p className="mt-2 text-sm text-text-muted">
-              Shopping made simple in 3 easy steps
+            <p className="mt-2 text-sm text-on-surface-variant max-w-xl mx-auto">
+              Follow these three simple steps to get your hands on the best tech in town.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {howItWorks.map((item, index) => (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 relative">
+            {/* Connecting Line */}
+            <div className="hidden sm:block absolute top-[50px] left-[15%] right-[15%] h-0.5 border-dashed border-b border-outline-variant/50 z-0" />
+
+            {howItWorks.map((item) => (
               <div
                 key={item.step}
-                className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-green-400/20 hover:bg-white/[0.04] hover:shadow-lg hover:shadow-green-400/5"
+                className="group relative z-10 flex flex-col items-center text-center"
               >
-                {/* Step number */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-400 text-xs font-bold text-navy-950">
-                  {item.step}
+                {/* Icon Circle */}
+                <div className="relative mb-5 flex h-[100px] w-[100px] items-center justify-center rounded-full bg-white shadow-[0_8px_24px_rgba(4,22,39,0.06)] transition-transform duration-300 group-hover:-translate-y-2 border border-outline-variant/20">
+                  {/* Step number badge */}
+                  <div className="absolute top-0 right-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#e6f0ff] text-[10px] font-label font-bold text-primary shadow-sm border border-white">
+                    {item.step}
+                  </div>
+                  <item.icon className="h-8 w-8 text-on-surface transition-colors group-hover:text-primary" />
                 </div>
 
-                {/* Icon */}
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 transition-all duration-300 group-hover:bg-green-400/10">
-                  <item.icon className="h-7 w-7 text-text-muted transition-colors group-hover:text-green-400" />
-                </div>
-
-                <h3 className="font-heading text-base font-bold text-text-primary">
+                <h3 className="font-heading text-lg font-bold text-on-surface">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                <p className="mt-2 text-[13px] leading-relaxed text-on-surface-variant max-w-[260px]">
                   {item.description}
                 </p>
-
-                {/* Connector line (not on last item) */}
-                {index < howItWorks.length - 1 && (
-                  <div className="absolute top-1/2 -right-3 hidden h-px w-6 bg-white/10 sm:block" />
-                )}
               </div>
             ))}
           </div>
@@ -550,55 +594,59 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════ CTA: Start Selling ═══════════ */}
-      <section className="py-16 sm:py-20">
+      <section className="py-12 sm:py-20 bg-[#fafafa]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative overflow-hidden rounded-3xl border border-white/10">
-            {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 via-navy-900 to-gold-400/10" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(0,245,160,0.08),transparent_50%)]" />
+          <div className="relative overflow-hidden rounded-[2rem] bg-primary shadow-lg">
+            {/* Background effects */}
+            <div className="absolute inset-0">
+              <div className="absolute -top-[150px] -right-[150px] h-[400px] w-[400px] rounded-full bg-secondary/20 blur-[80px]" />
+              <div className="absolute -bottom-[150px] -left-[150px] h-[400px] w-[400px] rounded-full bg-white/10 blur-[80px]" />
+            </div>
 
-            <div className="relative px-8 py-16 text-center sm:py-20 sm:px-12">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-green-400/10 px-4 py-1.5">
-                <Zap className="h-3.5 w-3.5 text-green-400" />
-                <span className="text-xs font-semibold text-green-400 uppercase tracking-wider">
+            <div className="relative z-10 px-6 py-16 text-center sm:px-12 sm:py-20">
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 backdrop-blur-sm">
+                <Store className="h-3.5 w-3.5 text-white" />
+                <span className="text-[10px] font-label font-bold text-white uppercase tracking-wider">
                   For Sellers
                 </span>
               </div>
 
-              <h2 className="mx-auto max-w-lg font-heading text-3xl font-extrabold text-text-primary sm:text-4xl">
-                Start Selling Today
+              <h2 className="mx-auto max-w-2xl font-heading text-2xl font-black text-white sm:text-4xl leading-tight">
+                Grow Your Business Online
               </h2>
-              <p className="mx-auto mt-3 max-w-md text-base text-text-muted">
-                Join hundreds of sellers at Farm Center Market and reach
-                thousands of buyers across Kano and beyond.
+              <p className="mx-auto mt-4 max-w-lg text-[15px] text-white/80 sm:text-base">
+                Join hundreds of sellers at Farm Center Market. Reach thousands of buyers, manage orders easily, and scale your sales.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm">
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <CreditCard className="h-4 w-4 text-green-400" />
-                  Free starter plan
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-xs font-label text-white">
+                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                  <CreditCard className="h-3.5 w-3.5 text-secondary" />
+                  Free Starter Plan
                 </div>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Upload className="h-4 w-4 text-green-400" />
-                  Easy product upload
+                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                  <Upload className="h-3.5 w-3.5 text-secondary" />
+                  Easy Upload
                 </div>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Users className="h-4 w-4 text-green-400" />
-                  Reach thousands of buyers
+                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                  <Users className="h-3.5 w-3.5 text-secondary" />
+                  Reach Buyers
                 </div>
               </div>
 
               <Link
-                href="/seller/register"
-                className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-green-400 px-8 py-4 font-heading text-base font-bold text-navy-950 transition-all hover:shadow-xl hover:shadow-green-400/25 active:scale-[0.98]"
+                href="/register"
+                className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 font-label text-sm font-bold text-primary transition-all hover:bg-secondary hover:text-on-secondary hover:-translate-y-1 shadow-md active:scale-[0.98]"
               >
                 Open Your Shop — It&apos;s Free
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Spacer for mobile bottom nav */}
+      <div className="h-16 lg:hidden" />
     </div>
   );
 }

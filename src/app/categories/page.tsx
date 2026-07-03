@@ -19,12 +19,12 @@ const categories = [
 
 export default function CategoriesPage() {
   return (
-    <main className="min-h-screen bg-navy-950 pt-4 pb-16">
+    <main className="min-h-screen bg-[#fafafa] pt-4 pb-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-text-primary">Browse Categories</h1>
-          <p className="text-text-secondary mt-2">Find exactly what you need from Farm Center Market</p>
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-on-surface">Browse Categories</h1>
+          <p className="text-on-surface-variant mt-2">Find exactly what you need from Farm Center Market</p>
         </div>
 
         {/* Categories Grid */}
@@ -33,16 +33,16 @@ export default function CategoriesPage() {
             const Icon = cat.icon;
             return (
               <Link key={cat.slug} href={`/categories/${cat.slug}`} className="group block">
-                <div className="glass-card rounded-2xl p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-lg group-hover:shadow-green-400/10 group-hover:border-green-400/30 h-full">
+                <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-6 transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-[0_4px_12px_rgba(4,22,39,0.02)] group-hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] group-hover:border-primary/30 h-full">
                   <div className="flex items-start gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-green-400/10 border border-green-400/20 flex items-center justify-center flex-shrink-0 group-hover:bg-green-400/20 transition-colors">
-                      <Icon className="w-7 h-7 text-green-400" />
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <Icon className="w-7 h-7 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h2 className="font-heading text-lg font-bold text-text-primary group-hover:text-green-400 transition-colors">
+                      <h2 className="font-heading text-lg font-bold text-on-surface group-hover:text-primary transition-colors">
                         {cat.name}
                       </h2>
-                      <p className="text-text-muted text-sm mt-0.5">{cat.count} products</p>
+                      <p className="text-outline text-sm mt-0.5">{cat.count} products</p>
                     </div>
                   </div>
 
@@ -51,7 +51,7 @@ export default function CategoriesPage() {
                     {cat.subs.map((sub) => (
                       <span
                         key={sub}
-                        className="px-3 py-1 rounded-full text-xs bg-navy-800/60 text-text-secondary border border-white/5 group-hover:border-white/10 transition-colors"
+                        className="px-3 py-1 rounded-full text-xs bg-[#f3f4f6] text-on-surface-variant border border-outline-variant/50 group-hover:border-outline transition-colors"
                       >
                         {sub}
                       </span>

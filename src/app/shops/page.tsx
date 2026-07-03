@@ -37,24 +37,24 @@ export default function ShopsPage() {
     });
 
   return (
-    <main className="min-h-screen bg-navy-950 pt-4 pb-16">
+    <main className="min-h-screen bg-[#fafafa] pt-4 pb-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-text-primary">Browse Shops</h1>
-          <p className="text-text-secondary mt-2">Discover trusted sellers in Farm Center Market, Kano</p>
+          <h1 className="font-heading text-3xl sm:text-4xl font-bold text-on-surface">Browse Shops</h1>
+          <p className="text-on-surface-variant mt-2">Discover trusted sellers in Farm Center Market, Kano</p>
         </div>
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-3 mb-8">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-outline" />
             <input
               type="text"
               placeholder="Search shops by name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-xl bg-navy-800/60 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/25 transition-all text-sm"
+              className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface placeholder:text-outline focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-all text-sm"
             />
           </div>
 
@@ -63,8 +63,8 @@ export default function ShopsPage() {
               onClick={() => setVerifiedOnly(!verifiedOnly)}
               className={`flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium transition-all ${
                 verifiedOnly
-                  ? 'bg-green-400/15 text-green-400 border-green-400/30'
-                  : 'bg-navy-800/60 text-text-secondary border-white/10 hover:border-white/20'
+                  ? 'bg-primary/15 text-primary border-primary/30'
+                  : 'bg-[#f3f4f6] text-on-surface-variant border-outline-variant/50 hover:border-outline-variant'
               }`}
             >
               <CheckCircle className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function ShopsPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="px-4 py-3 rounded-xl bg-navy-800/60 border border-white/10 text-text-secondary text-sm focus:outline-none focus:border-green-400/50 appearance-none cursor-pointer pr-10"
+              className="px-4 py-3 rounded-xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface-variant text-sm focus:outline-none focus:border-primary/50 appearance-none cursor-pointer pr-10"
             >
               <option value="products">Most Products</option>
               <option value="name">Name A-Z</option>
@@ -85,24 +85,24 @@ export default function ShopsPage() {
 
         {/* Shops Grid */}
         {filtered.length === 0 ? (
-          <div className="glass-card rounded-2xl p-12 text-center">
-            <Search className="w-16 h-16 text-text-muted mx-auto mb-4" />
-            <h3 className="font-heading text-xl font-bold text-text-primary mb-2">No shops found</h3>
-            <p className="text-text-muted">Try a different search term.</p>
+          <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-12 text-center">
+            <Search className="w-16 h-16 text-outline mx-auto mb-4" />
+            <h3 className="font-heading text-xl font-bold text-on-surface mb-2">No shops found</h3>
+            <p className="text-outline">Try a different search term.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filtered.map((shop) => (
               <Link key={shop.id} href={`/shop/${shop.slug}`} className="group block">
-                <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-green-400/10 group-hover:border-green-400/30 h-full">
+                <div className="bg-white border border-outline-variant/50 overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-[0_4px_12px_rgba(4,22,39,0.02)] group-hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] group-hover:border-primary/30 h-full">
                   {/* Banner */}
                   <div className="relative h-28 overflow-hidden">
-                    <div className="w-full h-full bg-gradient-to-br from-green-500/20 via-navy-800 to-gold-500/20 flex items-center justify-center">
-                      <Zap className="w-10 h-10 text-green-400/20" />
+                    <div className="w-full h-full bg-gradient-to-br from-primary/10 via-surface-container-lowest to-secondary/10 flex items-center justify-center">
+                      <Zap className="w-10 h-10 text-primary/20" />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                     {shop.isVerified && (
-                      <div className="absolute top-3 right-3 flex items-center gap-1 bg-green-500/20 backdrop-blur-sm text-green-400 px-2 py-1 rounded-full text-xs font-semibold border border-green-500/30">
+                      <div className="absolute top-3 right-3 flex items-center gap-1 bg-primary/20 backdrop-blur-sm text-primary px-2 py-1 rounded-full text-xs font-semibold font-label border border-primary/30">
                         <CheckCircle className="w-3 h-3" /> Verified
                       </div>
                     )}
@@ -111,19 +111,19 @@ export default function ShopsPage() {
                   {/* Info */}
                   <div className="relative px-4 pb-5">
                     <div className="-mt-7 mb-3">
-                      <div className="w-14 h-14 rounded-xl border-2 border-surface bg-navy-800 flex items-center justify-center shadow-lg">
-                        <span className="text-xl font-bold font-heading text-green-400">{shop.name.charAt(0)}</span>
+                      <div className="w-14 h-14 rounded-xl border-2 border-surface bg-[#f3f4f6] flex items-center justify-center shadow-[0_4px_12px_rgba(4,22,39,0.02)]">
+                        <span className="text-xl font-bold font-heading text-primary">{shop.name.charAt(0)}</span>
                       </div>
                     </div>
 
-                    <h3 className="font-heading font-bold text-text-primary group-hover:text-green-400 transition-colors truncate">
+                    <h3 className="font-heading font-bold text-on-surface group-hover:text-primary transition-colors truncate">
                       {shop.name}
                     </h3>
-                    <p className="text-text-muted text-sm mt-1 flex items-center gap-1 truncate">
+                    <p className="text-outline text-sm mt-1 flex items-center gap-1 truncate">
                       <MapPin className="w-3.5 h-3.5 flex-shrink-0" />{shop.location}
                     </p>
-                    <p className="text-text-secondary text-xs mt-2 line-clamp-2">{shop.description}</p>
-                    <div className="mt-3 flex items-center gap-1.5 text-text-secondary text-sm">
+                    <p className="text-on-surface-variant text-xs mt-2 line-clamp-2">{shop.description}</p>
+                    <div className="mt-3 flex items-center gap-1.5 text-on-surface-variant text-sm">
                       <Package className="w-3.5 h-3.5" />
                       <span>{shop.productCount} products</span>
                     </div>

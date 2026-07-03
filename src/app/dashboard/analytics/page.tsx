@@ -24,8 +24,8 @@ const STATS = [
     change: '+18.2%',
     trend: 'up' as const,
     icon: Eye,
-    bgTint: 'bg-blue-400/10',
-    iconColor: 'text-blue-400',
+    bgTint: 'bg-primary/10',
+    iconColor: 'text-primary',
   },
   {
     label: 'Total Orders',
@@ -33,8 +33,8 @@ const STATS = [
     change: '+12.5%',
     trend: 'up' as const,
     icon: ShoppingCart,
-    bgTint: 'bg-green-400/10',
-    iconColor: 'text-green-400',
+    bgTint: 'bg-secondary/10',
+    iconColor: 'text-secondary',
   },
   {
     label: 'Revenue',
@@ -42,8 +42,8 @@ const STATS = [
     change: '+8.3%',
     trend: 'up' as const,
     icon: DollarSign,
-    bgTint: 'bg-gold-400/10',
-    iconColor: 'text-gold-400',
+    bgTint: 'bg-amber-500/10',
+    iconColor: 'text-amber-500',
   },
   {
     label: 'Conversion Rate',
@@ -51,8 +51,8 @@ const STATS = [
     change: '+0.5%',
     trend: 'up' as const,
     icon: TrendingUp,
-    bgTint: 'bg-purple-400/10',
-    iconColor: 'text-purple-400',
+    bgTint: 'bg-purple-500/10',
+    iconColor: 'text-purple-500',
   },
 ];
 
@@ -107,8 +107,8 @@ export default function AnalyticsPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h2 className="font-heading text-2xl font-bold text-text-primary">Analytics</h2>
-          <p className="text-sm text-text-secondary mt-1">
+          <h2 className="font-heading text-2xl font-bold text-on-surface">Analytics</h2>
+          <p className="font-body text-sm text-on-surface-variant mt-1">
             Insights into your shop performance
           </p>
         </div>
@@ -121,30 +121,30 @@ export default function AnalyticsPage() {
               {STATS.map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="glass-card p-5">
+                  <div key={stat.label} className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-5">
                     <div className="flex items-start justify-between">
                       <div className={cn('w-11 h-11 rounded-xl flex items-center justify-center', stat.bgTint)}>
                         <Icon className={cn('w-5 h-5', stat.iconColor)} />
                       </div>
                     </div>
-                    <p className="mt-4 font-heading text-2xl font-bold text-text-primary">{stat.value}</p>
-                    <p className="text-sm text-text-muted mt-1">{stat.label}</p>
+                    <p className="mt-4 font-heading text-2xl font-bold text-on-surface">{stat.value}</p>
+                    <p className="font-body text-sm text-on-surface-variant mt-1">{stat.label}</p>
                   </div>
                 );
               })}
             </div>
 
             {/* Fake chart */}
-            <div className="glass-card p-6">
-              <h3 className="font-heading text-lg font-semibold text-text-primary mb-4">Views This Week</h3>
+            <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+              <h3 className="font-heading text-lg font-semibold text-on-surface mb-4">Views This Week</h3>
               <div className="flex items-end gap-3 h-40">
                 {WEEKLY_VIEWS.map((d) => (
                   <div key={d.day} className="flex-1 flex flex-col items-center gap-1">
                     <div
-                      className="w-full rounded-t-lg bg-green-400/20"
+                      className="w-full rounded-t-lg bg-primary/20"
                       style={{ height: `${(d.views / maxViews) * 100}%` }}
                     />
-                    <span className="text-xs text-text-muted">{d.day}</span>
+                    <span className="font-body text-xs text-on-surface-variant">{d.day}</span>
                   </div>
                 ))}
               </div>
@@ -152,20 +152,20 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Lock overlay */}
-          <div className="absolute inset-0 flex items-center justify-center bg-navy-950/60 backdrop-blur-[2px] rounded-2xl">
-            <div className="text-center p-8 max-w-md">
-              <div className="w-20 h-20 mx-auto rounded-2xl bg-gold-400/10 flex items-center justify-center mb-5">
-                <Lock className="w-10 h-10 text-gold-400" />
+          <div className="absolute inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm rounded-2xl">
+            <div className="text-center p-8 max-w-md bg-white border border-outline-variant/50 rounded-2xl shadow-lg">
+              <div className="w-20 h-20 mx-auto rounded-2xl bg-amber-500/10 flex items-center justify-center mb-5">
+                <Lock className="w-10 h-10 text-amber-500" />
               </div>
-              <h3 className="font-heading text-2xl font-bold text-text-primary mb-2">
+              <h3 className="font-heading text-2xl font-bold text-on-surface mb-2">
                 Unlock Analytics
               </h3>
-              <p className="text-sm text-text-secondary mb-6">
+              <p className="font-body text-sm text-on-surface-variant mb-6">
                 Upgrade to Pro to access detailed analytics, conversion tracking, and performance insights for your shop.
               </p>
               <Link
                 href="/dashboard/billing"
-                className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-green-400 to-green-600 text-navy-950 text-sm font-bold hover:shadow-lg hover:shadow-green-400/25 hover:scale-[1.02] transition-all"
+                className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-on-primary text-sm font-label font-bold hover:opacity-90 hover:scale-[1.02] transition-all"
               >
                 <Crown className="w-4 h-4" />
                 Upgrade to Pro
@@ -181,8 +181,8 @@ export default function AnalyticsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="font-heading text-2xl font-bold text-text-primary">Analytics</h2>
-        <p className="text-sm text-text-secondary mt-1">
+        <h2 className="font-heading text-2xl font-bold text-on-surface">Analytics</h2>
+        <p className="font-body text-sm text-on-surface-variant mt-1">
           Track your shop performance and growth
         </p>
       </div>
@@ -192,18 +192,18 @@ export default function AnalyticsPage() {
         {STATS.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.label} className="glass-card p-5 hover:scale-[1.02] transition-transform duration-300">
+            <div key={stat.label} className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-5 hover:scale-[1.02] transition-transform duration-300">
               <div className="flex items-start justify-between">
                 <div className={cn('w-11 h-11 rounded-xl flex items-center justify-center', stat.bgTint)}>
                   <Icon className={cn('w-5 h-5', stat.iconColor)} />
                 </div>
-                <span className="flex items-center gap-0.5 text-xs font-medium text-green-400">
+                <span className="flex items-center gap-0.5 text-xs font-label font-bold text-green-600">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                   {stat.change}
                 </span>
               </div>
-              <p className="mt-4 font-heading text-2xl font-bold text-text-primary">{stat.value}</p>
-              <p className="text-sm text-text-muted mt-1">{stat.label}</p>
+              <p className="mt-4 font-heading text-2xl font-bold text-on-surface">{stat.value}</p>
+              <p className="font-body text-sm text-on-surface-variant mt-1">{stat.label}</p>
             </div>
           );
         })}
@@ -211,10 +211,10 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Weekly Views Chart */}
-        <div className="glass-card p-6">
+        <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-heading text-lg font-semibold text-text-primary">Views This Week</h3>
-            <span className="text-xs text-green-400 bg-green-400/10 px-2 py-1 rounded-full font-medium">
+            <h3 className="font-heading text-lg font-semibold text-on-surface">Views This Week</h3>
+            <span className="text-xs font-label font-bold text-green-600 bg-green-50 px-2 py-1 rounded">
               +18.2% vs last week
             </span>
           </div>
@@ -223,12 +223,12 @@ export default function AnalyticsPage() {
               const height = (d.views / maxViews) * 100;
               return (
                 <div key={d.day} className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-xs text-text-muted">{d.views}</span>
-                  <div className="w-full relative rounded-t-lg overflow-hidden" style={{ height: `${height}%` }}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-green-400/40 to-green-400/10 rounded-t-lg" />
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-green-400" />
+                  <span className="font-body text-xs text-on-surface-variant">{d.views}</span>
+                  <div className="w-full relative rounded-t-lg overflow-hidden bg-surface-container-highest" style={{ height: `${height}%` }}>
+                    <div className="absolute inset-0 bg-primary/40 rounded-t-lg" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary" />
                   </div>
-                  <span className="text-xs text-text-muted">{d.day}</span>
+                  <span className="font-body text-xs text-on-surface-variant">{d.day}</span>
                 </div>
               );
             })}
@@ -236,10 +236,10 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Monthly Revenue Chart */}
-        <div className="glass-card p-6">
+        <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="font-heading text-lg font-semibold text-text-primary">Monthly Revenue</h3>
-            <span className="text-xs text-gold-400 bg-gold-400/10 px-2 py-1 rounded-full font-medium">
+            <h3 className="font-heading text-lg font-semibold text-on-surface">Monthly Revenue</h3>
+            <span className="text-xs font-label font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">
               ₦385K this month
             </span>
           </div>
@@ -248,12 +248,12 @@ export default function AnalyticsPage() {
               const height = (d.revenue / maxRevenue) * 100;
               return (
                 <div key={d.month} className="flex-1 flex flex-col items-center gap-2">
-                  <span className="text-xs text-text-muted">{formatPrice(d.revenue).replace('.00', '')}</span>
-                  <div className="w-full relative rounded-t-lg overflow-hidden" style={{ height: `${height}%` }}>
-                    <div className="absolute inset-0 bg-gradient-to-t from-gold-400/40 to-gold-400/10 rounded-t-lg" />
-                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gold-400" />
+                  <span className="font-body text-xs text-on-surface-variant">{formatPrice(d.revenue).replace('.00', '')}</span>
+                  <div className="w-full relative rounded-t-lg overflow-hidden bg-surface-container-highest" style={{ height: `${height}%` }}>
+                    <div className="absolute inset-0 bg-amber-500/40 rounded-t-lg" />
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-amber-500" />
                   </div>
-                  <span className="text-xs text-text-muted">{d.month}</span>
+                  <span className="font-body text-xs text-on-surface-variant">{d.month}</span>
                 </div>
               );
             })}
@@ -262,8 +262,8 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Top Products */}
-      <div className="glass-card p-6">
-        <h3 className="font-heading text-lg font-semibold text-text-primary mb-5">
+      <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+        <h3 className="font-heading text-lg font-semibold text-on-surface mb-5">
           Top Products by Views
         </h3>
         <div className="space-y-4">
@@ -271,40 +271,40 @@ export default function AnalyticsPage() {
             const viewBarWidth = (product.views / maxProductViews) * 100;
             return (
               <div key={product.id} className="flex items-center gap-4">
-                <span className="text-sm font-bold text-text-muted w-6 text-center shrink-0">
+                <span className="font-label text-sm font-bold text-on-surface-variant w-6 text-center shrink-0">
                   {index + 1}
                 </span>
-                <div className="w-10 h-10 rounded-lg bg-navy-800 flex items-center justify-center shrink-0">
-                  <Package className="w-5 h-5 text-text-muted/30" />
+                <div className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center shrink-0">
+                  <Package className="w-5 h-5 text-on-surface-variant/50" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-text-primary truncate mb-1.5">
+                  <p className="font-body text-sm font-medium text-on-surface truncate mb-1.5">
                     {product.name}
                   </p>
-                  <div className="h-1.5 rounded-full bg-navy-800 overflow-hidden">
+                  <div className="h-1.5 rounded-full bg-surface-container overflow-hidden">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-green-400/60 to-green-400/30 transition-all duration-700"
+                      className="h-full rounded-full bg-primary transition-all duration-700"
                       style={{ width: `${viewBarWidth}%` }}
                     />
                   </div>
                 </div>
-                <div className="hidden md:flex items-center gap-6 shrink-0 text-sm">
+                <div className="hidden md:flex items-center gap-6 shrink-0 font-body text-sm">
                   <div className="text-center">
-                    <p className="font-semibold text-text-primary">{product.views.toLocaleString()}</p>
-                    <p className="text-xs text-text-muted">Views</p>
+                    <p className="font-semibold text-on-surface">{product.views.toLocaleString()}</p>
+                    <p className="text-xs text-on-surface-variant">Views</p>
                   </div>
                   <div className="text-center">
-                    <p className="font-semibold text-text-primary">{product.orders}</p>
-                    <p className="text-xs text-text-muted">Orders</p>
+                    <p className="font-semibold text-on-surface">{product.orders}</p>
+                    <p className="text-xs text-on-surface-variant">Orders</p>
                   </div>
                   <div className="text-center">
-                    <p className="font-semibold text-green-400">{product.conversionRate}%</p>
-                    <p className="text-xs text-text-muted">Conv.</p>
+                    <p className="font-semibold text-primary">{product.conversionRate}%</p>
+                    <p className="text-xs text-on-surface-variant">Conv.</p>
                   </div>
                 </div>
                 <div className="md:hidden text-right shrink-0">
-                  <p className="text-sm font-semibold text-text-primary">{product.views.toLocaleString()}</p>
-                  <p className="text-xs text-text-muted">views</p>
+                  <p className="font-body text-sm font-semibold text-on-surface">{product.views.toLocaleString()}</p>
+                  <p className="font-body text-xs text-on-surface-variant">views</p>
                 </div>
               </div>
             );

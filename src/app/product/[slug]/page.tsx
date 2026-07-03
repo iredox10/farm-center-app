@@ -69,9 +69,9 @@ const mockImages = [
 ];
 
 const conditionConfig: Record<string, { label: string; color: string; bg: string }> = {
-  new: { label: 'Brand New', color: 'text-green-400', bg: 'bg-green-500/15 border-green-500/30' },
-  'uk-used': { label: 'UK-Used', color: 'text-blue-400', bg: 'bg-blue-500/15 border-blue-500/30' },
-  refurbished: { label: 'Refurbished', color: 'text-yellow-400', bg: 'bg-yellow-500/15 border-yellow-500/30' },
+  new: { label: 'Brand New', color: 'text-primary', bg: 'bg-primary/15 border-primary/30' },
+  'uk-used': { label: 'UK-Used', color: 'text-secondary', bg: 'bg-blue-500/15 border-secondary/30' },
+  refurbished: { label: 'Refurbished', color: 'text-tertiary', bg: 'bg-yellow-500/15 border-tertiary/30' },
 };
 
 export default function ProductDetailPage() {
@@ -120,27 +120,27 @@ export default function ProductDetailPage() {
   const isLongDesc = descriptionLines.length > 3;
 
   return (
-    <main className="min-h-screen bg-navy-950 pt-4 pb-16">
+    <main className="min-h-screen bg-[#fafafa] pt-4 pb-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-text-muted mb-6">
-          <Link href="/" className="hover:text-green-400 transition-colors">Home</Link>
+        <nav className="flex items-center gap-2 text-sm text-outline mb-6">
+          <Link href="/" className="hover:text-primary transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/categories/phones-tablets" className="hover:text-green-400 transition-colors">Phones</Link>
+          <Link href="/categories/phones-tablets" className="hover:text-primary transition-colors">Phones</Link>
           <span>/</span>
-          <span className="text-text-secondary truncate">{product.name}</span>
+          <span className="text-on-surface-variant truncate">{product.name}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left: Gallery */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="glass-card rounded-3xl overflow-hidden aspect-square relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-navy-700/30 to-navy-900/50 flex items-center justify-center">
-                <Zap className="w-20 h-20 text-navy-700/40" />
+            <div className="bg-white border border-outline-variant/50 rounded-3xl overflow-hidden aspect-square relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-surface-container/50 to-surface-container-lowest flex items-center justify-center">
+                <Zap className="w-20 h-20 text-outline-variant" />
               </div>
               {mockImages[currentImage] && (
-                <div className="absolute inset-0 flex items-center justify-center text-text-muted text-lg">
+                <div className="absolute inset-0 flex items-center justify-center text-outline text-lg">
                   Product Image {currentImage + 1}
                 </div>
               )}
@@ -150,13 +150,13 @@ export default function ProductDetailPage() {
                 <>
                   <button
                     onClick={() => setCurrentImage((p) => (p > 0 ? p - 1 : mockImages.length - 1))}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-950/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-navy-950/80"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#fafafa]/60 backdrop-blur-sm border border-outline-variant/50 flex items-center justify-center text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#fafafa]/80"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => setCurrentImage((p) => (p < mockImages.length - 1 ? p + 1 : 0))}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-navy-950/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-navy-950/80"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#fafafa]/60 backdrop-blur-sm border border-outline-variant/50 flex items-center justify-center text-on-surface opacity-0 group-hover:opacity-100 transition-opacity hover:bg-[#fafafa]/80"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -172,9 +172,9 @@ export default function ProductDetailPage() {
                   onClick={() => setCurrentImage(i)}
                   className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 flex items-center justify-center text-sm ${
                     i === currentImage
-                      ? 'border-green-400 shadow-lg shadow-green-400/20'
-                      : 'border-white/10 hover:border-white/30 opacity-60 hover:opacity-100'
-                  } bg-navy-800/50`}
+                      ? 'border-primary shadow-[0_4px_12px_rgba(4,22,39,0.02)] shadow-[0_8px_24px_rgba(4,22,39,0.06)]'
+                      : 'border-outline-variant/50 hover:border-outline opacity-60 hover:opacity-100'
+                  } bg-[#f3f4f6]`}
                 >
                   {i + 1}
                 </button>
@@ -185,31 +185,31 @@ export default function ProductDetailPage() {
           {/* Right: Product Info */}
           <div className="space-y-6">
             {/* Condition Badge */}
-            <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold ${cond.bg} ${cond.color}`}>
+            <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-semibold font-label ${cond.bg} ${cond.color}`}>
               <Tag className="w-4 h-4" />
               {cond.label}
             </div>
 
             {/* Title */}
-            <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-text-primary leading-tight">
+            <h1 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold text-on-surface leading-tight">
               {product.name}
             </h1>
 
             {/* Views */}
-            <p className="text-text-muted text-sm flex items-center gap-1.5">
+            <p className="text-outline text-sm flex items-center gap-1.5">
               <Star className="w-4 h-4 text-gold-400" />
               {product.viewCount.toLocaleString()} views
             </p>
 
             {/* Price */}
-            <div className="glass-card rounded-2xl p-5">
+            <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-5">
               <div className="flex items-end gap-3 flex-wrap">
-                <span className="font-heading text-3xl sm:text-4xl font-bold text-green-400">
+                <span className="font-heading text-3xl sm:text-4xl font-bold text-on-surface">
                   {formatPrice(displayPrice)}
                 </span>
                 {hasDiscount && (
                   <>
-                    <span className="text-text-muted text-xl line-through">{formatPrice(product.price)}</span>
+                    <span className="text-outline text-xl line-through">{formatPrice(product.price)}</span>
                     <span className="bg-red-500/20 text-red-400 text-sm font-bold px-2.5 py-1 rounded-full border border-red-500/30">
                       Save {discountPercent}%
                     </span>
@@ -219,8 +219,8 @@ export default function ProductDetailPage() {
 
               {/* Stock Status */}
               <div className="mt-3 flex items-center gap-2">
-                <span className={`w-2.5 h-2.5 rounded-full ${inStock ? (lowStock ? 'bg-yellow-400 animate-pulse' : 'bg-green-400') : 'bg-red-500'}`} />
-                <span className={`text-sm font-medium ${inStock ? (lowStock ? 'text-yellow-400' : 'text-green-400') : 'text-red-400'}`}>
+                <span className={`w-2.5 h-2.5 rounded-full ${inStock ? (lowStock ? 'bg-yellow-400 animate-pulse' : 'bg-primary') : 'bg-red-500'}`} />
+                <span className={`text-sm font-medium ${inStock ? (lowStock ? 'text-tertiary' : 'text-primary') : 'text-red-400'}`}>
                   {!inStock ? 'Out of Stock' : lowStock ? `Only ${product.stockQuantity} left` : 'In Stock'}
                 </span>
               </div>
@@ -228,14 +228,14 @@ export default function ProductDetailPage() {
 
             {/* Description */}
             <div>
-              <h3 className="font-heading font-semibold text-text-primary mb-2">Description</h3>
-              <div className="text-text-secondary text-sm leading-relaxed whitespace-pre-line">
+              <h3 className="font-heading font-semibold text-on-surface mb-2">Description</h3>
+              <div className="text-on-surface-variant text-sm leading-relaxed whitespace-pre-line">
                 {descExpanded || !isLongDesc ? product.description : shortDesc + '...'}
               </div>
               {isLongDesc && (
                 <button
                   onClick={() => setDescExpanded(!descExpanded)}
-                  className="mt-2 text-green-400 text-sm font-medium flex items-center gap-1 hover:text-green-300 transition-colors"
+                  className="mt-2 text-primary text-sm font-medium flex items-center gap-1 hover:text-primary/80 transition-colors"
                 >
                   {descExpanded ? 'Show less' : 'Read more'}
                   {descExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -247,18 +247,18 @@ export default function ProductDetailPage() {
             <div className="space-y-4">
               {/* Quantity Selector */}
               <div className="flex items-center gap-4">
-                <span className="text-text-secondary text-sm font-medium">Quantity:</span>
-                <div className="flex items-center gap-0 bg-navy-800/60 rounded-xl border border-white/10">
+                <span className="text-on-surface-variant text-sm font-medium">Quantity:</span>
+                <div className="flex items-center gap-0 bg-[#f3f4f6] rounded-xl border border-outline-variant/50">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-10 h-10 flex items-center justify-center text-text-secondary hover:text-green-400 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center text-text-primary font-semibold">{quantity}</span>
+                  <span className="w-12 text-center text-on-surface font-semibold">{quantity}</span>
                   <button
                     onClick={() => setQuantity(Math.min(product.stockQuantity, quantity + 1))}
-                    className="w-10 h-10 flex items-center justify-center text-text-secondary hover:text-green-400 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -272,14 +272,14 @@ export default function ProductDetailPage() {
                   disabled={!inStock}
                   className={`flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-base transition-all duration-300 ${
                     inStock
-                      ? 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-400 hover:to-green-500 text-navy-950 hover:shadow-lg hover:shadow-green-500/25 active:scale-95'
-                      : 'bg-navy-800/50 text-text-muted cursor-not-allowed'
+                      ? 'bg-[#0f172a] text-white hover:bg-black font-label font-bold active:scale-95 transition-all rounded-full'
+                      : 'bg-[#f3f4f6] text-outline cursor-not-allowed'
                   }`}
                 >
                   <ShoppingCart className="w-5 h-5" />
                   {inStock ? 'Add to Cart' : 'Out of Stock'}
                 </button>
-                <button className="w-12 h-12 flex items-center justify-center rounded-xl border border-white/10 bg-navy-800/40 text-text-secondary hover:text-red-400 hover:border-red-400/30 transition-all">
+                <button className="w-12 h-12 flex items-center justify-center rounded-xl border border-outline-variant/50 bg-[#f3f4f6]/40 text-on-surface-variant hover:text-red-400 hover:border-red-400/30 transition-all">
                   <Heart className="w-5 h-5" />
                 </button>
               </div>
@@ -288,7 +288,7 @@ export default function ProductDetailPage() {
               {shop.allowWhatsappOrder && inStock && (
                 <button
                   onClick={handleWhatsAppOrder}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-green-500/30 text-green-400 font-semibold hover:bg-green-500/10 transition-all"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-primary/30 text-primary font-semibold hover:bg-primary/10 transition-all"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Order via WhatsApp
@@ -299,9 +299,9 @@ export default function ProductDetailPage() {
               <div className="flex gap-3">
                 <button
                   onClick={handleCopyLink}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 text-text-secondary hover:text-green-400 hover:border-green-400/30 transition-all text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-outline-variant/50 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all text-sm"
                 >
-                  {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                  {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
                   {copied ? 'Link Copied!' : 'Copy Product Link'}
                 </button>
                 <button
@@ -309,7 +309,7 @@ export default function ProductDetailPage() {
                     const msg = `Check out ${product.name} on Farm Center Market!\n${window.location.href}`;
                     window.open(getWhatsAppLink('', msg), '_blank');
                   }}
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 text-text-secondary hover:text-green-400 hover:border-green-400/30 transition-all text-sm"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-outline-variant/50 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all text-sm"
                 >
                   <Share2 className="w-4 h-4" />
                   Share
@@ -318,23 +318,23 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Shop Info Card */}
-            <div className="glass-card rounded-2xl p-5">
+            <div className="bg-white border border-outline-variant/50 shadow-[0_4px_12px_rgba(4,22,39,0.02)] rounded-2xl p-5">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-navy-800/80 border border-white/10 flex items-center justify-center">
-                  <span className="font-heading text-xl font-bold text-green-400">
+                <div className="w-14 h-14 rounded-xl bg-[#f3f4f6]/80 border border-outline-variant/50 flex items-center justify-center">
+                  <span className="font-heading text-xl font-bold text-primary">
                     {shop.name.charAt(0)}
                   </span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <h3 className="font-heading font-bold text-text-primary truncate">{shop.name}</h3>
-                    {shop.isVerified && <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />}
+                    <h3 className="font-heading font-bold text-on-surface truncate">{shop.name}</h3>
+                    {shop.isVerified && <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />}
                   </div>
-                  <p className="text-text-muted text-sm flex items-center gap-1 mt-0.5">
+                  <p className="text-outline text-sm flex items-center gap-1 mt-0.5">
                     <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                     <span className="truncate">{shop.location}</span>
                   </p>
-                  <p className="text-text-muted text-xs flex items-center gap-1 mt-0.5">
+                  <p className="text-outline text-xs flex items-center gap-1 mt-0.5">
                     <Package className="w-3 h-3" />
                     {shop.productCount} products
                   </p>
@@ -344,14 +344,14 @@ export default function ProductDetailPage() {
               <div className="mt-4 flex gap-3">
                 <Link
                   href={`/shop/${shop.slug}`}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-navy-800/60 border border-white/10 text-text-secondary hover:text-green-400 hover:border-green-400/30 transition-all text-sm font-medium"
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#f3f4f6] border border-outline-variant/50 text-on-surface-variant hover:text-primary hover:border-primary/30 transition-all text-sm font-medium"
                 >
                   <Store className="w-4 h-4" />
                   Visit Shop
                 </Link>
                 <button
                   onClick={() => window.open(getWhatsAppLink(shop.whatsapp, 'Hi! I have a question about a product.'), '_blank')}
-                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-green-500/30 text-green-400 hover:bg-green-500/10 transition-all text-sm font-medium"
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-primary/30 text-primary hover:bg-primary/10 transition-all text-sm font-medium"
                 >
                   <MessageCircle className="w-4 h-4" />
                   Chat
@@ -364,12 +364,12 @@ export default function ProductDetailPage() {
         {/* Related Products */}
         <section className="mt-16">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-heading text-2xl font-bold text-text-primary">
+            <h2 className="font-heading text-2xl font-bold text-on-surface">
               More from {shop.name}
             </h2>
             <Link
               href={`/shop/${shop.slug}`}
-              className="text-green-400 text-sm font-medium flex items-center gap-1 hover:text-green-300 transition-colors"
+              className="text-primary text-sm font-medium flex items-center gap-1 hover:text-primary/80 transition-colors"
             >
               View All <ExternalLink className="w-4 h-4" />
             </Link>
@@ -377,28 +377,39 @@ export default function ProductDetailPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {mockRelated.map((p) => (
               <Link key={p.id} href={`/product/${p.slug}`} className="group block">
-                <div className="glass-card overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-lg group-hover:shadow-green-400/10 group-hover:border-green-400/30">
-                  <div className="aspect-square bg-navy-800/50 flex items-center justify-center relative overflow-hidden">
-                    <Zap className="w-10 h-10 text-navy-700/40" />
-                    <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-semibold border ${
-                      p.condition === 'new' ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                      : p.condition === 'uk-used' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                      : 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+                <div className="bg-white border border-outline-variant/50 overflow-hidden rounded-2xl transition-all duration-300 group-hover:scale-[1.03] group-hover:shadow-[0_4px_12px_rgba(4,22,39,0.02)] group-hover:shadow-[0_8px_24px_rgba(4,22,39,0.06)] group-hover:border-primary/30">
+                  <div className="aspect-square bg-[#f3f4f6] flex items-center justify-center relative overflow-hidden">
+                    <Zap className="w-10 h-10 text-outline-variant" />
+                    <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs font-semibold font-label border ${
+                      p.condition === 'new' ? 'bg-primary/20 text-primary border-primary/30'
+                      : p.condition === 'uk-used' ? 'bg-secondary/20 text-secondary border-secondary/30'
+                      : 'bg-tertiary/20 text-tertiary border-tertiary/30'
                     }`}>
                       {p.condition === 'new' ? 'New' : p.condition === 'uk-used' ? 'UK-Used' : 'Refurbished'}
                     </div>
                   </div>
-                  <div className="p-3">
-                    <h3 className="font-heading font-semibold text-text-primary text-sm line-clamp-2 group-hover:text-green-400 transition-colors">
+                  <div className="p-3 flex flex-col flex-1">
+                    <h3 className="font-heading font-semibold text-on-surface text-sm line-clamp-2 group-hover:text-[#0f172a] transition-colors mb-3">
                       {p.name}
                     </h3>
-                    <div className="mt-1.5 flex items-baseline gap-2">
-                      <span className="font-bold text-green-400">
-                        {formatPrice(p.discountPrice > 0 ? p.discountPrice : p.price)}
-                      </span>
-                      {p.discountPrice > 0 && p.discountPrice < p.price && (
-                        <span className="text-text-muted text-xs line-through">{formatPrice(p.price)}</span>
-                      )}
+                    <div className="mt-auto flex items-center justify-between">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-bold text-on-surface">
+                          {formatPrice(p.discountPrice > 0 ? p.discountPrice : p.price)}
+                        </span>
+                        {p.discountPrice > 0 && p.discountPrice < p.price && (
+                          <span className="text-outline text-xs line-through hidden sm:inline">{formatPrice(p.price)}</span>
+                        )}
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault(); e.stopPropagation();
+                          useCartStore.getState().addItem({ productId: p.id, name: p.name, price: p.discountPrice > 0 ? p.discountPrice : p.price, imageUrl: '', shopId: p.shopId, shopName: shop.name, slug: p.slug, quantity: 1 });
+                        }}
+                        className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0f172a] text-white transition-transform active:scale-95 hover:bg-black"
+                      >
+                        <ShoppingCart className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </div>
                 </div>

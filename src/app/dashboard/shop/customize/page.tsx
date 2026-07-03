@@ -99,14 +99,14 @@ export default function CustomizePage() {
   }
 
   const inputClass =
-    'w-full bg-navy-900/60 border border-white/8 rounded-xl px-4 py-3 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-green-400/50 focus:ring-1 focus:ring-green-400/20 transition-all';
+    'w-full bg-white border border-outline-variant/50 rounded-xl px-4 py-3 font-body text-on-surface placeholder:text-on-surface-variant text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all shadow-[0_4px_12px_rgba(4,22,39,0.02)]';
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h2 className="font-heading text-2xl font-bold text-text-primary">Customize Shop</h2>
-        <p className="text-sm text-text-secondary mt-1">
+        <h2 className="font-heading text-2xl font-bold text-on-surface">Customize Shop</h2>
+        <p className="font-body text-sm text-on-surface-variant mt-1">
           Personalize how your storefront looks to customers
         </p>
       </div>
@@ -115,15 +115,15 @@ export default function CustomizePage() {
         {/* Settings Panel */}
         <div className="xl:col-span-3 space-y-6">
           {/* Colors */}
-          <div className="glass-card p-6">
-            <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-              <Palette className="w-5 h-5 text-green-400" />
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+            <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+              <Palette className="w-5 h-5 text-primary" />
               Colors
             </h3>
             <div className="space-y-5">
               {/* Primary Color */}
               <div>
-                <p className="text-sm font-medium text-text-secondary mb-3">Primary Color</p>
+                <p className="font-body text-sm font-medium text-on-surface-variant mb-3">Primary Color</p>
                 <div className="flex items-center gap-3 flex-wrap">
                   {COLOR_PRESETS.map((color) => (
                     <button
@@ -131,13 +131,13 @@ export default function CustomizePage() {
                       onClick={() => setPrimaryColor(color)}
                       className={cn(
                         'w-9 h-9 rounded-xl transition-all hover:scale-110',
-                        primaryColor === color && 'ring-2 ring-white ring-offset-2 ring-offset-navy-900'
+                        primaryColor === color && 'ring-2 ring-white ring-offset-2 ring-offset-surface-container-lowest'
                       )}
                       style={{ backgroundColor: color }}
                     />
                   ))}
-                  <label className="relative w-9 h-9 rounded-xl border-2 border-dashed border-white/20 flex items-center justify-center cursor-pointer hover:border-white/40 transition-colors overflow-hidden">
-                    <span className="text-xs text-text-muted">+</span>
+                  <label className="relative w-9 h-9 rounded-xl border-2 border-dashed border-outline-variant flex items-center justify-center cursor-pointer hover:border-outline-variant/80 transition-colors overflow-hidden">
+                    <span className="text-xs text-on-surface-variant">+</span>
                     <input
                       type="color"
                       value={primaryColor}
@@ -150,7 +150,7 @@ export default function CustomizePage() {
 
               {/* Secondary Color */}
               <div>
-                <p className="text-sm font-medium text-text-secondary mb-3">Secondary Color</p>
+                <p className="font-body text-sm font-medium text-on-surface-variant mb-3">Secondary Color</p>
                 <div className="flex items-center gap-3 flex-wrap">
                   {SECONDARY_PRESETS.map((color) => (
                     <button
@@ -158,13 +158,13 @@ export default function CustomizePage() {
                       onClick={() => setSecondaryColor(color)}
                       className={cn(
                         'w-9 h-9 rounded-xl transition-all hover:scale-110',
-                        secondaryColor === color && 'ring-2 ring-white ring-offset-2 ring-offset-navy-900'
+                        secondaryColor === color && 'ring-2 ring-white ring-offset-2 ring-offset-surface-container-lowest'
                       )}
                       style={{ backgroundColor: color }}
                     />
                   ))}
-                  <label className="relative w-9 h-9 rounded-xl border-2 border-dashed border-white/20 flex items-center justify-center cursor-pointer hover:border-white/40 transition-colors overflow-hidden">
-                    <span className="text-xs text-text-muted">+</span>
+                  <label className="relative w-9 h-9 rounded-xl border-2 border-dashed border-outline-variant flex items-center justify-center cursor-pointer hover:border-outline-variant/80 transition-colors overflow-hidden">
+                    <span className="text-xs text-on-surface-variant">+</span>
                     <input
                       type="color"
                       value={secondaryColor}
@@ -178,9 +178,9 @@ export default function CustomizePage() {
           </div>
 
           {/* Font */}
-          <div className="glass-card p-6">
-            <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-              <Type className="w-5 h-5 text-green-400" />
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+            <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+              <Type className="w-5 h-5 text-primary" />
               Font
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -191,23 +191,23 @@ export default function CustomizePage() {
                   className={cn(
                     'p-4 rounded-xl border text-left transition-all hover:scale-[1.02]',
                     fontChoice === font.id
-                      ? 'bg-green-400/10 border-green-400/30'
-                      : 'bg-white/3 border-white/6 hover:border-white/12'
+                      ? 'bg-primary/10 border-primary/30'
+                      : 'bg-surface-container border-outline-variant/50 hover:border-outline-variant'
                   )}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <p
-                      className="text-lg font-semibold text-text-primary"
+                      className="text-lg font-semibold text-on-surface"
                       style={{ fontFamily: font.family }}
                     >
                       {font.name}
                     </p>
                     {fontChoice === font.id && (
-                      <Check className="w-4 h-4 text-green-400" />
+                      <Check className="w-4 h-4 text-primary" />
                     )}
                   </div>
                   <p
-                    className="text-xs text-text-muted"
+                    className="text-xs text-on-surface-variant"
                     style={{ fontFamily: font.family }}
                   >
                     {font.sample}
@@ -218,9 +218,9 @@ export default function CustomizePage() {
           </div>
 
           {/* Layout */}
-          <div className="glass-card p-6">
-            <h3 className="font-heading text-base font-semibold text-text-primary mb-5 flex items-center gap-2">
-              <LayoutGrid className="w-5 h-5 text-green-400" />
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
+            <h3 className="font-heading text-base font-semibold text-on-surface mb-5 flex items-center gap-2">
+              <LayoutGrid className="w-5 h-5 text-primary" />
               Product Layout
             </h3>
             <div className="grid grid-cols-3 gap-3">
@@ -233,25 +233,25 @@ export default function CustomizePage() {
                     className={cn(
                       'p-4 rounded-xl border text-center transition-all hover:scale-[1.02]',
                       layoutStyle === layout.id
-                        ? 'bg-green-400/10 border-green-400/30'
-                        : 'bg-white/3 border-white/6 hover:border-white/12'
+                        ? 'bg-primary/10 border-primary/30'
+                        : 'bg-surface-container border-outline-variant/50 hover:border-outline-variant'
                     )}
                   >
                     <Icon
                       className={cn(
                         'w-7 h-7 mx-auto mb-2',
-                        layoutStyle === layout.id ? 'text-green-400' : 'text-text-muted'
+                        layoutStyle === layout.id ? 'text-primary' : 'text-on-surface-variant'
                       )}
                     />
                     <p
                       className={cn(
-                        'text-sm font-medium',
-                        layoutStyle === layout.id ? 'text-text-primary' : 'text-text-secondary'
+                        'font-label text-sm font-medium',
+                        layoutStyle === layout.id ? 'text-on-surface' : 'text-on-surface-variant'
                       )}
                     >
                       {layout.name}
                     </p>
-                    <p className="text-xs text-text-muted mt-0.5">{layout.description}</p>
+                    <p className="font-body text-xs text-on-surface-variant mt-0.5">{layout.description}</p>
                   </button>
                 );
               })}
@@ -259,18 +259,18 @@ export default function CustomizePage() {
           </div>
 
           {/* Announcement */}
-          <div className="glass-card p-6">
+          <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] p-6">
             <div className="flex items-center justify-between mb-5">
-              <h3 className="font-heading text-base font-semibold text-text-primary flex items-center gap-2">
-                <Megaphone className="w-5 h-5 text-green-400" />
+              <h3 className="font-heading text-base font-semibold text-on-surface flex items-center gap-2">
+                <Megaphone className="w-5 h-5 text-primary" />
                 Announcement Banner
               </h3>
               <button
                 onClick={() => setAnnouncementEnabled(!announcementEnabled)}
-                className="text-text-muted hover:text-text-primary transition-colors"
+                className="text-on-surface-variant hover:text-on-surface transition-colors"
               >
                 {announcementEnabled ? (
-                  <ToggleRight className="w-8 h-8 text-green-400" />
+                  <ToggleRight className="w-8 h-8 text-primary" />
                 ) : (
                   <ToggleLeft className="w-8 h-8" />
                 )}
@@ -291,7 +291,7 @@ export default function CustomizePage() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-green-400 to-green-600 text-navy-950 text-sm font-bold hover:shadow-lg hover:shadow-green-400/25 hover:scale-[1.02] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-on-primary text-sm font-label font-bold hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Save className="w-4 h-4" />
               {saving ? 'Saving...' : 'Save Theme'}
@@ -302,16 +302,16 @@ export default function CustomizePage() {
         {/* Live Preview Panel */}
         <div className="xl:col-span-2">
           <div className="sticky top-6">
-            <div className="glass-card overflow-hidden">
-              <div className="p-4 border-b border-white/6 flex items-center gap-2">
-                <Monitor className="w-4 h-4 text-green-400" />
-                <span className="text-sm font-semibold text-text-primary">Live Preview</span>
+            <div className="bg-white border border-outline-variant/50 rounded-2xl shadow-[0_4px_12px_rgba(4,22,39,0.02)] overflow-hidden">
+              <div className="p-4 border-b border-outline-variant/50 flex items-center gap-2">
+                <Monitor className="w-4 h-4 text-primary" />
+                <span className="font-heading text-sm font-semibold text-on-surface">Live Preview</span>
               </div>
 
               <div className="p-4">
                 {/* Mini storefront preview */}
                 <div
-                  className="rounded-xl overflow-hidden border border-white/6"
+                  className="rounded-xl overflow-hidden border border-outline-variant/50"
                   style={{ fontFamily: selectedFont.family }}
                 >
                   {/* Announcement */}
@@ -325,7 +325,7 @@ export default function CustomizePage() {
                   )}
 
                   {/* Store header */}
-                  <div className="p-4 bg-navy-800">
+                  <div className="p-4 bg-surface-container-highest">
                     <div className="flex items-center gap-3">
                       <div
                         className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold"
@@ -334,23 +334,23 @@ export default function CustomizePage() {
                         TV
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-text-primary">TechVille Store</p>
-                        <p className="text-xs text-text-muted">Premium gadgets</p>
+                        <p className="text-sm font-bold text-on-surface">TechVille Store</p>
+                        <p className="text-xs text-on-surface-variant">Premium gadgets</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Products preview */}
-                  <div className="p-3 bg-navy-900/80">
+                  <div className="p-3 bg-surface-container">
                     {layoutStyle === 'grid' && (
                       <div className="grid grid-cols-2 gap-2">
                         {[1, 2, 3, 4].map((i) => (
-                          <div key={i} className="rounded-lg bg-navy-800 overflow-hidden border border-white/4">
-                            <div className="aspect-square bg-navy-700 flex items-center justify-center">
-                              <Package className="w-6 h-6 text-text-muted/30" />
+                          <div key={i} className="rounded-lg bg-white overflow-hidden border border-outline-variant/50">
+                            <div className="aspect-square bg-surface-container flex items-center justify-center">
+                              <Package className="w-6 h-6 text-on-surface-variant/30" />
                             </div>
                             <div className="p-2">
-                              <div className="h-2 w-16 bg-white/10 rounded mb-1.5" />
+                              <div className="h-2 w-16 bg-outline-variant/50 rounded mb-1.5" />
                               <div
                                 className="h-2 w-10 rounded"
                                 style={{ backgroundColor: primaryColor, opacity: 0.6 }}
@@ -373,12 +373,12 @@ export default function CustomizePage() {
                     {layoutStyle === 'list' && (
                       <div className="space-y-2">
                         {[1, 2, 3].map((i) => (
-                          <div key={i} className="flex gap-2 p-2 rounded-lg bg-navy-800 border border-white/4">
-                            <div className="w-12 h-12 rounded bg-navy-700 flex items-center justify-center shrink-0">
-                              <Package className="w-4 h-4 text-text-muted/30" />
+                          <div key={i} className="flex gap-2 p-2 rounded-lg bg-white border border-outline-variant/50">
+                            <div className="w-12 h-12 rounded bg-surface-container flex items-center justify-center shrink-0">
+                              <Package className="w-4 h-4 text-on-surface-variant/30" />
                             </div>
                             <div className="flex-1">
-                              <div className="h-2 w-20 bg-white/10 rounded mb-1.5" />
+                              <div className="h-2 w-20 bg-outline-variant/50 rounded mb-1.5" />
                               <div
                                 className="h-2 w-12 rounded"
                                 style={{ backgroundColor: primaryColor, opacity: 0.6 }}
@@ -393,17 +393,17 @@ export default function CustomizePage() {
                         {[1, 2, 3, 4].map((i) => (
                           <div
                             key={i}
-                            className="rounded-lg bg-navy-800 overflow-hidden border border-white/4"
+                            className="rounded-lg bg-white overflow-hidden border border-outline-variant/50"
                             style={{ height: i % 2 === 0 ? '120px' : '90px' }}
                           >
                             <div
-                              className="w-full bg-navy-700 flex items-center justify-center"
+                              className="w-full bg-surface-container flex items-center justify-center"
                               style={{ height: i % 2 === 0 ? '80px' : '50px' }}
                             >
-                              <Package className="w-5 h-5 text-text-muted/30" />
+                              <Package className="w-5 h-5 text-on-surface-variant/30" />
                             </div>
                             <div className="p-2">
-                              <div className="h-1.5 w-12 bg-white/10 rounded mb-1" />
+                              <div className="h-1.5 w-12 bg-outline-variant/50 rounded mb-1" />
                               <div
                                 className="h-1.5 w-8 rounded"
                                 style={{ backgroundColor: primaryColor, opacity: 0.6 }}
@@ -420,7 +420,7 @@ export default function CustomizePage() {
                     className="p-2 text-center"
                     style={{ backgroundColor: `${primaryColor}15` }}
                   >
-                    <p className="text-[10px] text-text-muted">
+                    <p className="text-[10px] text-on-surface-variant">
                       Powered by Farm Center Market
                     </p>
                   </div>
