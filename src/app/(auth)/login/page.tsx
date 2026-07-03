@@ -13,6 +13,8 @@ import {
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { account } from '@/lib/appwrite/client';
+import { useAuthStore } from '@/stores/auth';
 
 const emailSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -41,18 +43,27 @@ export default function LoginPage() {
   const handleEmailSubmit = async (data: EmailFormData) => {
     setIsLoading(true);
     try {
-      // Set a mock session cookie so the proxy middleware allows access
+      // 1. Appwrite Session
+      await account.createEmailPasswordSession(data.email, data.password);
+      
+      // 2. Initialize Zustand Store (fetches profile)
+      const authStore = useAuthStore.getState();
+      await authStore.initialize();
+      const profile = authStore.profile;
+
+      // 3. Set a mock session cookie so the proxy middleware allows access (can be updated later for SSR)
       await fetch('/api/auth/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session: 'mock-session-id' }),
       });
       
-      // If the email has 'admin', redirect to admin panel, otherwise dashboard
-      const targetPath = data.email.includes('admin') ? '/admin' : '/dashboard';
+      // 4. Redirect based on role
+      const targetPath = profile?.role === 'admin' ? '/admin' : (profile?.role === 'seller' ? '/dashboard/shop' : '/dashboard');
       window.location.href = targetPath;
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      emailForm.setError('root', { message: err.message || 'Failed to login' });
     } finally {
       setIsLoading(false);
     }
@@ -128,6 +139,13 @@ export default function LoginPage() {
               onSubmit={emailForm.handleSubmit(handleEmailSubmit)}
               className="space-y-5"
             >
+              {emailForm.formState.errors.root && (
+                <div className="rounded-xl bg-error/10 p-4 text-center">
+                  <p className="font-label text-sm font-semibold text-error">
+                    {emailForm.formState.errors.root.message}
+                  </p>
+                </div>
+              )}
               <div>
                 <label
                   htmlFor="email"

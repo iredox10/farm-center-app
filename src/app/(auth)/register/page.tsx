@@ -14,6 +14,10 @@ import {
   User,
 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { account, databases } from '@/lib/appwrite/client';
+import { DATABASE_ID, PROFILES_COLLECTION, SHOPS_COLLECTION } from '@/lib/appwrite/config';
+import { ID } from 'appwrite';
+import { useAuthStore } from '@/stores/auth';
 
 type AccountType = 'buyer' | 'seller' | null;
 
@@ -45,9 +49,71 @@ export default function RegisterPage() {
 
   const handleRegister = async (data: RegisterFormData) => {
     setIsLoading(true);
-    console.log('Register:', { ...data, accountType });
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsLoading(false);
+    try {
+      // 1. Create User in Appwrite Auth
+      const user = await account.create(
+        ID.unique(),
+        data.email,
+        data.password,
+        data.fullName
+      );
+      
+      // Update phone (requires active session usually, or server SDK, but let's just store it in profile)
+      // We will store phone in profile instead of Auth if it throws errors without verification
+      
+      // 2. Create Session (Login)
+      await account.createEmailPasswordSession(data.email, data.password);
+
+      // 3. Create Profile in Database
+      await databases.createDocument(
+        DATABASE_ID,
+        PROFILES_COLLECTION,
+        user.$id,
+        {
+          userId: user.$id,
+          fullName: data.fullName,
+          phone: data.phone,
+          role: accountType || 'buyer',
+          createdAt: new Date().toISOString(),
+        }
+      );
+
+      // 4. If Seller, Create Shop Placeholder
+      if (accountType === 'seller' && data.shopName) {
+        await databases.createDocument(
+          DATABASE_ID,
+          SHOPS_COLLECTION,
+          ID.unique(),
+          {
+            ownerId: user.$id,
+            name: data.shopName,
+            slug: data.shopName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, ''),
+            createdAt: new Date().toISOString(),
+            isActive: false, // Needs to complete onboarding/verification
+          }
+        );
+      }
+
+      // 5. Initialize Store
+      await useAuthStore.getState().initialize();
+
+      // 6. Set mock session cookie for middleware
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session: 'mock-session-id' }),
+      });
+
+      // 7. Redirect based on role
+      window.location.href = accountType === 'seller' ? '/dashboard/shop' : '/dashboard';
+      
+    } catch (err: any) {
+      console.error(err);
+      // We can use setError to display the error on the UI
+      alert(err.message || 'Failed to register account');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

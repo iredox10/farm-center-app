@@ -1,78 +1,91 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import {
   MapPin, CheckCircle, Phone, MessageCircle, Share2, ShoppingCart, ExternalLink,
-  Star, Plus, Smartphone, Laptop, Clock, Award, ShieldCheck, Mail, Wrench, Check, Shield
+  Star, Plus, Smartphone, Laptop, Clock, Award, ShieldCheck, Mail, Wrench, Check, Shield, Loader2
 } from 'lucide-react';
 import { formatPrice, getWhatsAppLink } from '@/lib/utils';
 import { useCartStore } from '@/stores/cart';
-
-// --- MOCK DATA SIMULATING DATABASE WITH TRUST METRICS ---
-const shop = {
-  name: "TechHub Electronics",
-  slug: "techhub-electronics",
-  whatsapp: "+2348091234567",
-  phone: "+2348091234567",
-  isVerified: true,
-  physicalAuditDate: '2023-10-15',
-  ratingAverage: 4.9,
-  reviewCount: 1245,
-  createdAt: '2018-04-12T00:00:00Z',
-  location: "Shop 42, Block B, FarmCenter GSM Market, Kano State, Nigeria."
-};
-
-const mockProducts = [
-  {
-    id: 'p1', name: 'iPhone 15 Pro Max', category: 'phone', price: 1450000, discountPrice: 1550000,
-    specs: '256GB, Natural Titanium.', tag: 'NEW RELEASE', tagType: 'bg-[#006875]',
-    image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=600',
-    certificationStatus: 'certified', batteryHealth: 100, testingWarrantyDays: 30,
-    isFeatured: true
-  },
-  {
-    id: 'p2', name: 'iPhone 14', category: 'phone', price: 620000, discountPrice: null,
-    specs: '128GB, Midnight, Refurbished Grade A.', tag: 'SAVE 15%', tagType: 'bg-[#00e5ff] text-[#041627]',
-    image: 'https://images.unsplash.com/photo-1663465374413-83eb009efa03?auto=format&fit=crop&q=80&w=400',
-    certificationStatus: 'certified', batteryHealth: 92, testingWarrantyDays: 7,
-    isFeatured: false
-  },
-  {
-    id: 'l1', name: 'ROG Zephyrus G14', category: 'laptop', price: 2100000,
-    specs: 'Ryzen 9, 32GB RAM, 1TB SSD. High-Tech Cooling.', tag: 'RTX 4070', tagColor: 'bg-orange-100 text-orange-700',
-    image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=400',
-    certificationStatus: 'none', testingWarrantyDays: 7
-  },
-  {
-    id: 'l2', name: 'Alienware m15 R7', category: 'laptop', price: 1550000,
-    specs: 'Core i7, 16GB RAM, 512GB SSD, RGB Per-Key.', tag: 'RTX 3060', tagColor: 'bg-blue-100 text-blue-700',
-    image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&q=80&w=400',
-    certificationStatus: 'certified', testingWarrantyDays: 14
-  },
-  {
-    id: 'l3', name: 'Razer Blade 15', category: 'laptop', price: 2850000,
-    specs: 'Core i9, 32GB RAM, 1TB SSD. QHD Display.', tag: '240HZ', tagColor: 'bg-amber-100 text-amber-700',
-    image: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&q=80&w=400',
-    certificationStatus: 'certified', batteryHealth: 98, testingWarrantyDays: 30
-  }
-];
+import { api } from '@/lib/appwrite/api';
 
 export default function ShopStorefrontPage() {
+  const params = useParams();
+  const slug = params?.slug as string;
+
+  const [shop, setShop] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  
   const addItem = useCartStore((s) => s.addItem);
 
+  useEffect(() => {
+    async function loadData() {
+      if (!slug) return;
+      
+      // Fallback for "slug" mapping to the mock slug we just seeded
+      const targetSlug = slug || 'techhub-electronics'; 
+      
+      const fetchedShop = await api.getShopBySlug(targetSlug);
+      if (fetchedShop) {
+        setShop(fetchedShop);
+        const shopId = (fetchedShop as any).$id || fetchedShop.id;
+        const fetchedProducts = await api.getShopProducts(shopId);
+        setProducts(fetchedProducts);
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, [slug]);
+
   const handleCopyShopLink = () => {
+    if (!shop) return;
     navigator.clipboard.writeText(`${window.location.origin}/shop/${shop.slug}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const joinedYear = new Date(shop.createdAt).getFullYear();
-  const latestIphones = mockProducts.filter(p => p.category === 'phone');
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center">
+        <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+        <p className="text-on-surface-variant font-medium">Loading Shop...</p>
+      </div>
+    );
+  }
+
+  if (!shop) {
+    return (
+      <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center">
+        <h2 className="font-heading text-2xl font-bold text-primary mb-2">Shop Not Found</h2>
+        <p className="text-on-surface-variant">The shop you are looking for does not exist.</p>
+        <Link href="/" className="mt-6 px-6 py-2 bg-primary text-white rounded-xl font-bold">Go Home</Link>
+      </div>
+    );
+  }
+
+  const joinedYear = shop.createdAt ? new Date(shop.createdAt).getFullYear() : new Date().getFullYear();
+  
+  // Format products with fallback images since real Appwrite storage isn't fully seeded with images yet
+  const formattedProducts = products.map((p, idx) => ({
+    ...p,
+    id: p.$id || p.id,
+    image: p.categoryIds?.includes('laptops') || p.name.toLowerCase().includes('zephyrus')
+        ? 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&q=80&w=400' 
+        : (idx === 0 ? 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&q=80&w=600' : 'https://images.unsplash.com/photo-1663465374413-83eb009efa03?auto=format&fit=crop&q=80&w=400'),
+    tag: p.discountPrice ? 'SALE' : (idx === 0 ? 'NEW RELEASE' : 'HOT'),
+    tagType: idx === 0 ? 'bg-[#006875]' : 'bg-[#00e5ff] text-[#041627]',
+    tagColor: 'bg-orange-100 text-orange-700',
+    isFeatured: idx === 0 && (p.categoryIds?.includes('phones') || p.name.toLowerCase().includes('iphone'))
+  }));
+
+  const latestIphones = formattedProducts.filter(p => p.categoryIds?.includes('phones') || p.name.toLowerCase().includes('iphone'));
   const featuredPhone = latestIphones.find(p => p.isFeatured) || latestIphones[0];
   const regularPhones = latestIphones.filter(p => p.id !== featuredPhone?.id);
-  const gamingLaptops = mockProducts.filter(p => p.category === 'laptop');
+  const gamingLaptops = formattedProducts.filter(p => p.categoryIds?.includes('laptops') || p.name.toLowerCase().includes('zephyrus'));
 
   return (
     <main className="min-h-screen bg-[#fafafa]">
@@ -91,10 +104,9 @@ export default function ShopStorefrontPage() {
             <div className="w-24 h-24 sm:w-32 sm:h-32 bg-white rounded-xl flex items-center justify-center flex-shrink-0 shadow-[0_8px_30px_rgba(0,0,0,0.12)] p-2">
                <div className="w-full h-full border-2 border-primary/20 rounded-lg flex flex-col items-center justify-center text-center p-1">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1">
-                     <span className="font-heading text-lg sm:text-xl font-bold text-primary">T</span>
+                     <span className="font-heading text-lg sm:text-xl font-bold text-primary">{shop.name.charAt(0)}</span>
                   </div>
-                  <span className="font-heading text-[10px] sm:text-xs font-bold text-primary leading-none mb-0.5">TECHHUB</span>
-                  <span className="text-[7px] sm:text-[8px] text-outline font-bold leading-none tracking-wider">ELECTRONICS</span>
+                  <span className="font-heading text-[10px] sm:text-xs font-bold text-primary leading-none mb-0.5">{shop.name.substring(0,7).toUpperCase()}</span>
                </div>
             </div>
             
@@ -111,7 +123,7 @@ export default function ShopStorefrontPage() {
                <p className="text-sm text-gray-300 mb-3 sm:mb-4">Premium Gadget Retailer since {joinedYear} • Kano FarmCenter</p>
                <div className="flex flex-wrap gap-2 sm:gap-3">
                  <span className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-xs sm:text-sm border border-white/20 flex items-center gap-1.5 shadow-sm">
-                   <Star className="w-3.5 h-3.5 fill-gold-400 text-gold-400" /> {shop.ratingAverage} ({(shop.reviewCount / 1000).toFixed(1)}k Reviews)
+                   <Star className="w-3.5 h-3.5 fill-gold-400 text-gold-400" /> {shop.ratingAverage || '0.0'} ({((shop.reviewCount || 0) / 1000).toFixed(1)}k Reviews)
                  </span>
                  <span className="px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-xs sm:text-sm border border-white/20 flex items-center gap-1.5 shadow-sm">
                    <MessageCircle className="w-3.5 h-3.5 text-blue-200" /> Fast Response
@@ -144,17 +156,18 @@ export default function ShopStorefrontPage() {
           <div className="flex-1 space-y-12 min-w-0">
             
             {/* Latest iPhones Section */}
+            {latestIphones.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-heading text-xl sm:text-2xl font-bold text-primary flex items-center gap-3">
                   <span className="w-1.5 h-7 bg-[#00e5ff] rounded-full inline-block"></span>
-                  Latest iPhones
+                  Latest Phones
                 </h2>
                 <Link href="#" className="text-[#006875] font-semibold text-sm hover:underline">View All</Link>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-                {/* Featured iPhone (Spans 2 cols) */}
+                {/* Featured Phone (Spans 2 cols) */}
                 {featuredPhone && (
                   <div className="md:col-span-2 bg-white rounded-2xl border border-outline-variant/50 overflow-hidden shadow-[0_4px_20px_rgba(4,22,39,0.03)] flex flex-col group">
                      <div className="bg-[#f8f9fa] p-6 sm:p-8 flex-1 relative flex items-center justify-center min-h-[260px] sm:min-h-[300px]">
@@ -168,7 +181,7 @@ export default function ShopStorefrontPage() {
                             </span>
                           )}
                         </div>
-                        {/* iPhone Image */}
+                        {/* Phone Image */}
                         <div className="w-56 h-64 relative flex items-center justify-center transform group-hover:scale-105 transition-transform duration-500 drop-shadow-2xl">
                            <img src={featuredPhone.image} alt={featuredPhone.name} className="object-contain h-full w-full rounded-2xl border-4 border-white/50 mix-blend-multiply" />
                         </div>
@@ -183,7 +196,7 @@ export default function ShopStorefrontPage() {
                             )}
                           </div>
                         </div>
-                        <p className="text-on-surface-variant text-sm sm:text-base mb-4 max-w-md">{featuredPhone.specs}</p>
+                        <p className="text-on-surface-variant text-sm sm:text-base mb-4 max-w-md">{featuredPhone.description}</p>
                         
                         {/* Trust Details */}
                         <div className="flex gap-2 mb-6 sm:mb-8">
@@ -201,7 +214,7 @@ export default function ShopStorefrontPage() {
 
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                           <button 
-                            onClick={() => addItem({ productId: featuredPhone.id, shopId: 'shop-1', name: featuredPhone.name, price: featuredPhone.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: featuredPhone.id })}
+                            onClick={() => addItem({ productId: featuredPhone.id, shopId: shop.id, name: featuredPhone.name, price: featuredPhone.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: featuredPhone.id })}
                             className="flex-1 bg-primary text-white py-3.5 sm:py-4 rounded-xl font-bold hover:bg-[#006875] transition-colors shadow-md text-sm sm:text-base"
                           >
                             Add to Cart
@@ -227,7 +240,7 @@ export default function ShopStorefrontPage() {
                     </div>
                     <div className="p-5 sm:p-6 border-t border-outline-variant/30 flex flex-col flex-1">
                        <h3 className="font-heading text-lg font-bold text-primary mb-1.5">{phone.name}</h3>
-                       <p className="text-on-surface-variant text-xs sm:text-sm mb-3 leading-relaxed flex-1">{phone.specs}</p>
+                       <p className="text-on-surface-variant text-xs sm:text-sm mb-3 leading-relaxed flex-1">{phone.description}</p>
                        
                        {/* Trust Details */}
                        <div className="flex flex-wrap gap-1.5 mb-4">
@@ -245,7 +258,7 @@ export default function ShopStorefrontPage() {
 
                        <p className="font-heading font-bold text-[#006875] text-xl mb-4">{formatPrice(phone.price)}</p>
                        <button 
-                          onClick={() => addItem({ productId: phone.id, shopId: 'shop-1', name: phone.name, price: phone.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: phone.id })}
+                          onClick={() => addItem({ productId: phone.id, shopId: shop.id, name: phone.name, price: phone.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: phone.id })}
                           className="w-full bg-[#e5eeff] text-[#006875] py-3 rounded-xl font-bold text-sm hover:bg-[#dce9ff] transition-colors mt-auto"
                         >
                           Quick Add
@@ -255,13 +268,15 @@ export default function ShopStorefrontPage() {
                 ))}
               </div>
             </section>
+            )}
 
             {/* Gaming Laptops Section */}
+            {gamingLaptops.length > 0 && (
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-heading text-xl sm:text-2xl font-bold text-primary flex items-center gap-3">
                   <span className="w-1.5 h-7 bg-[#00e5ff] rounded-full inline-block opacity-75"></span>
-                  Gaming Laptops
+                  Laptops
                 </h2>
                 <Link href="#" className="text-[#006875] font-semibold text-sm hover:underline">View All</Link>
               </div>
@@ -286,7 +301,7 @@ export default function ShopStorefrontPage() {
                          <span className={`px-2.5 py-1 ${laptop.tagColor} text-[10px] font-bold rounded uppercase tracking-wider`}>{laptop.tag}</span>
                        </div>
                        <h3 className="font-heading text-sm sm:text-base font-bold text-primary mb-1.5 group-hover:text-[#006875] transition-colors">{laptop.name}</h3>
-                       <p className="text-on-surface-variant text-xs mb-3 flex-1 leading-relaxed">{laptop.specs}</p>
+                       <p className="text-on-surface-variant text-xs mb-3 flex-1 leading-relaxed">{laptop.description}</p>
                        
                        {/* Trust Details */}
                        {laptop.testingWarrantyDays > 0 && (
@@ -300,7 +315,7 @@ export default function ShopStorefrontPage() {
                        <div className="flex items-center justify-between mt-auto">
                          <p className="font-heading font-bold text-primary text-base">{formatPrice(laptop.price)}</p>
                          <button 
-                           onClick={() => addItem({ productId: laptop.id, shopId: 'shop-1', name: laptop.name, price: laptop.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: laptop.id })}
+                           onClick={() => addItem({ productId: laptop.id, shopId: shop.id, name: laptop.name, price: laptop.price, quantity: 1, imageUrl: '', shopName: shop.name, slug: laptop.id })}
                            className="w-9 h-9 rounded-full bg-[#00e5ff] text-[#041627] flex items-center justify-center hover:bg-[#00cce6] transition-colors shadow-sm"
                          >
                            <ShoppingCart className="w-4 h-4" />
@@ -311,6 +326,7 @@ export default function ShopStorefrontPage() {
                  ))}
               </div>
             </section>
+            )}
 
           </div>
 
@@ -329,7 +345,7 @@ export default function ShopStorefrontPage() {
                       </div>
                       <div>
                          <p className="font-bold text-sm text-primary mb-1.5">Location</p>
-                         <p className="text-sm text-on-surface-variant leading-relaxed">{shop.location}</p>
+                         <p className="text-sm text-on-surface-variant leading-relaxed">{shop.location || 'Kano, Nigeria'}</p>
                          <Link href="#" className="text-[#006875] text-[11px] font-bold mt-2 inline-flex items-center gap-1 hover:underline">
                             View on Map <ExternalLink className="w-3 h-3" />
                          </Link>
@@ -380,8 +396,8 @@ export default function ShopStorefrontPage() {
                       </div>
                       <div>
                          <p className="font-bold text-sm text-primary mb-1.5">Contact Details</p>
-                         <p className="text-sm text-on-surface-variant font-medium">{shop.phone}</p>
-                         <p className="text-sm text-[#006875] hover:underline cursor-pointer mt-0.5">sales@techhubkano.com</p>
+                         <p className="text-sm text-on-surface-variant font-medium">{shop.phone || '+234...'}</p>
+                         <p className="text-sm text-[#006875] hover:underline cursor-pointer mt-0.5">sales@{shop.slug}.com</p>
                       </div>
                    </div>
                 </div>
@@ -404,7 +420,7 @@ export default function ShopStorefrontPage() {
                 </div>
 
                 <button 
-                  onClick={() => window.open(getWhatsAppLink(shop.whatsapp, `Hi ${shop.name}! I found your shop on Farm Center Market.`), '_blank')}
+                  onClick={() => window.open(getWhatsAppLink(shop.whatsapp || '', `Hi ${shop.name}! I found your shop on Farm Center Market.`), '_blank')}
                   className="w-full bg-[#e5eeff] text-[#006875] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 hover:bg-[#dce9ff] transition-colors shadow-sm"
                 >
                    <Mail className="w-4 h-4" /> Contact Seller
