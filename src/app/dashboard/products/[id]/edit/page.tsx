@@ -1,66 +1,16 @@
 'use client';
 
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import ProductForm from '@/components/dashboard/ProductForm';
-
-/* Mock product data for edit mode */
-const MOCK_PRODUCTS: Record<string, {
-  name: string;
-  description: string;
-  categoryIds: string[];
-  condition: 'new' | 'uk-used' | 'refurbished';
-  price: number;
-  discountPrice: number;
-  stockQuantity: number;
-}> = {
-  '1': {
-    name: 'iPhone 15 Pro Max 256GB',
-    description: 'Brand new iPhone 15 Pro Max with 256GB storage. Natural Titanium finish. Comes with original box, charger, and Apple warranty. A17 Pro chip, 48MP camera system, titanium design.',
-    categoryIds: ['phones'],
-    condition: 'new',
-    price: 950000,
-    discountPrice: 0,
-    stockQuantity: 5,
-  },
-  '2': {
-    name: 'Samsung Galaxy S24 Ultra',
-    description: 'Samsung Galaxy S24 Ultra with 512GB storage and S-Pen. Titanium Gray color. Features AI-powered photo editing, 200MP camera, and Snapdragon 8 Gen 3 processor.',
-    categoryIds: ['phones'],
-    condition: 'new',
-    price: 780000,
-    discountPrice: 720000,
-    stockQuantity: 3,
-  },
-  '3': {
-    name: 'MacBook Air M3 2024',
-    description: 'UK-used MacBook Air with Apple M3 chip. 15-inch Liquid Retina display. 16GB unified memory, 512GB SSD. Battery health at 94%. Comes with original charger, no box.',
-    categoryIds: ['laptops'],
-    condition: 'uk-used',
-    price: 1200000,
-    discountPrice: 0,
-    stockQuantity: 1,
-  },
-  '4': {
-    name: 'JBL Flip 6 Bluetooth Speaker',
-    description: 'Professionally refurbished JBL Flip 6 portable speaker. IP67 waterproof, 12 hours battery life. Sound quality tested and certified. Comes with USB-C cable.',
-    categoryIds: ['audio', 'electronics'],
-    condition: 'refurbished',
-    price: 85000,
-    discountPrice: 75000,
-    stockQuantity: 8,
-  },
-  '5': {
-    name: 'AirPods Pro 2nd Generation',
-    description: 'Brand new sealed AirPods Pro (2nd generation) with MagSafe Charging Case (USB-C). Active Noise Cancellation, Adaptive Audio, Personalized Spatial Audio.',
-    categoryIds: ['audio', 'accessories'],
-    condition: 'new',
-    price: 185000,
-    discountPrice: 0,
-    stockQuantity: 0,
-  },
-};
+import { api } from '@/lib/appwrite/api';
+import { databases } from '@/lib/appwrite/client';
+import { DATABASE_ID, PRODUCT_MEDIA_COLLECTION, PRODUCT_MEDIA_BUCKET } from '@/lib/appwrite/config';
+import { Query, ID } from 'appwrite';
+import { Product } from '@/types';
+import { toast } from 'react-hot-toast';
 
 interface EditProductPageProps {
   params: Promise<{ id: string }>;
@@ -68,7 +18,41 @@ interface EditProductPageProps {
 
 export default function EditProductPage({ params }: EditProductPageProps) {
   const { id } = use(params);
-  const product = MOCK_PRODUCTS[id];
+  const router = useRouter();
+  
+  const [product, setProduct] = useState<Product | null>(null);
+  const [mediaUrls, setMediaUrls] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const prod = await api.getProduct(id);
+        if (!prod) {
+          setIsLoading(false);
+          return;
+        }
+        setProduct(prod);
+
+        // Fetch media
+        const mediaDocs = await databases.listDocuments(DATABASE_ID, PRODUCT_MEDIA_COLLECTION, [
+          Query.equal('productId', id)
+        ]);
+        
+        const urls = mediaDocs.documents.map(doc => api.getFileUrl(PRODUCT_MEDIA_BUCKET, doc.fileId));
+        setMediaUrls(urls);
+      } catch (error) {
+        console.error('Failed to load product', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadData();
+  }, [id]);
+
+  if (isLoading) {
+    return <div className="p-12 text-center text-on-surface-variant">Loading product...</div>;
+  }
 
   if (!product) {
     return (
@@ -77,7 +61,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
           Product Not Found
         </h3>
         <p className="font-body text-sm text-on-surface-variant mb-4">
-          The product you&apos;re looking for doesn&apos;t exist.
+          The product you're looking for doesn't exist.
         </p>
         <Link
           href="/dashboard/products"
@@ -103,17 +87,50 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         <div>
           <h2 className="font-heading text-2xl font-bold text-on-surface">Edit Product</h2>
           <p className="font-body text-sm text-on-surface-variant mt-0.5">
-            Update &quot;{product.name}&quot;
+            Update "{product.name}"
           </p>
         </div>
       </div>
 
       <ProductForm
-        initialData={product}
+        initialData={{ ...product, mediaUrls }}
         isEditing
         onSubmit={async (data, media) => {
-          console.log('Updating product:', id, data, media);
-          await new Promise((resolve) => setTimeout(resolve, 1500));
+          try {
+            await api.updateProduct(id, {
+              name: data.name,
+              slug: data.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+              description: data.description,
+              price: data.price,
+              discountPrice: data.discountPrice || 0,
+              stockQuantity: data.stockQuantity,
+              condition: data.condition,
+              categoryIds: data.categoryIds,
+            });
+
+            // Note: In a real app we'd need to delete old media documents and their files
+            // and upload new ones if they changed. For now we append new ones.
+            if (media && media.length > 0) {
+              const newMedia = media.filter(m => m.file); // Assuming only new media has a file
+              let sortOrder = mediaUrls.length;
+              for (const m of newMedia) {
+                const fileId = await api.uploadFile(PRODUCT_MEDIA_BUCKET, m.file);
+                await databases.createDocument(DATABASE_ID, PRODUCT_MEDIA_COLLECTION, ID.unique(), {
+                  productId: id,
+                  fileId: fileId,
+                  type: m.type,
+                  sortOrder: sortOrder++,
+                  isPrimary: m.isPrimary
+                });
+              }
+            }
+
+            toast.success('Product updated');
+            router.push('/dashboard/products');
+          } catch (error) {
+            toast.error('Failed to update product');
+            throw error;
+          }
         }}
       />
     </div>

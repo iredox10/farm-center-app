@@ -59,27 +59,45 @@ export default function CheckoutPage() {
     setIsProcessing(true);
     
     try {
+      const createOrder = async (reference?: string) => {
+        const response = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            buyerId: user?.$id || '',
+            buyerEmail: user?.email || '',
+            items,
+            paymentMethod,
+            paymentReference: reference || '',
+            shippingInfo,
+            totalAmount: total
+          })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to create order');
+        }
+        return response.json();
+      };
+
       if (paymentMethod === 'whatsapp') {
+        const orderData = await createOrder();
+        
         // WhatsApp order flow
-        const shopNames = Array.from(new Set(items.map(i => i.shopName))).join(', ');
         const orderSummary = items.map(i => `${i.quantity}x ${i.name} (₦${i.price.toLocaleString()})`).join('%0A');
         
-        const message = `*NEW ORDER FROM FARM CENTER MARKET*%0A%0A*Customer*: ${shippingInfo.fullName}%0A*Phone*: ${shippingInfo.phone}%0A*Address*: ${shippingInfo.address}, ${shippingInfo.city}%0A%0A*Order Details*:%0A${orderSummary}%0A%0A*Subtotal*: ₦${subtotal.toLocaleString()}%0A*Delivery*: ₦${deliveryFee.toLocaleString()}%0A*Total*: ₦${total.toLocaleString()}`;
+        const message = `*NEW ORDER FROM FARM CENTER MARKET*%0A*Order Ref*: ${orderData.orderNumber}%0A%0A*Customer*: ${shippingInfo.fullName}%0A*Phone*: ${shippingInfo.phone}%0A*Address*: ${shippingInfo.address}, ${shippingInfo.city}%0A%0A*Order Details*:%0A${orderSummary}%0A%0A*Subtotal*: ₦${subtotal.toLocaleString()}%0A*Delivery*: ₦${deliveryFee.toLocaleString()}%0A*Total*: ₦${total.toLocaleString()}`;
         
-        // Use a mock shop number for demonstration
         const shopPhone = '2348000000000';
         window.open(`https://wa.me/${shopPhone}?text=${message}`, '_blank');
         
-        // In a real app, we'd save the order first. For now, clear cart and redirect
         useCartStore.getState().clearCart();
         router.push('/order-success');
         return;
       }
 
       if (paymentMethod === 'paystack') {
-        // Initialize Paystack Inline
         const PaystackPop = (await import('@paystack/inline-js')).default;
-        
         const paystack = new PaystackPop();
         
         paystack.newTransaction({
@@ -88,8 +106,9 @@ export default function CheckoutPage() {
           amount: total * 100, // Paystack uses kobo
           currency: 'NGN',
           ref: `FC-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-          onSuccess: (transaction: any) => {
+          onSuccess: async (transaction: any) => {
             console.log('Payment complete! Reference: ' + transaction.reference);
+            await createOrder(transaction.reference);
             useCartStore.getState().clearCart();
             router.push('/order-success');
           },
@@ -101,8 +120,7 @@ export default function CheckoutPage() {
       }
 
       if (paymentMethod === 'pay_on_delivery') {
-        // Mock save order
-        await new Promise(r => setTimeout(r, 1500));
+        await createOrder();
         useCartStore.getState().clearCart();
         router.push('/order-success');
       }
@@ -110,6 +128,7 @@ export default function CheckoutPage() {
     } catch (error) {
       console.error('Checkout error:', error);
       setIsProcessing(false);
+      alert('Failed to place order. Please try again.');
     }
   };
 

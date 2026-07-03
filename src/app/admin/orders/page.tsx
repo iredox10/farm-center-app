@@ -1,63 +1,46 @@
 'use client';
 
-import { useState } from 'react';
-import { Search, Eye, ShoppingBag } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Eye, ShoppingBag, Loader2 } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 
-export default function AdminOrders() {
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  const mockOrders = [
-    {
-      id: 'FC-20260703-9182',
-      customer: 'Sani Bello',
-      shopName: 'Tech Haven',
-      date: '2026-07-03',
-      totalAmount: 320000,
-      paymentMethod: 'paystack',
-      status: 'paid',
-    },
-    {
-      id: 'FC-20260703-4819',
-      customer: 'Halima Ibrahim',
-      shopName: 'Kano Phones Hub',
-      date: '2026-07-02',
-      totalAmount: 180000,
-      paymentMethod: 'pay_on_delivery',
-      status: 'pending',
-    },
-    {
-      id: 'FC-20260703-1284',
-      customer: 'Mustapha Yusuf',
-      shopName: 'Smart Accessories',
-      date: '2026-07-02',
-      totalAmount: 45000,
-      paymentMethod: 'whatsapp',
-      status: 'processing',
-    },
-    {
-      id: 'FC-20260702-8371',
-      customer: 'Aisha Lawal',
-      shopName: 'Gadget World',
-      date: '2026-07-01',
-      totalAmount: 750000,
-      paymentMethod: 'paystack',
-      status: 'delivered',
-    },
-    {
-      id: 'FC-20260701-3829',
-      customer: 'Kabiru Haruna',
-      shopName: 'Tech Haven',
-      date: '2026-06-30',
-      totalAmount: 95000,
-      paymentMethod: 'pay_on_delivery',
-      status: 'cancelled',
-    },
-  ];
+interface Order {
+  id: string;
+  orderNumber: string;
+  customer: string;
+  shopName: string;
+  date: string;
+  totalAmount: number;
+  paymentMethod: string;
+  status: string;
+}
 
-  const filteredOrders = mockOrders.filter(
+export default function AdminOrders() {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = async () => {
+    try {
+      const res = await fetch('/api/admin/orders');
+      const data = await res.json();
+      if (data.success) {
+        setOrders(data.orders);
+      }
+    } catch (error) {
+      console.error('Failed to fetch orders:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const filteredOrders = orders.filter(
     (order) =>
-      order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.orderNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.shopName.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -117,96 +100,86 @@ export default function AdminOrders() {
         </div>
       </div>
 
-      <div className="card bg-white overflow-hidden border border-outline-variant/50 rounded-2xl">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-surface border-b border-outline-variant/50">
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Order ID
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Customer
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Shop
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Date
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Total
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Payment
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">
-                  Status
-                </th>
-                <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap text-right">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredOrders.length > 0 ? (
-                filteredOrders.map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-b border-outline-variant/50 hover:bg-surface-container/20 transition-colors"
-                  >
-                    <td className="px-6 py-4 font-bold text-primary whitespace-nowrap">
-                      {order.id}
-                    </td>
-                    <td className="px-6 py-4 text-on-surface whitespace-nowrap">
-                      {order.customer}
-                    </td>
-                    <td className="px-6 py-4 text-on-surface-variant whitespace-nowrap">
-                      {order.shopName}
-                    </td>
-                    <td className="px-6 py-4 text-on-surface-variant whitespace-nowrap">
-                      {order.date}
-                    </td>
-                    <td className="px-6 py-4 font-semibold text-primary whitespace-nowrap">
-                      {formatPrice(order.totalAmount)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-surface-container text-on-surface-variant border border-outline-variant/50">
-                        {getPaymentBadge(order.paymentMethod)}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${getStatusStyle(
-                          order.status
-                        )}`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex justify-end gap-3">
-                        <button className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-secondary transition-colors">
-                          <Eye className="w-4 h-4" />
-                          View
-                        </button>
-                      </div>
+      <div className="card bg-white overflow-hidden border border-outline-variant/50 rounded-2xl min-h-[400px]">
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full min-h-[400px]">
+             <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-surface border-b border-outline-variant/50">
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Order ID</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Customer</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Shop</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Date</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Total</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Payment</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap">Status</th>
+                  <th className="px-6 py-4 font-semibold text-on-surface-variant text-sm whitespace-nowrap text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredOrders.length > 0 ? (
+                  filteredOrders.map((order) => (
+                    <tr
+                      key={order.id}
+                      className="border-b border-outline-variant/50 hover:bg-surface-container/20 transition-colors"
+                    >
+                      <td className="px-6 py-4 font-bold text-primary whitespace-nowrap">
+                        {order.orderNumber}
+                      </td>
+                      <td className="px-6 py-4 text-on-surface whitespace-nowrap">
+                        {order.customer}
+                      </td>
+                      <td className="px-6 py-4 text-on-surface-variant whitespace-nowrap">
+                        {order.shopName}
+                      </td>
+                      <td className="px-6 py-4 text-on-surface-variant whitespace-nowrap">
+                        {order.date}
+                      </td>
+                      <td className="px-6 py-4 font-semibold text-primary whitespace-nowrap">
+                        {formatPrice(order.totalAmount)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-surface-container text-on-surface-variant border border-outline-variant/50">
+                          {getPaymentBadge(order.paymentMethod)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${getStatusStyle(
+                            order.status
+                          )}`}
+                        >
+                          {order.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right">
+                        <div className="flex justify-end gap-3">
+                          <button className="flex items-center gap-1 text-sm font-semibold text-primary hover:text-secondary transition-colors">
+                            <Eye className="w-4 h-4" />
+                            View
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan={8}
+                      className="px-6 py-12 text-center text-on-surface-variant font-body text-sm"
+                    >
+                      No orders found.
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={8}
-                    className="px-6 py-12 text-center text-on-surface-variant font-body text-sm"
-                  >
-                    No orders found matching your search.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
