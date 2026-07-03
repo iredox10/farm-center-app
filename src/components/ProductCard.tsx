@@ -7,7 +7,7 @@ import { formatPrice } from '@/lib/utils';
 import type { Product } from '@/types';
 
 interface ProductCardProps {
-  product: Product & { shopName?: string; imageUrl?: string };
+  product: Product & { shopName?: string; imageUrl?: string; isShopVerified?: boolean };
   compact?: boolean;
 }
 
@@ -69,6 +69,13 @@ export default function ProductCard({ product, compact = false }: ProductCardPro
             {condition.label}
           </div>
 
+          {/* Certification Badge */}
+          {product.certificationStatus === 'certified' && (
+            <div className="absolute top-10 left-3 bg-[#eab308] text-white px-2 py-0.5 rounded text-[9px] font-label font-bold uppercase tracking-wider border border-[#ca8a04]">
+              Certified
+            </div>
+          )}
+
           {/* Discount Badge */}
           {hasDiscount && (
             <div className="absolute top-3 right-3 bg-error text-on-error px-2.5 py-1 rounded text-[10px] font-label font-bold uppercase tracking-wider">
@@ -98,10 +105,15 @@ export default function ProductCard({ product, compact = false }: ProductCardPro
         <div className={compact ? 'p-4 flex flex-col h-full' : 'p-5 flex flex-col h-full'}>
           {/* Shop Name */}
           {product.shopName && (
-            <p className="text-outline font-label text-xs mb-1.5 truncate flex items-center gap-1 uppercase tracking-wider font-semibold">
+            <div className="text-outline font-label text-xs mb-1.5 flex items-center gap-1 uppercase tracking-wider font-semibold">
               <Tag className="w-3 h-3" />
-              {product.shopName}
-            </p>
+              <span className="truncate">{product.shopName}</span>
+              {product.isShopVerified && (
+                <svg className="w-3.5 h-3.5 text-blue-500 fill-current shrink-0" viewBox="0 0 24 24">
+                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              )}
+            </div>
           )}
 
           {/* Product Name */}

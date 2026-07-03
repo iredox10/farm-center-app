@@ -40,16 +40,34 @@ export default function LoginPage() {
 
   const handleEmailSubmit = async (data: EmailFormData) => {
     setIsLoading(true);
-    console.log('Email login:', data);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsLoading(false);
+    try {
+      // Set a mock session cookie so the proxy middleware allows access
+      await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session: 'mock-session-id' }),
+      });
+      
+      // If the email has 'admin', redirect to admin panel, otherwise dashboard
+      const targetPath = data.email.includes('admin') ? '/admin' : '/dashboard';
+      window.location.href = targetPath;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePhoneSubmit = async (data: PhoneFormData) => {
     setIsLoading(true);
-    console.log('Phone login:', data);
-    await new Promise((r) => setTimeout(r, 1500));
-    setIsLoading(false);
+    try {
+      // Redirect to our verify page with a mock user session detail
+      window.location.href = `/verify?userId=mock-user-id&phone=${data.phone}`;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

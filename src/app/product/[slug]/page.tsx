@@ -5,11 +5,12 @@ import Link from 'next/link';
 import {
   ShoppingCart, Heart, Share2, Copy, Check, ChevronLeft, ChevronRight,
   MapPin, CheckCircle, Minus, Plus, MessageCircle, Store, Tag, Star,
-  ChevronDown, ChevronUp, Zap, ExternalLink, Package
+  ChevronDown, ChevronUp, Zap, ExternalLink, Package, ShieldCheck, Award,
+  User
 } from 'lucide-react';
 import { useCartStore } from '@/stores/cart';
 import { formatPrice, getWhatsAppLink } from '@/lib/utils';
-import type { Product } from '@/types';
+import type { Product, Review } from '@/types';
 
 /* ── Mock Data ── */
 const mockProduct = {
@@ -41,12 +42,15 @@ This device is in excellent condition with 98% battery health. Comes with origin
   viewCount: 1842,
   createdAt: '2026-06-15T00:00:00Z',
   updatedAt: '2026-07-01T00:00:00Z',
+  certificationStatus: 'certified' as const,
+  batteryHealth: 98,
+  testingWarrantyDays: 30,
 };
 
 const mockShop = {
   name: "King's Gadgets",
   slug: 'kings-gadgets',
-  location: 'Shop 13, Albarka Plaza, Farm Center',
+  location: 'Shop 13, Albarka Plaza, Farm Center, Kano',
   isVerified: true,
   phone: '+2348012345678',
   whatsapp: '+2348012345678',
@@ -68,6 +72,42 @@ const mockImages = [
   '/placeholder-phone-4.jpg',
 ];
 
+const initialReviews: Review[] = [
+  {
+    id: 'rev-1',
+    productId: 'prod-1',
+    shopId: 'shop-1',
+    buyerId: 'user-23',
+    buyerName: 'Usman Danjuma',
+    rating: 5,
+    comment: 'Excellent phone! Battery is great and camera works perfectly. Audited condition certificate is fully authentic.',
+    isVerifiedPurchase: true,
+    createdAt: '2026-06-28T14:22:00Z',
+  },
+  {
+    id: 'rev-2',
+    productId: 'prod-1',
+    shopId: 'shop-1',
+    buyerId: 'user-45',
+    buyerName: 'Fatima Yusuf',
+    rating: 4,
+    comment: 'Very neat UK-used device, practically brand new. Delivery to Hotoro was fast.',
+    isVerifiedPurchase: true,
+    createdAt: '2026-06-25T09:15:00Z',
+  },
+  {
+    id: 'rev-3',
+    productId: 'prod-1',
+    shopId: 'shop-1',
+    buyerId: 'user-72',
+    buyerName: 'Ibrahim Kano',
+    rating: 5,
+    comment: 'Super happy with the 30-day testing warranty offered. Real trust value compared to buy-and-go sellers.',
+    isVerifiedPurchase: true,
+    createdAt: '2026-06-20T18:40:00Z',
+  },
+];
+
 const conditionConfig: Record<string, { label: string; color: string; bg: string }> = {
   new: { label: 'Brand New', color: 'text-primary', bg: 'bg-primary/15 border-primary/30' },
   'uk-used': { label: 'UK-Used', color: 'text-secondary', bg: 'bg-blue-500/15 border-secondary/30' },
@@ -81,6 +121,14 @@ export default function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [copied, setCopied] = useState(false);
   const [descExpanded, setDescExpanded] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+  
+  // Review form state
+  const [newRating, setNewRating] = useState(5);
+  const [newComment, setNewComment] = useState('');
+  const [newName, setNewName] = useState('');
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  
   const addItem = useCartStore((s) => s.addItem);
 
   const hasDiscount = product.discountPrice > 0 && product.discountPrice < product.price;
@@ -113,6 +161,29 @@ export default function ProductDetailPage() {
   const handleWhatsAppOrder = () => {
     const msg = `Hi! I'd like to order:\n\n📱 *${product.name}*\n💰 ${formatPrice(displayPrice)}\n📦 Qty: ${quantity}\n\nFrom Farm Center Market`;
     window.open(getWhatsAppLink(shop.whatsapp, msg), '_blank');
+  };
+
+  const handleAddReview = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newComment || !newName) return;
+    
+    const review: Review = {
+      id: `rev-${Date.now()}`,
+      productId: product.id,
+      shopId: product.shopId,
+      buyerId: `user-${Math.random()}`,
+      buyerName: newName,
+      rating: newRating,
+      comment: newComment,
+      isVerifiedPurchase: true, // Mock purchase verification
+      createdAt: new Date().toISOString(),
+    };
+    
+    setReviews([review, ...reviews]);
+    setNewName('');
+    setNewComment('');
+    setNewRating(5);
+    setShowReviewForm(false);
   };
 
   const descriptionLines = product.description.split('\n');
@@ -172,7 +243,7 @@ export default function ProductDetailPage() {
                   onClick={() => setCurrentImage(i)}
                   className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 flex items-center justify-center text-sm ${
                     i === currentImage
-                      ? 'border-primary shadow-[0_4px_12px_rgba(4,22,39,0.02)] shadow-[0_8px_24px_rgba(4,22,39,0.06)]'
+                      ? 'border-primary shadow-[0_4px_12px_rgba(4,22,39,0.02)]'
                       : 'border-outline-variant/50 hover:border-outline opacity-60 hover:opacity-100'
                   } bg-[#f3f4f6]`}
                 >
@@ -224,6 +295,28 @@ export default function ProductDetailPage() {
                   {!inStock ? 'Out of Stock' : lowStock ? `Only ${product.stockQuantity} left` : 'In Stock'}
                 </span>
               </div>
+            </div>
+
+            {/* Trust Badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {product.certificationStatus === 'certified' && (
+                <div className="bg-amber-50/60 border border-amber-200/60 rounded-2xl p-4 flex items-start gap-3">
+                  <Award className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-label text-sm font-bold text-amber-900">Certified Device</h4>
+                    <p className="text-xs text-amber-700 mt-1">Technician audited. {product.batteryHealth}% Battery Health.</p>
+                  </div>
+                </div>
+              )}
+              {product.testingWarrantyDays && (
+                <div className="bg-blue-50/60 border border-blue-200/60 rounded-2xl p-4 flex items-start gap-3">
+                  <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-label text-sm font-bold text-blue-900">Warranty Included</h4>
+                    <p className="text-xs text-blue-700 mt-1">{product.testingWarrantyDays}-Day Testing & Verification Warranty.</p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Description */}
@@ -328,7 +421,11 @@ export default function ProductDetailPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h3 className="font-heading font-bold text-on-surface truncate">{shop.name}</h3>
-                    {shop.isVerified && <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />}
+                    {shop.isVerified && (
+                      <svg className="w-4 h-4 text-blue-500 fill-current flex-shrink-0" viewBox="0 0 24 24">
+                        <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
+                    )}
                   </div>
                   <p className="text-outline text-sm flex items-center gap-1 mt-0.5">
                     <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
@@ -360,6 +457,112 @@ export default function ProductDetailPage() {
             </div>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        <section className="mt-16 border-t border-outline-variant/30 pt-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+              <h2 className="font-heading text-2xl font-bold text-on-surface">
+                Customer Reviews ({reviews.length})
+              </h2>
+              <p className="text-on-surface-variant text-sm mt-1">Verified purchases from audited buyers.</p>
+            </div>
+            <button
+              onClick={() => setShowReviewForm(!showReviewForm)}
+              className="px-5 py-2.5 rounded-xl bg-primary text-on-primary font-label font-bold text-sm hover:opacity-90 transition-all"
+            >
+              {showReviewForm ? 'Cancel Review' : 'Write a Review'}
+            </button>
+          </div>
+
+          {/* New Review Form */}
+          {showReviewForm && (
+            <form onSubmit={handleAddReview} className="bg-white border border-outline-variant/50 rounded-2xl p-6 mb-8 max-w-xl space-y-4">
+              <h3 className="font-heading font-semibold text-lg text-primary">Your Review</h3>
+              <div>
+                <label className="block text-sm font-label font-semibold text-on-surface mb-2">Your Name</label>
+                <input
+                  type="text"
+                  required
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  placeholder="e.g. Aliyu Usman"
+                  className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-label font-semibold text-on-surface mb-2">Rating</label>
+                <div className="flex gap-1.5">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setNewRating(star)}
+                      className="text-2xl transition-transform hover:scale-110 focus:outline-none"
+                    >
+                      <Star className={`w-6 h-6 ${star <= newRating ? 'text-[#eab308] fill-[#eab308]' : 'text-outline-variant'}`} />
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-label font-semibold text-on-surface mb-2">Comment</label>
+                <textarea
+                  rows={4}
+                  required
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Share your experience with this device and seller..."
+                  className="w-full rounded-xl border border-outline-variant/50 bg-white px-4 py-2.5 text-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-secondary text-on-secondary px-6 py-2.5 rounded-xl font-label font-bold text-sm hover:opacity-90 transition-all"
+              >
+                Submit Review
+              </button>
+            </form>
+          )}
+
+          {/* Reviews List */}
+          <div className="space-y-6 max-w-3xl">
+            {reviews.map((rev) => (
+              <div key={rev.id} className="bg-white border border-outline-variant/50 rounded-2xl p-6 shadow-sm">
+                <div className="flex justify-between items-start flex-wrap gap-2 mb-3">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant font-bold text-sm">
+                      <User className="w-5 h-5 text-outline" />
+                    </div>
+                    <div>
+                      <h4 className="font-heading font-bold text-sm text-on-surface">{rev.buyerName}</h4>
+                      <p className="text-outline text-xs mt-0.5">{new Date(rev.createdAt).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-end gap-1">
+                    <div className="flex gap-0.5">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className={`w-4 h-4 ${star <= rev.rating ? 'text-[#eab308] fill-[#eab308]' : 'text-outline-variant'}`}
+                        />
+                      ))}
+                    </div>
+                    {rev.isVerifiedPurchase && (
+                      <span className="text-[10px] font-label font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200 flex items-center gap-1">
+                        <Check className="w-3 h-3" />
+                        Verified Purchase
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <p className="text-on-surface-variant text-sm font-body leading-relaxed">{rev.comment}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Related Products */}
         <section className="mt-16">

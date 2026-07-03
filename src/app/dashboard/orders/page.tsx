@@ -399,18 +399,67 @@ export default function OrdersPage() {
                       </div>
 
                       {/* Customer Info */}
-                      <div>
-                        <p className="font-label text-xs text-on-surface-variant uppercase tracking-wider mb-3">Customer</p>
-                        <div className="space-y-2 font-body text-sm">
-                          <p className="text-on-surface">{order.buyerName}</p>
-                          <p className="text-on-surface-variant">{order.buyerPhone}</p>
-                          <p className="text-on-surface-variant text-xs">{order.shippingAddress}</p>
-                          <p className="text-on-surface-variant text-xs">
-                            {new Date(order.date).toLocaleString('en-NG', {
-                              dateStyle: 'medium',
-                              timeStyle: 'short',
-                            })}
-                          </p>
+                      <div className="space-y-4">
+                        <div>
+                          <p className="font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Customer</p>
+                          <div className="space-y-1 font-body text-sm">
+                            <p className="text-on-surface font-semibold">{order.buyerName}</p>
+                            <p className="text-on-surface-variant">{order.buyerPhone}</p>
+                            <p className="text-on-surface-variant text-xs">{order.shippingAddress}</p>
+                            <p className="text-on-surface-variant text-[11px]">
+                              Ordered: {new Date(order.date).toLocaleString('en-NG', {
+                                dateStyle: 'medium',
+                                timeStyle: 'short',
+                              })}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Escrow Details */}
+                        <div className="border border-outline-variant/50 rounded-xl p-3.5 bg-surface-container/50">
+                          <p className="font-label text-xs text-on-surface-variant uppercase tracking-wider mb-2">Escrow Protection</p>
+                          {order.paymentMethod === 'paystack' ? (
+                            order.status === 'delivered' ? (
+                              <div>
+                                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                                  🔓 Payout Disbursed
+                                </span>
+                                <p className="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">
+                                  Commission (5%) processed. Payout sent to your bank account.
+                                </p>
+                              </div>
+                            ) : order.status === 'cancelled' ? (
+                              <div>
+                                <span className="inline-flex items-center gap-1.5 text-xs font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded border border-red-200">
+                                  ↩️ Refunded
+                                </span>
+                                <p className="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">
+                                  Funds returned to the buyer's credit/debit card.
+                                </p>
+                              </div>
+                            ) : (
+                              <div>
+                                <div className="flex items-center justify-between gap-2 flex-wrap">
+                                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                                    🔒 Held in Escrow
+                                  </span>
+                                  <button
+                                    onClick={() => updateStatus(order.id, 'delivered')}
+                                    className="text-[10px] font-bold text-primary hover:underline hover:text-secondary"
+                                  >
+                                    Release Payout
+                                  </button>
+                                </div>
+                                <p className="text-[10px] text-on-surface-variant mt-1.5 leading-relaxed">
+                                  Secured by platform. Released on customer receipt confirmation.
+                                </p>
+                              </div>
+                            )
+                          ) : (
+                            <p className="text-xs text-on-surface-variant leading-relaxed">
+                              Escrow not active for {order.paymentMethod === 'pay_on_delivery' ? 'Pay on Delivery' : 'WhatsApp Orders'}.
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>

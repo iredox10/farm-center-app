@@ -11,6 +11,7 @@ interface ShopCardData {
   bannerUrl?: string;
   logoUrl?: string;
   description?: string;
+  physicalAuditDate?: string;
 }
 
 interface ShopCardProps {
@@ -78,9 +79,16 @@ export default function ShopCard({ shop }: ShopCardProps) {
               {shop.location}
             </p>
             
-            <div className="flex items-center gap-1.5 text-on-surface-variant text-sm font-label">
-              <Package className="w-4 h-4 text-outline" />
-              <span>{shop.productCount} products available</span>
+            <div className="flex items-center gap-1.5 text-on-surface-variant text-sm font-label justify-between">
+              <div className="flex items-center gap-1.5">
+                <Package className="w-4 h-4 text-outline" />
+                <span>{shop.productCount} products</span>
+              </div>
+              {shop.physicalAuditDate && (
+                <span className="text-[10px] font-label font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">
+                  Audited
+                </span>
+              )}
             </div>
           </div>
         </div>

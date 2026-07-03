@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LayoutDashboard, Store, Users, DollarSign, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Store, Users, DollarSign, Settings, LogOut, ShoppingBag } from 'lucide-react';
 
 export default function AdminLayout({
   children,
@@ -22,6 +22,10 @@ export default function AdminLayout({
           <Link href="/admin/shops" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors">
             <Store className="w-5 h-5" />
             <span className="font-medium">Shops</span>
+          </Link>
+          <Link href="/admin/orders" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors">
+            <ShoppingBag className="w-5 h-5" />
+            <span className="font-medium">Orders</span>
           </Link>
           <Link href="/admin/users" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-surface-container text-on-surface-variant hover:text-primary transition-colors">
             <Users className="w-5 h-5" />

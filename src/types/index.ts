@@ -34,6 +34,9 @@ export interface Shop {
   productCount: number;
   subscriptionTier: 'free' | 'pro' | 'business';
   createdAt: string;
+  physicalAuditDate?: string;
+  ratingAverage?: number;
+  reviewCount?: number;
 }
 
 export interface ShopSettings {
@@ -68,6 +71,21 @@ export interface Product {
   viewCount: number;
   createdAt: string;
   updatedAt: string;
+  certificationStatus?: 'none' | 'certified';
+  batteryHealth?: number;
+  testingWarrantyDays?: number;
+}
+
+export interface Review {
+  id: string;
+  productId: string;
+  shopId: string;
+  buyerId: string;
+  buyerName: string;
+  rating: number; // 1 to 5 stars
+  comment: string;
+  isVerifiedPurchase: boolean;
+  createdAt: string;
 }
 
 export interface ProductMedia {
