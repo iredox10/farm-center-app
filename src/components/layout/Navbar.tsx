@@ -40,6 +40,11 @@ export default function Navbar() {
   const getItemCount = useCartStore((s) => s.getItemCount);
   const totalItems = getItemCount();
 
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const handleScroll = useCallback(() => {
     setScrolled(window.scrollY > 10);
   }, []);
@@ -147,8 +152,8 @@ export default function Navbar() {
                 aria-label="Open cart"
               >
                 <ShoppingCart className="h-5 w-5" />
-                {totalItems > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-secondary-container px-1.5 text-[10px] font-label font-bold text-on-secondary-container">
+                {isMounted && totalItems > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-error px-1 text-[10px] font-bold text-on-error shadow-sm ring-2 ring-surface-container-lowest">
                     {totalItems > 99 ? '99+' : totalItems}
                   </span>
                 )}
